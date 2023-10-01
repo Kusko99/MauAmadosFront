@@ -22,19 +22,15 @@ class ChoiceButton extends StatelessWidget{
         top: deviceHeight * 0.02,
         bottom: deviceHeight * 0.02
       ),
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        color: Colors.white,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withAlpha(50),
-            spreadRadius: 4,
-            blurRadius: 4,
-            offset: const Offset(3, 3)
-          )
-        ]
+      child: FloatingActionButton(
+        onPressed: () {},
+        backgroundColor: Colors.white,
+        elevation: 4,
+        highlightElevation: 1,
+        hoverElevation: 1,
+        hoverColor: Colors.grey.withAlpha(50),
+        child: Icon(icon, color: color, size: size),
       ),
-      child: Icon(icon, color: color, size: size)
     );
   }
 }
