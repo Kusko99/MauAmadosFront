@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:mauamados/models/models.dart';
 import 'package:mauamados/src/widgets/widgets.dart';
+// import 'package:mauamados/models/models.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -11,21 +13,6 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
 
-  static const User user = 
-    User(
-      id: 1, 
-      nome: 'Carlos', 
-      idade: 18, 
-      urlFotos: [
-        'https://media.licdn.com/dms/image/D4E03AQHgAMy3qx5SNg/profile-displayphoto-shrink_800_800/0/1683990505413?e=2147483647&v=beta&t=Jab6vrLkz8UOjKFhd_MF9RCEeg4PikNScMzosoLHAWo', 
-        'https://i.imgur.com/PUfQZfl.jpg',
-        'https://i.imgur.com/kKMbl23.jpg',
-      ], 
-      bio: 'Shrek é um ogro rabugento e nada sociável que se vê com um problema enorme: todas as criaturas de contos de fadas foram despejadas no pântano onde vive. Determinado a tirá-las dali e voltar a viver em paz, ele faz um trato com o príncipe do reino, que por sua vez precisa de alguém bruto e forte para resgatar a princesa Fiona, com quem o monarca pretende se casar para virar rei. Porém, a moça está guardada em uma torre por um dragão feroz. Se conseguir trazer a princesa, Shrek terá suas terras de volta. Assim, ele logo parte em sua missão, mas não sem a companhia de um inconveniente burro falante.', 
-      curso: 'Ciências da Computação',
-      interesses: ['Hacker', 'Rei do Hambúrguer', 'Daniel', 'Moleza', 'Fotografia', 'Sorocaba', 'Mesa de cabiceira']
-    );
-
   @override
   Widget build(BuildContext context) {
     double deviceHeight = MediaQuery.of(context).size.height;
@@ -33,6 +20,9 @@ class _HomePageState extends State<HomePage> {
     if (MediaQuery.of(context).size.width / deviceHeight <= 0.267 ) {
       size = MediaQuery.of(context).size.shortestSide * 0.375;
     }
+
+    List<User> users = User.users;
+    User user= users[0];
     
     return MaterialApp(
       home: Scaffold(
@@ -40,7 +30,7 @@ class _HomePageState extends State<HomePage> {
           child: Column(
             children: [
               const CustomAppBar(),
-              const UserCard(user: user),
+              UserCard(user: user),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 crossAxisAlignment: CrossAxisAlignment.center,
