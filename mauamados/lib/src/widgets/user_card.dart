@@ -18,8 +18,6 @@ class _UserCardState extends State<UserCard> {
     setState(() {
       if (currentIndex < widget.user.urlFotos.length -1) {
         currentIndex++;
-      } else {
-        currentIndex = currentIndex;
       }
     });
   }
@@ -28,8 +26,6 @@ class _UserCardState extends State<UserCard> {
     setState(() {
       if (currentIndex > 0) {
         currentIndex--;
-      } else {
-        currentIndex = currentIndex;
       }
     });
   }
@@ -162,15 +158,14 @@ class _UserCardState extends State<UserCard> {
                       SizedBox(
                         width: iconSize * 3,
                         height: iconSize * 3,
-                        child: FloatingActionButton(
-                          backgroundColor: Colors.transparent,
+                        child: IconButton(
                           onPressed: () => showModalBottomSheet(
                             isScrollControlled: true,
                             backgroundColor: Colors.transparent,
                             context: context,
                             builder: (context) => BuildSheet(user: widget.user),
                           ),
-                          child: Icon(
+                          icon: Icon(
                             Icons.info_outline,
                             size: iconSize,
                             color: Colors.grey[350],

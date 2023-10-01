@@ -38,6 +38,15 @@ class BuildSheet extends StatelessWidget {
           child: ListView(
             controller: controller,
             children: [
+              Container(
+                padding: EdgeInsets.only(
+                  bottom: MediaQuery.of(context).size.height * 0.07,
+                ),
+                child: Wrap(
+                  children: 
+                    InterestsBuilder(interesses: user.interesses, fontSize: fontSize).buildInterests(),
+                ),
+              ),
               Text(
                 user.bio,
               style: TextStyle(fontSize: fontSize)
