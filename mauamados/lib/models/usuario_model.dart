@@ -80,11 +80,11 @@ class User extends Equatable {
       idade: 20, 
       urlFotos: [
         'https://media.licdn.com/dms/image/C4D03AQE1NpnztOz_yA/profile-displayphoto-shrink_800_800/0/1659984116048?e=2147483647&v=beta&t=oBCbhwFecBZCX3XpxEjGFHXn5VZNgb4BrynzPo5zR6A',
-        'blob:https://imgur.com/19be7dca-2afa-4990-8233-eacf26e88072',
+        'https://i.imgur.com/eoLu40q.jpg',
         'https://i.imgur.com/LkHKScP.jpg',
-        'blob:https://imgur.com/b7143615-5f2e-4267-8c4f-a7a75d2df667',
-        'blob:https://imgur.com/9e35ddfe-13fd-472e-8918-d79e244fbd31',
-        'blob:https://imgur.com/bf042723-ba1e-4a9b-895f-677531758d90',
+        'https://i.imgur.com/9IQVnbU.jpg',
+        'https://i.imgur.com/PHZd1Hf.jpg',
+        'https://i.imgur.com/QGkPs3g.jpg',
         'https://i.imgur.com/DK4FX3e.jpg'
       ], 
       bio: 'Escravo do Aero', 
