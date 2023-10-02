@@ -11,6 +11,23 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  List<User> users = User.users;
+  User currentUser = User.users[0];
+  int currentIndex = 0;
+
+  void _next() {
+    if (currentIndex < User.users.length - 1) {
+      setState(() {
+        currentIndex++;
+        currentUser = User.users[currentIndex];
+      });
+    } else if (currentIndex == User.users.length - 1) {
+      setState(() {
+        currentIndex = 0;
+        currentUser = User.users[currentIndex];
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -20,9 +37,14 @@ class _HomePageState extends State<HomePage> {
       size = MediaQuery.of(context).size.shortestSide * 0.375;
     }
 
-    List<User> users = User.users;
-    UserCard card = UserCard(user: users[0]);
-    UserCard nextCard = UserCard(user: users[1]);
+    UserCard userCard = UserCard(
+            user: users[currentIndex],
+            onUserChanged: (newUser) {
+              setState(() {
+                currentIndex = users.indexOf(newUser);
+              });
+            },
+          );
     
     return MaterialApp(
       home: Scaffold(
@@ -31,19 +53,24 @@ class _HomePageState extends State<HomePage> {
             children: [
               const CustomAppBar(),
               Draggable(
-                feedback: card,
-                child: card,
-                childWhenDragging: nextCard,
+                feedback: userCard,
+                childWhenDragging: UserCard(
+                  user: currentIndex < users.length - 1 ? users[currentIndex + 1] : users[0],
+                  onUserChanged: (newUser) {},),
                 onDragEnd: (drag) {
                   final endPosition = drag.offset;
-                  if (endPosition.dx > 0) {
-                    print('Direita');
-                  } else if (endPosition.dx < 0) {
-                    print('Esquerda');
-                  }
-                  print(endPosition.dx);
-                  print(endPosition.dy);
+                  if (endPosition.dx > 0 && endPosition.dx > 100) {
+                    print('MAUÁprovado');
+                    _next();
+                  } else if (endPosition.dx < 0 && endPosition.dx < -100) {
+                    _next();
+                    print('MAUÁnulado');
+                  } else if (endPosition.dy < -100) {
+                    _next();
+                    print('MAUÁmado');
+                  };
                 },
+                child: userCard
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -53,16 +80,19 @@ class _HomePageState extends State<HomePage> {
                     color: const Color.fromARGB(255, 255, 88, 100), 
                     icon: Icons.clear_rounded,
                     size: size / 2,
+                    onPressed: _next,
                   ),
                   ChoiceButton(
                     color: const Color.fromARGB(255, 45, 185, 216), 
                     icon: Icons.star_rounded,
                     size: size /3,
+                    onPressed: _next,
                   ),
                   ChoiceButton(
                     color: const Color.fromARGB(255, 107, 253, 168), 
                     icon: Icons.favorite_rounded,
                     size: size /2,
+                    onPressed: _next,
                   ),
                 ],
               )

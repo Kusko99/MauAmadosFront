@@ -4,8 +4,9 @@ import 'package:mauamados/src/widgets/widgets.dart';
 
 class UserCard extends StatefulWidget{
   final User user;
+  Function(User) onUserChanged;
   int currentIndex = 0;
-   UserCard({required this.user, this.currentIndex = 0, super.key});
+  UserCard({required this.user, this.currentIndex = 0, required this.onUserChanged,super.key});
 
   @override
   State<UserCard> createState() {
@@ -181,5 +182,11 @@ class _UserCardState extends State<UserCard> {
         ),
       ),
     );
+  }
+
+  void changeUser(User newUser) {
+  setState(() {
+    widget.onUserChanged(newUser);
+  });
   }
 }

@@ -4,11 +4,13 @@ class ChoiceButton extends StatelessWidget{
   final double size;
   final Color color;
   final IconData icon;
+  final VoidCallback onPressed;
 
   const ChoiceButton({ Key? key,
     required this.size,
     required this.color,
     required this.icon,
+    required this.onPressed
   }) : super(key: key);
 
   
@@ -23,7 +25,7 @@ class ChoiceButton extends StatelessWidget{
         bottom: deviceHeight * 0.02
       ),
       child: FloatingActionButton(
-        onPressed: () {},
+        onPressed: onPressed,
         backgroundColor: Colors.white,
         elevation: 4,
         highlightElevation: 1,
