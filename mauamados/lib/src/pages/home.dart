@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mauamados/models/models.dart';
 import 'package:mauamados/src/widgets/widgets.dart';
-// import 'package:mauamados/models/models.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -30,7 +29,19 @@ class _HomePageState extends State<HomePage> {
           child: Column(
             children: [
               const CustomAppBar(),
-              UserCard(user: user),
+              Draggable(
+                feedback: UserCard(user: user),
+                child: UserCard(user: user),
+                onDragEnd: (drag) {
+                  final endPosition = drag.offset;
+                  if (endPosition.dx > 0) {
+                    print('Direita');
+                  } else if (endPosition.dx < 0) {
+                    print('Esquerda');
+                  }
+                  print(endPosition.dx);
+                },
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 crossAxisAlignment: CrossAxisAlignment.center,
