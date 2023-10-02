@@ -21,7 +21,8 @@ class _HomePageState extends State<HomePage> {
     }
 
     List<User> users = User.users;
-    User user= users[0];
+    UserCard card = UserCard(user: users[0]);
+    UserCard nextCard = UserCard(user: users[1]);
     
     return MaterialApp(
       home: Scaffold(
@@ -30,8 +31,9 @@ class _HomePageState extends State<HomePage> {
             children: [
               const CustomAppBar(),
               Draggable(
-                feedback: UserCard(user: user),
-                child: UserCard(user: user),
+                feedback: card,
+                child: card,
+                childWhenDragging: nextCard,
                 onDragEnd: (drag) {
                   final endPosition = drag.offset;
                   if (endPosition.dx > 0) {
@@ -40,6 +42,7 @@ class _HomePageState extends State<HomePage> {
                     print('Esquerda');
                   }
                   print(endPosition.dx);
+                  print(endPosition.dy);
                 },
               ),
               Row(
