@@ -57,7 +57,41 @@ class User extends Equatable {
       ], 
       bio: 'Oi, eu sou Goku!', 
       curso: 'Sistemas de Informação', 
-      interesses: ['Pokemon', 'Corgi', 'Terceira Idade', 'Telefone do Gabriel'] )
+      interesses: ['Pokemon', 'Corgi', 'Terceira Idade', 'Telefone do Gabriel']
+    ),
+    const User(
+      id: 3, 
+      nome: 'Gustavo', 
+      idade: 20, 
+      urlFotos: [
+        'https://i.imgur.com/jINJHHn.jpg',
+        'https://i.imgur.com/c2wmbA0.jpg',
+        'https://i.imgur.com/6kja6e4.jpg'
+      ], 
+      bio: 'Gustavo?', 
+      curso: 'Ciências da Computação', 
+      interesses: [
+        'Japonês', 'Honda', 'Nintendo', 'Yamaha', 'Corno'
+      ]
+    ),
+    const User(
+      id: 4, 
+      nome: 'Lucas', 
+      idade: 20, 
+      urlFotos: [
+        'https://media.licdn.com/dms/image/C4D03AQE1NpnztOz_yA/profile-displayphoto-shrink_800_800/0/1659984116048?e=2147483647&v=beta&t=oBCbhwFecBZCX3XpxEjGFHXn5VZNgb4BrynzPo5zR6A',
+        'blob:https://imgur.com/19be7dca-2afa-4990-8233-eacf26e88072',
+        'https://i.imgur.com/LkHKScP.jpg',
+        'blob:https://imgur.com/b7143615-5f2e-4267-8c4f-a7a75d2df667',
+        'blob:https://imgur.com/9e35ddfe-13fd-472e-8918-d79e244fbd31',
+        'blob:https://imgur.com/bf042723-ba1e-4a9b-895f-677531758d90',
+        'https://i.imgur.com/DK4FX3e.jpg'
+      ], 
+      bio: 'Escravo do Aero', 
+      curso: 'Ciências da Computação', 
+      interesses: [
+        'Avião', 'Iberê Thenorio', 'Teodoro Sampaio', 'Pizza de Calabresa', 'Escravidão'
+      ]
+    )
   ];
-
 }

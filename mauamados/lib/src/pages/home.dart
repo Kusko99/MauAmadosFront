@@ -32,7 +32,6 @@ class _HomePageState extends State<HomePage> {
               const CustomAppBar(),
               Draggable(
                 feedback: card,
-                child: card,
                 childWhenDragging: nextCard,
                 onDragEnd: (drag) {
                   final endPosition = drag.offset;
@@ -44,6 +43,7 @@ class _HomePageState extends State<HomePage> {
                   print(endPosition.dx);
                   print(endPosition.dy);
                 },
+                child: card,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,

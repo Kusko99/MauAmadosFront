@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:mauamados/src/pages/pages.dart';
 
 class App extends StatefulWidget {
+  const App({super.key});
+
   @override
   State<App> createState() {
     return AppState();
@@ -12,8 +14,8 @@ class AppState extends State<App> {
   int currentIndex = 0;
   final screens = [
     const HomePage(),
-    ProfilePage(),
-    ChatPage()
+    const ProfilePage(),
+    const ChatPage()
   ];
 
   @override

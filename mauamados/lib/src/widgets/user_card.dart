@@ -5,7 +5,7 @@ import 'package:mauamados/src/widgets/widgets.dart';
 class UserCard extends StatefulWidget{
   final User user;
   int currentIndex = 0;
-   UserCard({required this.user, this.currentIndex = 0, super.key});
+  UserCard({required this.user, this.currentIndex = 0, super.key});
 
   @override
   State<UserCard> createState() {
