@@ -21,6 +21,11 @@ class _HomePageState extends State<HomePage> {
         currentIndex++;
         currentUser = User.users[currentIndex];
       });
+    } else if (currentIndex == User.users.length - 1) {
+      setState(() {
+        currentIndex = 0;
+        currentUser = User.users[currentIndex];
+      });
     }
   }
 
@@ -50,7 +55,7 @@ class _HomePageState extends State<HomePage> {
               Draggable(
                 feedback: userCard,
                 childWhenDragging: UserCard(
-                  user: currentIndex < users.length - 1 ? users[currentIndex + 1] : users[currentIndex],
+                  user: currentIndex < users.length - 1 ? users[currentIndex + 1] : users[0],
                   onUserChanged: (newUser) {},),
                 onDragEnd: (drag) {
                   final endPosition = drag.offset;
