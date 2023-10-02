@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mauamados/models/models.dart';
 import 'package:mauamados/src/widgets/widgets.dart';
 
 class BuildSheet extends StatelessWidget {

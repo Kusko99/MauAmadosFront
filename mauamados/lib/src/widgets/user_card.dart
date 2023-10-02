@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:mauamados/models/models.dart';
 import 'package:mauamados/src/widgets/widgets.dart';
 
 class UserCard extends StatefulWidget{
   final User user;
-  const UserCard({required this.user, super.key});
+  int currentIndex = 0;
+   UserCard({required this.user, this.currentIndex = 0, super.key});
 
   @override
   State<UserCard> createState() {
@@ -12,20 +14,18 @@ class UserCard extends StatefulWidget{
 }
 
 class _UserCardState extends State<UserCard> {
-  int currentIndex = 0;
-
   void _next() {
     setState(() {
-      if (currentIndex < widget.user.urlFotos.length -1) {
-        currentIndex++;
+      if (widget.currentIndex < widget.user.urlFotos.length -1) {
+        widget.currentIndex++;
       }
     });
   }
 
   void _preve() {
     setState(() {
-      if (currentIndex > 0) {
-        currentIndex--;
+      if (widget.currentIndex > 0) {
+        widget.currentIndex--;
       }
     });
   }
@@ -68,7 +68,7 @@ class _UserCardState extends State<UserCard> {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20),
                 image: DecorationImage(
-                  image: NetworkImage(widget.user.urlFotos[currentIndex]),
+                  image: NetworkImage(widget.user.urlFotos[widget.currentIndex]),
                   fit: BoxFit.cover,
                 ),
                 boxShadow: [
@@ -104,7 +104,7 @@ class _UserCardState extends State<UserCard> {
                       margin: const EdgeInsets.all(15),
                       child: Row(
                         children: IndicatorBuilder(
-                          currentIndex: currentIndex,
+                          currentIndex: widget.currentIndex,
                           urlFotos: widget.user.urlFotos,
                         ).buildIndicators(),
                       ),
@@ -138,20 +138,20 @@ class _UserCardState extends State<UserCard> {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            '${widget.user.nome}, ${widget.user.idade}',
+                          DefaultTextStyle(
                             style: TextStyle(
                               fontSize: fontSize1,
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
                             ),
+                            child: Text('${widget.user.nome}, ${widget.user.idade}'),
                           ),
-                          Text(
-                            widget.user.curso,
+                          DefaultTextStyle(
                             style: TextStyle(
                               fontSize: fontSize2,
                               color: Colors.white,
                             ),
+                            child: Text(widget.user.curso),
                           ),
                         ],
                       ),
