@@ -59,11 +59,16 @@ class _HomePageState extends State<HomePage> {
                   onUserChanged: (newUser) {},),
                 onDragEnd: (drag) {
                   final endPosition = drag.offset;
-                  if (endPosition.dx > 0) {
+                  if (endPosition.dx > 0 && endPosition.dx > 100) {
+                    print('MAUÁprovado');
                     _next();
-                  } else if (endPosition.dx < 0) {
+                  } else if (endPosition.dx < 0 && endPosition.dx < -100) {
                     _next();
-                  }
+                    print('MAUÁnulado');
+                  } else if (endPosition.dy < -100) {
+                    _next();
+                    print('MAUÁmado');
+                  };
                 },
                 child: userCard
               ),

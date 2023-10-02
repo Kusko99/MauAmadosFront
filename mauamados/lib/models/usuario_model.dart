@@ -57,7 +57,7 @@ class User extends Equatable {
       ], 
       bio: 'Oi, eu sou Goku!', 
       curso: 'Sistemas de Informação', 
-      interesses: ['Pokemon', 'Corgi', 'Terceira Idade', 'Telefone do Gabriel']
+      interesses: ['Pokemon', 'Corgi', 'Terceira Idade', 'Telefone do Gabriel', 'Aparecido']
     ),
     const User(
       id: 3, 
@@ -71,7 +71,7 @@ class User extends Equatable {
       bio: 'Gustavo?', 
       curso: 'Ciências da Computação', 
       interesses: [
-        'Japonês', 'Honda', 'Nintendo', 'Yamaha', 'Corno'
+        'Japonês', 'Honda', 'Nintendo', 'Yamaha', 'Corno', 'Banheiro do H', 'Bolinho de arroz'
       ]
     ),
     const User(
@@ -90,8 +90,24 @@ class User extends Equatable {
       bio: 'Escravo do Aero', 
       curso: 'Ciências da Computação', 
       interesses: [
-        'Avião', 'Iberê Thenorio', 'Teodoro Sampaio', 'Pizza de Calabresa', 'Escravidão'
+        'Avião', 'Iberê Thenorio', 'Teodoro Sampaio', 'Pizza de Calabresa', 'Escravidão', 'W500'
       ]
-    )
+    ),
+    const User(
+      id: 5, 
+      nome: 'Daniel', 
+      idade: 20, 
+      urlFotos: [
+        'https://media.licdn.com/dms/image/C4E03AQEbEbgzWj8Caw/profile-displayphoto-shrink_800_800/0/1653845220429?e=2147483647&v=beta&t=E7g_sVl2-0MWGywvgPYkpeuIwefTwpFch5rdHQRZiSg',
+        'https://i.imgur.com/JFmQrVq.jpg',
+        'https://avatars.githubusercontent.com/u/102300060?v=4',
+        'https://i.imgur.com/RIF6Bzc.jpg'
+      ], 
+      bio: 'Você não sabe programar', 
+      curso: 'Ciências da Computação', 
+      interesses: [
+        'Calistenia', 'Corrida', 'Macaco', 'MAUÁritacas', 'Dev', 'Dev de novo', 'Tapioca', 'Corote', 'Álcool antes das 12h'
+      ]
+    ),
   ];
 }
