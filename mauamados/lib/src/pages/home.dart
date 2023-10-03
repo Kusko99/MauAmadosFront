@@ -14,6 +14,9 @@ class _HomePageState extends State<HomePage> {
   List<User> users = User.users;
   User currentUser = User.users[0];
   int currentIndex = 0;
+  String dragDirection = '';
+  Offset startPosition = Offset.zero;
+  GlobalKey<DragTextIndicatorState> dragTextIndicatorKey = GlobalKey();
 
   void _next() {
     if (currentIndex < User.users.length - 1) {
@@ -53,12 +56,62 @@ class _HomePageState extends State<HomePage> {
             children: [
               const CustomAppBar(),
               Draggable(
-                feedback: userCard,
+                feedback: Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    userCard,
+                    Positioned(
+                      top: 20, // Ajuste a posição vertical do texto conforme necessário
+                      child: DragTextIndicator(
+                        key: dragTextIndicatorKey, // Passe a chave global para o indicador
+                      ),
+                    ),
+                  ],
+                ),
                 childWhenDragging: UserCard(
                   user: currentIndex < users.length - 1 ? users[currentIndex + 1] : users[0],
-                  onUserChanged: (newUser) {},),
+                  onUserChanged: (newUser) {},
+                ),
+                onDragStarted: () {
+                  startPosition = Offset.zero;
+                },
+                onDragUpdate: (details) {
+                  final dx = details.localPosition.dx;
+                  final dy = details.localPosition.dy;
+
+                  if (startPosition == Offset.zero) {
+                    // Se for a primeira atualização, registre a posição inicial
+                    startPosition = details.localPosition;
+                  } else {
+                    final deltaX = dx - startPosition.dx;
+                    final deltaY = dy - startPosition.dy;
+
+                    if (deltaX > 50) {
+                      setState(() {
+                        dragDirection = 'Direita'; // Atualize a direção do arrasto
+                      });
+                    } else if (deltaX < -50) {
+                      setState(() {
+                        dragDirection = 'Esquerda'; // Atualize a direção do arrasto
+                      });
+                    } else if (deltaY < -50) {
+                      setState(() {
+                        dragDirection = 'Cima'; // Atualize a direção do arrasto
+                      });
+                    } else {
+                      setState(() {
+                        dragDirection = ''; // Limpe a direção do arrasto se não for suficiente
+                      });
+                    }
+                    print(deltaX);
+                    print(dragDirection);
+                  }
+                },
                 onDragEnd: (drag) {
                   final endPosition = drag.offset;
+                  setState(() {
+                    dragDirection = '';
+                  });
                   if (endPosition.dx > 0 && endPosition.dx > 100) {
                     print('MAUÁprovado');
                     _next();
@@ -104,3 +157,39 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
+class DragTextIndicator extends StatefulWidget {
+  DragTextIndicator({Key? key}) : super(key: key);
+
+  @override
+  DragTextIndicatorState createState() => DragTextIndicatorState();
+}
+
+class DragTextIndicatorState extends State<DragTextIndicator> {
+  String text = ''; // Inicialize com uma string vazia
+
+  // Método para atualizar o texto
+  void updateText(String newText) {
+    setState(() {
+      text = newText;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.all(8),
+      decoration: BoxDecoration(
+        color: Colors.black.withOpacity(0.7),
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: Text(
+        'Arraste para a $text', // Use a string atualizada com base na direção do arrasto
+        style: TextStyle(
+          color: Colors.white,
+          fontSize: 16,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+    );
+  }
+}

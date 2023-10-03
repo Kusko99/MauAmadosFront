@@ -7,3 +7,4 @@ export 'user_card.dart';
 export 'choice_button.dart';
 export 'interests.dart';
 export 'interests_builder.dart';
+export 'draggable_user_card.dart';
