@@ -56,18 +56,7 @@ class _HomePageState extends State<HomePage> {
             children: [
               const CustomAppBar(),
               Draggable(
-                feedback: Stack(
-                  alignment: Alignment.center,
-                  children: [
-                    userCard,
-                    Positioned(
-                      top: 20, // Ajuste a posição vertical do texto conforme necessário
-                      child: DragTextIndicator(
-                        key: dragTextIndicatorKey, // Passe a chave global para o indicador
-                      ),
-                    ),
-                  ],
-                ),
+                feedback: userCard,
                 childWhenDragging: UserCard(
                   user: currentIndex < users.length - 1 ? users[currentIndex + 1] : users[0],
                   onUserChanged: (newUser) {},
@@ -80,7 +69,6 @@ class _HomePageState extends State<HomePage> {
                   final dy = details.localPosition.dy;
 
                   if (startPosition == Offset.zero) {
-                    // Se for a primeira atualização, registre a posição inicial
                     startPosition = details.localPosition;
                   } else {
                     final deltaX = dx - startPosition.dx;
@@ -88,19 +76,19 @@ class _HomePageState extends State<HomePage> {
 
                     if (deltaX > 50) {
                       setState(() {
-                        dragDirection = 'Direita'; // Atualize a direção do arrasto
+                        dragDirection = 'Direita';
                       });
                     } else if (deltaX < -50) {
                       setState(() {
-                        dragDirection = 'Esquerda'; // Atualize a direção do arrasto
+                        dragDirection = 'Esquerda';
                       });
                     } else if (deltaY < -50) {
                       setState(() {
-                        dragDirection = 'Cima'; // Atualize a direção do arrasto
+                        dragDirection = 'Cima';
                       });
                     } else {
                       setState(() {
-                        dragDirection = ''; // Limpe a direção do arrasto se não for suficiente
+                        dragDirection = '';
                       });
                     }
                     print(deltaX);
@@ -153,43 +141,6 @@ class _HomePageState extends State<HomePage> {
           ),
         )
       )
-    );
-  }
-}
-
-class DragTextIndicator extends StatefulWidget {
-  DragTextIndicator({Key? key}) : super(key: key);
-
-  @override
-  DragTextIndicatorState createState() => DragTextIndicatorState();
-}
-
-class DragTextIndicatorState extends State<DragTextIndicator> {
-  String text = ''; // Inicialize com uma string vazia
-
-  // Método para atualizar o texto
-  void updateText(String newText) {
-    setState(() {
-      text = newText;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(8),
-      decoration: BoxDecoration(
-        color: Colors.black.withOpacity(0.7),
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: Text(
-        'Arraste para a $text', // Use a string atualizada com base na direção do arrasto
-        style: TextStyle(
-          color: Colors.white,
-          fontSize: 16,
-          fontWeight: FontWeight.bold,
-        ),
-      ),
     );
   }
 }
