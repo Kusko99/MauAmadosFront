@@ -16,7 +16,6 @@ class _HomePageState extends State<HomePage> {
   int currentIndex = 0;
   String dragDirection = '';
   Offset startPosition = Offset.zero;
-  GlobalKey<DragTextIndicatorState> dragTextIndicatorKey = GlobalKey();
 
   void _next() {
     if (currentIndex < User.users.length - 1) {
