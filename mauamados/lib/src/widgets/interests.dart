@@ -13,7 +13,7 @@ class Interests extends StatelessWidget{
       padding: EdgeInsets.all(fontSize * 0.5),
       decoration: BoxDecoration(
         color: const Color.fromARGB(255, 0, 71, 133),
-        borderRadius: BorderRadius.circular(30)
+        borderRadius: BorderRadius.circular(20)
       ),
       child: Text(
         interesse,
