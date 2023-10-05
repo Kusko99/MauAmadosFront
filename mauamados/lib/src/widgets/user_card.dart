@@ -136,25 +136,28 @@ class _UserCardState extends State<UserCard> {
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          DefaultTextStyle(
-                            style: TextStyle(
-                              fontSize: fontSize1,
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
+                      IgnorePointer(
+                        ignoring: true,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            DefaultTextStyle(
+                              style: TextStyle(
+                                fontSize: fontSize1,
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                              ),
+                              child: Text('${widget.user.nome}, ${widget.user.idade}'),
                             ),
-                            child: Text('${widget.user.nome}, ${widget.user.idade}'),
-                          ),
-                          DefaultTextStyle(
-                            style: TextStyle(
-                              fontSize: fontSize2,
-                              color: Colors.white,
+                            DefaultTextStyle(
+                              style: TextStyle(
+                                fontSize: fontSize2,
+                                color: Colors.white,
+                              ),
+                              child: Text(widget.user.curso),
                             ),
-                            child: Text(widget.user.curso),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                       SizedBox(
                         width: iconSize * 3,
