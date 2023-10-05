@@ -21,7 +21,7 @@ class User extends Equatable {
   @override
   List<Object> get props => [id, nome, idade, urlFotos, bio, curso, interesses];
 
-    static List<User> users = [
+  static List<User> users = [
     const User(
       id: 1,
       nome: 'Carlos',
@@ -53,7 +53,9 @@ class User extends Equatable {
         'https://media.licdn.com/dms/image/C4E03AQG2X0slCKzxsw/profile-displayphoto-shrink_800_800/0/1645057872487?e=2147483647&v=beta&t=xYX_sDX31TxkgS_MzQGsXoerlsyDLRDe7AeJZtTu6kE',
         'https://i.imgur.com/TkhP9s9.jpg',
         'https://i.imgur.com/phvsVTy.jpg',
-        'https://i.imgur.com/PdADbF5.jpg'
+        'https://i.imgur.com/PdADbF5.jpg',
+        'https://i.imgur.com/uM2VQ5k.jpg',
+        'https://i.imgur.com/RI6Pydk.jpg'
       ], 
       bio: 'Oi, eu sou Goku!', 
       curso: 'Sistemas de Informação', 
@@ -68,7 +70,7 @@ class User extends Equatable {
         'https://i.imgur.com/c2wmbA0.jpg',
         'https://i.imgur.com/6kja6e4.jpg'
       ], 
-      bio: 'Gustavo?', 
+      bio: '1.63, 49kg', 
       curso: 'Ciências da Computação', 
       interesses: [
         'Japonês', 'Honda', 'Nintendo', 'Yamaha', 'Corno', 'Banheiro do H', 'Bolinho de arroz'
@@ -109,5 +111,52 @@ class User extends Equatable {
         'Calistenia', 'Corrida', 'Macaco', 'MAUÁritacas', 'Dev', 'Dev de novo', 'Tapioca', 'Corote', 'Álcool antes das 12h'
       ]
     ),
+    const User(
+      id: 6, 
+      nome: 'Diogo', 
+      idade: 20, 
+      urlFotos: [
+        'https://media.licdn.com/dms/image/C4D03AQEfSJEP1Kc7wQ/profile-displayphoto-shrink_800_800/0/1652812088679?e=2147483647&v=beta&t=BEnS7J1BtBVA13jXrhP1lIGwrHGnFjwdO6msdy1BgT0',
+        'https://i.imgur.com/OzifccI.jpg',
+        'https://i.imgur.com/IiBsU45.jpg',
+        'https://i.imgur.com/LX5iYSL.jpg',
+        'https://i.imgur.com/A6zC6Gl.jpg'
+      ],
+      bio: 'Diogo ou Diego?',
+      curso: 'Arquitetura',
+      interesses: ['Sabedoria', 'PixelArt', 'RapTap', 'Astronauta', 'Revolução Francesa', 'Peixes do U']
+    ),
+    const User(
+      id: 7, 
+      nome: 'Gabriel', 
+      idade: 20, 
+      urlFotos: [
+        'https://i.imgur.com/irRYYNq.jpg',
+        'https://i.imgur.com/PgIyNXT.jpg',
+        'https://i.imgur.com/8uWvU2u.jpg',
+        'https://i.imgur.com/zhNKTWA.jpg',
+        'https://i.imgur.com/2F2Y6TJ.jpg'
+      ],
+      bio: '+55 11 97115-0204',
+      curso: 'Culinária na Anhembi',
+      interesses: ['Hambúrguer', 'Pizza', 'Morrer no D&D', 'Irmã', 'As Primas', 'Faltar', 'CPTM']
+    ),
+    const User(
+      id: 8, 
+      nome: 'Raul', 
+      idade: 20, 
+      urlFotos: [
+        'https://i.imgur.com/WVFLumd.jpg',
+        'https://i.imgur.com/Ax0vxNb.jpg',
+        'https://i.imgur.com/b6VP1Ep.jpg',
+        'https://i.imgur.com/6FTMryz.jpg',
+        'https://i.imgur.com/m3PfJBK.jpg',
+        'https://i.imgur.com/Ah3JHSQ.jpg',
+        'https://i.imgur.com/11pL9Hu.jpg'
+      ],
+      bio: 'ZZZZZZzzzzzzzzzzzzzzzzzZZZZZZZZZZZzzzzzzzzzzzzzZZZZZZZ',
+      curso: 'Ciências do sono',
+      interesses: ['Mimir', 'Tirar cochilo', 'Nanar', 'Pregar o olho', 'Modo Soneca 24h', 'Cadeira Gamer', 'Ibere Thenorio', '494']
+    )
   ];
 }
