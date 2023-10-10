@@ -67,6 +67,7 @@ class User extends Equatable {
       nome: 'Gustavo', 
       idade: 20, 
       urlFotos: [
+        'https://media.licdn.com/dms/image/C4D03AQGvvLeyyIJdPw/profile-displayphoto-shrink_200_200/0/1650649757091?e=1701302400&v=beta&t=nV98UV9g16B1vvFGb_4C2uumfBYMl_U9nYWDn9YcHn4',
         'https://i.imgur.com/jINJHHn.jpg',
         'https://i.imgur.com/c2wmbA0.jpg',
         'https://i.imgur.com/6kja6e4.jpg'
