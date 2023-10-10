@@ -55,7 +55,8 @@ class User extends Equatable {
         'https://i.imgur.com/phvsVTy.jpg',
         'https://i.imgur.com/PdADbF5.jpg',
         'https://i.imgur.com/uM2VQ5k.jpg',
-        'https://i.imgur.com/RI6Pydk.jpg'
+        'https://i.imgur.com/RI6Pydk.jpg',
+        'https://i.imgur.com/Mdud8MY.jpg'
       ], 
       bio: 'Oi, eu sou Goku!', 
       curso: 'Sistemas de Informação', 
@@ -157,6 +158,19 @@ class User extends Equatable {
       bio: 'ZZZZZZzzzzzzzzzzzzzzzzzZZZZZZZZZZZzzzzzzzzzzzzzZZZZZZZ',
       curso: 'Ciências do sono',
       interesses: ['Mimir', 'Tirar cochilo', 'Nanar', 'Pregar o olho', 'Modo Soneca 24h', 'Cadeira Gamer', 'Ibere Thenorio', '494']
-    )
+    ),
+    const User(
+      id: 9, 
+      nome: 'Gatinha', 
+      idade: 19, 
+      urlFotos: [
+        'https://i.imgur.com/sJOjYHJ.jpg',
+        'https://i.imgur.com/ffXi09k.jpg',
+        'https://i.imgur.com/jqubRed.jpg',
+        'https://i.imgur.com/0PnQPtE.jpg'
+      ], 
+      bio: 'Ain, aniversário do Gatinha meu', 
+      curso: 'Design', 
+      interesses: ['Monster', 'Honda Civic 2004', 'Bolsonaro', 'Comunismo', 'Git Hub', 'Photoshop', 'Igor', 'Aniversário', 'Manikas'])
   ];
 }
