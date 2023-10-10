@@ -18,8 +18,8 @@ class ProfileImages extends StatelessWidget{
               child: Ink.image(
                 image: NetworkImage(image),
                 fit: BoxFit.cover,
-                width: MediaQuery.of(context).size.shortestSide * 0.2,
-                height: MediaQuery.of(context).size.shortestSide * 0.3,
+                width: MediaQuery.of(context).size.shortestSide * 0.28,
+                height: MediaQuery.of(context).size.shortestSide * 0.37,
                 child: InkWell(onTap: onClicked,),
               ),
             )
@@ -41,7 +41,7 @@ class ProfileImages extends StatelessWidget{
             ),
             child: Center(
               child: Icon(
-                Icons.edit,
+                Icons.remove_rounded,
                 color: Colors.white,
                 size: MediaQuery.of(context).size.shortestSide * 0.05,
               ),

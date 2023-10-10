@@ -9,8 +9,8 @@ class ImageButton extends StatelessWidget {
     return SingleChildScrollView(
       child: Container(
         margin: EdgeInsets.all(MediaQuery.of(context).size.shortestSide * 0.02),
-        width: MediaQuery.of(context).size.shortestSide * 0.2,
-        height: MediaQuery.of(context).size.shortestSide * 0.3,
+        width: MediaQuery.of(context).size.shortestSide * 0.28,
+        height: MediaQuery.of(context).size.shortestSide * 0.37,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
           color: Colors.grey
