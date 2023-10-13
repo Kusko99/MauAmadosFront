@@ -2,60 +2,65 @@ import 'package:flutter/material.dart';
 import 'package:mauamados/models/models.dart';
 import 'package:mauamados/src/widgets/widgets.dart';
 
-class ProfilePage extends StatefulWidget{
+class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
 
-  @override 
+  @override
   State<ProfilePage> createState() {
     return _ProfilePageState();
   }
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  User currentUser = User.users[0];
-  List<User> users = User.users;
+  List<String> userPhotos = User.users[0].urlFotos;
 
-  @override 
+  @override
   Widget build(BuildContext context) {
-    List<Widget> lista = ProfileImagesBuilder(images: User.users[0].urlFotos).imagesBuilder();
-    double deviceHeigh = MediaQuery.of(context).size.height;
-    
+    double deviceHeight = MediaQuery.of(context).size.height;
+
     return MaterialApp(
       home: Scaffold(
         body: SingleChildScrollView(
           child: Center(
             child: Column(
-            mainAxisAlignment: MainAxisAlignment.center, 
               children: [
                 AppBar(
-                  backgroundColor: Colors.transparent, 
-                  elevation: 0, 
-                  toolbarHeight: deviceHeigh * 0.08, 
+                  backgroundColor: Colors.transparent,
+                  elevation: 0,
+                  toolbarHeight: deviceHeight * 0.08,
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center, 
+                Wrap(
+                  alignment: WrapAlignment.center,
+                  spacing: 5,
+                  runSpacing: 5,
                   children: [
-                    lista[0],
-                    lista[1],
-                    lista[2],
+                    for (final photoUrl in userPhotos)
+                      ProfileImage(
+                        imageUrl: photoUrl,
+                        onRemove: () {
+                          final copy = List<String>.from(userPhotos);
+                          copy.remove(photoUrl);
+                          setState(() {
+                            userPhotos = copy;
+                          });
+                        },
+                      ),
+                    if (userPhotos.length < 9)
+                      ...List.generate(
+                        9 - userPhotos.length,
+                        (index) => ImageButton(
+                          onPressed: () => showModalBottomSheet(
+                            isScrollControlled: true,
+                            backgroundColor: Colors.transparent,
+                            context: context,
+                            builder: (context) => BuildImagePicker(
+                              onPressed: () {},
+                            ),
+                          ),
+                        ),
+                      ),
                   ],
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center, 
-                  children: [
-                    lista[3],
-                    lista[4],
-                    lista[5],
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center, 
-                  children: [
-                    lista[6],
-                    lista[7],
-                    lista[8],
-                  ],
-                )
               ],
             ),
           ),

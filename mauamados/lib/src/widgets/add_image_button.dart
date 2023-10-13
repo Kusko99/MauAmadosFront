@@ -1,19 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:mauamados/src/widgets/widgets.dart';
 
 class ImageButton extends StatelessWidget {
-  const ImageButton({super.key});
+  final VoidCallback onPressed;
+  const ImageButton({required this.onPressed, super.key});
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
+    return ConstrainedBox(
+      constraints: const BoxConstraints(
+        minWidth: 120,
+        minHeight: 158.5,
+      ),
       child: Container(
         margin: EdgeInsets.all(MediaQuery.of(context).size.shortestSide * 0.02),
         width: MediaQuery.of(context).size.shortestSide * 0.28,
         height: MediaQuery.of(context).size.shortestSide * 0.37,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
-          color: Colors.grey
+          color: Colors.grey,
         ),
         child: SizedBox.expand(
           child: IconButton(
@@ -22,12 +26,7 @@ class ImageButton extends StatelessWidget {
               size: 10,
               color: Colors.grey[350],
             ),
-            onPressed: () => showModalBottomSheet(
-              isScrollControlled: true,
-              backgroundColor: Colors.transparent,
-              context: context,
-              builder: (context) => BuildImagePicker(onPressed: (){},),
-            ),
+            onPressed: onPressed,
           ),
         ),
       ),
