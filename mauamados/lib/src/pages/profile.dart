@@ -43,23 +43,15 @@ class _ProfilePageState extends State<ProfilePage> {
                           setState(() {
                             userPhotos = copy;
                             User.users[0].urlFotos = userPhotos;
-                          });
-                        },
-                      ),
-                    if (userPhotos.length < 9)
-                      ...List.generate(
-                        9 - userPhotos.length,
-                        (index) => ImageButton(
-                          onPressed: () => showModalBottomSheet(
-                            isScrollControlled: true,
-                            backgroundColor: Colors.transparent,
-                            context: context,
-                            builder: (context) => BuildImagePicker(
-                              onPressed: () {},
-                            ),
-                          ),
-                        ),
-                      ),
+                          }
+                        );
+                      },
+                    ),
+                  if (userPhotos.length < 9)
+                    ...List.generate(
+                      9 - userPhotos.length,
+                      (index) => const ImageButton(),
+                    ),
                   ],
                 ),
               ],

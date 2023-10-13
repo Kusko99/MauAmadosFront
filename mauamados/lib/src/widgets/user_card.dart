@@ -69,7 +69,10 @@ class _UserCardState extends State<UserCard> {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20),
                 image: DecorationImage(
-                  image: NetworkImage(widget.user.urlFotos[widget.currentIndex]),
+                  image: NetworkImage(
+                    widget.user.urlFotos.isEmpty ? 'https://i.imgur.com/YTkSwCJ.png'
+                      : widget.user.urlFotos[widget.currentIndex],
+                  ),
                   fit: BoxFit.cover,
                 ),
                 boxShadow: [

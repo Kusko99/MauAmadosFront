@@ -9,11 +9,13 @@ class IndicatorBuilder {
 
   List<Widget> buildIndicators() {
     List<Widget> indicators = [];
-    for (int i = 0; i < urlFotos.length; i++) {
-      if (currentIndex == i) {
-        indicators.add(const Indicator(isActive: true));
-      } else {
-        indicators.add(const Indicator(isActive: false));
+    if (urlFotos.length > 1){
+      for (int i = 0; i < urlFotos.length; i++) {
+        if (currentIndex == i) {
+          indicators.add(const Indicator(isActive: true));
+        } else {
+          indicators.add(const Indicator(isActive: false));
+        }
       }
     }
     return indicators;
