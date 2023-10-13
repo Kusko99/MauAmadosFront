@@ -11,6 +11,11 @@ class ProfileImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double side = MediaQuery.of(context).size.longestSide;
+    double fontSize = side * 0.025;
+    if (side * 0.025 < 14) {
+      fontSize = 14;
+    }
     return ConstrainedBox(
       constraints: const BoxConstraints(
         minWidth: 120,
@@ -27,7 +32,41 @@ class ProfileImage extends StatelessWidget {
               fit: BoxFit.cover,
               width: MediaQuery.of(context).size.shortestSide * 0.28,
               height: MediaQuery.of(context).size.shortestSide * 0.37,
-              child: InkWell(onTap: onRemove),
+              child: InkWell(
+                onTap: () {
+                  showModalBottomSheet(
+                    context: context,
+                    builder: (context) => BottomSheet(
+                      onClosing: () {},
+                      builder: (BuildContext context) {
+                        return Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            ListTile(
+                              leading: Icon(
+                                Icons.delete,
+                                color: const Color.fromARGB(255, 0, 71, 133),
+                                size: fontSize,
+                              ),
+                              title: Text(
+                                'Remover Foto', 
+                                style: TextStyle(
+                                  fontSize: fontSize,
+                                  color: const Color.fromARGB(255, 0, 71, 133)
+                                ),
+                              ),
+                              onTap: () {
+                                Navigator.of(context).pop();
+                                onRemove();
+                              },
+                            ),
+                          ],
+                        );
+                      },
+                    ),
+                  );
+                },
+              ),
             ),
           ),
         ),

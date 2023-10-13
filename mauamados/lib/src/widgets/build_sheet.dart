@@ -12,8 +12,8 @@ class BuildSheet extends StatelessWidget {
     double side = MediaQuery.of(context).size.longestSide;
     double fontSize = 0;
     if (side * 0.025 > 12) {
-      if (side * 0.025 > 25) {
-        fontSize = 25;
+      if (side * 0.025 > 35) {
+        fontSize = 35;
       } else {
         fontSize = side * 0.025;
       }
