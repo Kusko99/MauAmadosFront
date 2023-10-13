@@ -27,7 +27,7 @@ class ImageButton extends StatelessWidget {
           child: IconButton(
             icon: Icon(
               Icons.add,
-              size: 10,
+              size: MediaQuery.of(context).size.shortestSide * 0.08,
               color: Colors.grey[350],
             ),
             onPressed: () {

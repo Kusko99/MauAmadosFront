@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mauamados/models/models.dart';
+import 'package:mauamados/src/pages/profile_main.dart';
 import 'package:mauamados/src/widgets/widgets.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -16,63 +17,31 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
-    double deviceHeight = MediaQuery.of(context).size.height;
+  double deviceHeight = MediaQuery.of(context).size.height;
 
     return MaterialApp(
       home: Scaffold(
-        body: SingleChildScrollView(
-          child: Center(
-            child: Column(
-              children: [
-                AppBar(
-                  backgroundColor: Colors.transparent,
-                  elevation: 0,
-                  toolbarHeight: deviceHeight * 0.08,
-                  actions: [
-                    Padding(
-                      padding: EdgeInsets.only(
-                        right: MediaQuery.of(context).size.width * 0.06
-                      ),
-                      child: IconButton(
-                        onPressed: (){},
-                        icon: Icon(
-                          Icons.settings,
-                          color: const Color.fromARGB(255, 0, 71, 133),
-                          size: deviceHeight * 0.06,
-                        ),
-                      ),
-                    )
-                  ],
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          toolbarHeight: deviceHeight * 0.08,
+          actions: [
+            Padding(
+              padding: EdgeInsets.only(
+                right: MediaQuery.of(context).size.width * 0.06
+              ),
+              child: IconButton(
+                onPressed: (){},
+                icon: Icon(
+                  Icons.settings,
+                  color: const Color.fromARGB(255, 0, 71, 133),
+                  size: deviceHeight * 0.06,
                 ),
-                Wrap(
-                  alignment: WrapAlignment.center,
-                  spacing: 5,
-                  runSpacing: 5,
-                  children: [
-                    for (final photoUrl in userPhotos)
-                      ProfileImage(
-                        imageUrl: photoUrl,
-                        onRemove: () {
-                          final copy = List<String>.from(userPhotos);
-                          copy.remove(photoUrl);
-                          setState(() {
-                            userPhotos = copy;
-                            User.users[0].urlFotos = userPhotos;
-                          }
-                        );
-                      },
-                    ),
-                  if (userPhotos.length < 9)
-                    ...List.generate(
-                      9 - userPhotos.length,
-                      (index) => const ImageButton(),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
+              ),
+            )
+          ],
         ),
+        body: ProfileMainPage(),
       ),
     );
   }
