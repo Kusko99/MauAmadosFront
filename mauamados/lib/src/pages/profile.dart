@@ -42,6 +42,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           copy.remove(photoUrl);
                           setState(() {
                             userPhotos = copy;
+                            User.users[0].urlFotos = userPhotos;
                           });
                         },
                       ),
