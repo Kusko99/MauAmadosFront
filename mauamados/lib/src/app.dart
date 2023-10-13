@@ -28,10 +28,6 @@ class AppState extends State<App> {
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      color: Colors.white,
-      theme: ThemeData(
-        primaryColor: Colors.white
-      ),
       home: Scaffold(    
         body: IndexedStack(
           index: currentIndex,

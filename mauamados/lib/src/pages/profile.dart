@@ -28,6 +28,21 @@ class _ProfilePageState extends State<ProfilePage> {
                   backgroundColor: Colors.transparent,
                   elevation: 0,
                   toolbarHeight: deviceHeight * 0.08,
+                  actions: [
+                    Padding(
+                      padding: EdgeInsets.only(
+                        right: MediaQuery.of(context).size.width * 0.06
+                      ),
+                      child: IconButton(
+                        onPressed: (){},
+                        icon: Icon(
+                          Icons.settings,
+                          color: const Color.fromARGB(255, 0, 71, 133),
+                          size: deviceHeight * 0.06,
+                        ),
+                      ),
+                    )
+                  ],
                 ),
                 Wrap(
                   alignment: WrapAlignment.center,
