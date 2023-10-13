@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class CustomAppBar extends StatelessWidget {
   const CustomAppBar({
@@ -19,10 +18,7 @@ class CustomAppBar extends StatelessWidget {
       centerTitle: true, 
       toolbarHeight: deviceHeigh * 0.08, 
       leadingWidth: deviceHeigh * 0.08,
-      leading: SvgPicture.asset(
-        'assets/logo.svg', 
-        colorFilter: const ColorFilter.mode(Color.fromARGB(255, 0, 71, 133), BlendMode.srcIn)
-      ),    
+      leading: Image.network('https://i.imgur.com/hbl9YoF.png'),
       title: Text(
         'MAUÁmados', 
         style: TextStyle(
