@@ -1,14 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:mauamados/models/models.dart';
 
 class ImageButton extends StatelessWidget {
-  const ImageButton({super.key});
+  final User user;
+  final Function(String) onAdd;
+
+  const ImageButton({required this.user, required this.onAdd, super.key});
 
   @override
   Widget build(BuildContext context) {
     double side = MediaQuery.of(context).size.longestSide;
     double fontSize = side * 0.025;
-    if (side * 0.025 < 14) {
-      fontSize = 14;
+    if (side * 0.025 < 12) {
+      fontSize = 12;
+    }
+    if (side * 0.025 > 25) {
+      fontSize = 25;
     }
     return ConstrainedBox(
       constraints: const BoxConstraints(
@@ -31,50 +38,70 @@ class ImageButton extends StatelessWidget {
               color: Colors.grey[350],
             ),
             onPressed: () {
-              showModalBottomSheet(
+              showDialog(
                 context: context,
-                builder: (context) => BottomSheet(
-                  onClosing: () {},
-                  builder: (BuildContext context) {
-                    return SingleChildScrollView(
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          ListTile(
-                            leading: Icon(
-                              Icons.photo_camera,
-                              color: const Color.fromARGB(255, 0, 71, 133),
-                              size: fontSize,
-                            ),
-                            title: Text(
-                              'Câmera', 
-                              style: TextStyle(
-                                fontSize: fontSize,
-                                color: const Color.fromARGB(255, 0, 71, 133)
-                              ),
-                            ),
-                            onTap: () {},
+                builder: (context) {
+                  TextEditingController linkController = TextEditingController();
+                  return Center(
+                    child: SingleChildScrollView(
+                      child: AlertDialog(
+                        title: Text(
+                          "Adicionar Imagem",
+                          style: TextStyle(
+                            fontSize: fontSize,
                           ),
-                          ListTile(
-                            leading: Icon(
-                              Icons.image,
-                              color: const Color.fromARGB(255, 0, 71, 133),
-                              size: fontSize,
-                            ),
-                            title: Text(
-                              'Galeria', 
-                              style: TextStyle(
-                                fontSize: fontSize,
-                                color: const Color.fromARGB(255, 0, 71, 133)
+                        ),
+                        content: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            TextField(
+                              autofocus: true,
+                              controller: linkController,
+                              decoration: InputDecoration(
+                                labelText: "Link da Imagem",
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(12),
+                                  borderSide:
+                                      const BorderSide(color: Color.fromARGB(255, 158, 189, 255)),
+                                ),
                               ),
                             ),
-                            onTap: () {},
+                          ],
+                        ),
+                        actions: <Widget>[
+                          TextButton(
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                            child: Text(
+                              "Fechar",
+                              style: TextStyle(
+                                color: const Color.fromARGB(255, 0, 71, 133),
+                                fontSize: fontSize * 0.8,
+                              ),
+                            ),
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                              onAdd(linkController.text);
+                            },
+                            child: Text(
+                              "Adicionar",
+                              style: TextStyle(
+                                color: const Color.fromARGB(255, 0, 71, 133),
+                                fontSize: fontSize * 0.8,
+                              ),
+                            ),
                           ),
                         ],
                       ),
-                    );
-                  },
-                ),
+                    ),
+                  );
+                },
               );
             },
           ),

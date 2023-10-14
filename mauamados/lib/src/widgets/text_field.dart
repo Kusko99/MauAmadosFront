@@ -54,6 +54,10 @@ class _TextFieldWidgetState extends State<TextFieldWidget>{
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12)
               ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(12),
+                borderSide: const BorderSide(color: Color.fromARGB(255, 158, 189, 255)), // Cor da borda quando em foco
+              ),
             ),
             maxLines: null,
             onChanged: widget.onChanged,
