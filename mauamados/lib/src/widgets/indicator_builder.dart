@@ -3,7 +3,7 @@ import 'package:mauamados/src/widgets/widgets.dart';
 
 class IndicatorBuilder {
   final int currentIndex;
-  final List<String> urlFotos;
+  final List urlFotos;
 
   IndicatorBuilder({required this.currentIndex, required this.urlFotos});
 

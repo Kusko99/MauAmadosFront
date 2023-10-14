@@ -19,7 +19,7 @@ class _ProfileEditState extends State<ProfileEdit>{
   @override
   Widget build(BuildContext context) {
     double deviceHeight = MediaQuery.of(context).size.height;
-    List<String> userPhotos = widget.user.urlFotos;
+    List userPhotos = widget.user.urlFotos;
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,

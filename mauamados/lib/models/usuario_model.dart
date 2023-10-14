@@ -4,7 +4,7 @@ class User extends Equatable {
   int id;
   String nome;
   int idade;
-  List<String> urlFotos;
+  List urlFotos;
   String bio;
   String curso;
   List interesses;
