@@ -18,15 +18,13 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     User user = User.users[0];
-    double deviceHeight = MediaQuery.of(context).size.height;
     double fontSize1 = widget.fontSize1;
     double fontSize2 = widget.fontSize2;
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        // body: ProfileMainPage(user: user, fontSize1: fontSize1, fontSize2: fontSize2,),
-        body: ProfileEdit(fontSize1: fontSize1,fontSize2: fontSize2, user: user,),
+        body: ProfileMainPage(user: user, fontSize1: fontSize1, fontSize2: fontSize2,),
       ),
     );
   }

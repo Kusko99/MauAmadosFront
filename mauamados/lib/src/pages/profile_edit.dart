@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mauamados/models/models.dart';
+import 'package:mauamados/src/pages/profile.dart';
 import 'package:mauamados/src/widgets/widgets.dart';
 
 class ProfileEdit extends StatefulWidget{
@@ -17,12 +18,8 @@ class ProfileEdit extends StatefulWidget{
 class _ProfileEditState extends State<ProfileEdit>{
   @override
   Widget build(BuildContext context) {
-    double deviceWidth = MediaQuery.of(context).size.width;
     double deviceHeight = MediaQuery.of(context).size.height;
-    User user = widget.user;
-    List<String> userPhotos = user.urlFotos;
-    double fontSize1 = widget.fontSize1;
-    double fontSize2 = widget.fontSize2;
+    List<String> userPhotos = widget.user.urlFotos;
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -33,7 +30,14 @@ class _ProfileEditState extends State<ProfileEdit>{
           toolbarHeight: deviceHeight * 0.08,
           leadingWidth: deviceHeight * 0.08,
           leading:IconButton(
-            onPressed: (){},
+            onPressed: (){
+              Navigator.of(context).push(
+                MaterialPageRoute(builder: (context) => ProfilePage(
+                  fontSize1: widget.fontSize1, 
+                  fontSize2: widget.fontSize2
+                ))
+              );
+            },
             icon: Icon(
               Icons.arrow_back,
               color: const Color.fromARGB(255, 0, 71, 133),
@@ -58,7 +62,7 @@ class _ProfileEditState extends State<ProfileEdit>{
                           copy.remove(photoUrl);
                           setState(() {
                             userPhotos = copy;
-                            user.urlFotos = userPhotos;
+                            widget.user.urlFotos = userPhotos;
                           }
                         );
                       },
@@ -70,27 +74,49 @@ class _ProfileEditState extends State<ProfileEdit>{
                     ),
                   ],
                 ),
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal :deviceWidth * 0.1),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            ProfileData(titulo: 'Nome', data: user.nome, fontSize1: fontSize1, fontSize2: fontSize2),
-                            ProfileData(titulo: 'Idade', data: user.idade.toString(), fontSize1: fontSize1, fontSize2: fontSize2),
-                            ProfileData(titulo: 'Curso', data: user.curso, fontSize1: fontSize1, fontSize2: fontSize2),
-                            ProfileData(titulo: 'Interesses', data: user.interesses.join(', '), fontSize1: fontSize1, fontSize2: fontSize2),
-                            ProfileData(titulo: 'Bio', data: user.bio, fontSize1: fontSize1, fontSize2: fontSize2),
-                          ],
-                        )
-                      ),
-                    ],
-                  )
-                )
+                const SizedBox(
+                  height: 24
+                ),
+                TextFieldWidget(
+                  label: 'Nome',
+                  text: widget.user.nome,
+                  fontSize: widget.fontSize2,
+                  onChanged: (nome) {
+                    setState(() {
+                       widget.user.nome = nome;
+                    });
+                  }
+                ),
+                TextFieldWidget(
+                  label: 'Idade',
+                  text: widget.user.idade.toString(),
+                  fontSize: widget.fontSize2,
+                  onChanged: (idade) {
+                    setState(() {
+                       widget.user.idade = int.parse(idade);
+                    });
+                  }
+                ),
+                TextFieldWidget(
+                  label: 'Curso',
+                  text: widget.user.curso,
+                  fontSize: widget.fontSize2,
+                  onChanged: (curso) {
+                    setState(() {
+                       widget.user.curso = curso;
+                    });
+                  }
+                ),
+                TextFieldWidget(
+                  label: 'Bio',
+                  text: widget.user.bio,
+                  fontSize: widget.fontSize2,
+                  onChanged: (bio) {
+                    setState(() {
+                       widget.user.bio = bio;
+                    });
+                  }
+                ),
               ],
             ),
           ),

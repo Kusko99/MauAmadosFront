@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mauamados/models/models.dart';
+import 'package:mauamados/src/pages/pages.dart';
 
 class ProfileMainPage extends StatefulWidget {
   final User user;
@@ -18,11 +19,8 @@ class _ProfileMainPageState extends State<ProfileMainPage> {
   @override
   Widget build(BuildContext context) {
     double deviceSide = MediaQuery.of(context).size.shortestSide;
-    User user = widget.user;
     double deviceHeight = MediaQuery.of(context).size.height;
     double deviceWidth = MediaQuery.of(context).size.width;
-    double fontSize1 = widget.fontSize1;
-    double fontSize2 = widget.fontSize2;
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -56,7 +54,7 @@ class _ProfileMainPageState extends State<ProfileMainPage> {
                   height: deviceSide * 0.7,
                   child: ClipOval(
                     child: Image(
-                      image: NetworkImage(user.urlFotos[0]),
+                      image: NetworkImage(widget.user.urlFotos.isEmpty ? 'https://i.imgur.com/YTkSwCJ.png' : widget.user.urlFotos[0]),
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -68,16 +66,16 @@ class _ProfileMainPageState extends State<ProfileMainPage> {
                   child: Column(
                     children: [
                       Text(
-                        ('${user.nome}, ${user.idade}'),
+                        ('${widget.user.nome}, ${widget.user.idade}'),
                         style: TextStyle(
-                          fontSize: fontSize1,
+                          fontSize: widget.fontSize1,
                           fontWeight: FontWeight.bold
                         ),
                       ),
                       Text(
-                        user.curso,
+                        widget.user.curso,
                         style: TextStyle(
-                          fontSize: fontSize2
+                          fontSize: widget.fontSize2
                         ),
                       )
                     ],
@@ -93,7 +91,15 @@ class _ProfileMainPageState extends State<ProfileMainPage> {
                         shape: const StadiumBorder(),
                         backgroundColor: const Color.fromARGB(255, 0, 71, 133)
                       ),
-                      onPressed: (){},
+                      onPressed: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(builder: (context) => ProfileEdit(
+                            user: widget.user, 
+                            fontSize1: widget.fontSize1, 
+                            fontSize2: widget.fontSize2
+                          ))
+                        );
+                      },
                       child: Container(
                         padding: EdgeInsets.all(
                           deviceHeight * 0.02
@@ -101,7 +107,7 @@ class _ProfileMainPageState extends State<ProfileMainPage> {
                         child: Text(
                           'Editar Perfil',
                           style: TextStyle(
-                            fontSize: fontSize2
+                            fontSize: widget.fontSize2
                           ),
                         ),
                       )
