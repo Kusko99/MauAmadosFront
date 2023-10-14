@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:mauamados/models/models.dart';
-import 'package:mauamados/src/pages/profile_main.dart';
-import 'package:mauamados/src/widgets/widgets.dart';
+import 'package:mauamados/src/pages/pages.dart';
 
 class ProfilePage extends StatefulWidget {
-  const ProfilePage({super.key});
+  final double fontSize1;
+  final double fontSize2;
+  const ProfilePage({required this.fontSize1, required this.fontSize2, super.key});
 
   @override
   State<ProfilePage> createState() {
@@ -12,36 +13,18 @@ class ProfilePage extends StatefulWidget {
   }
 }
 
-class _ProfilePageState extends State<ProfilePage> {
-  List<String> userPhotos = User.users[0].urlFotos;
+class _ProfilePageState extends State<ProfilePage> {  
 
   @override
   Widget build(BuildContext context) {
-  double deviceHeight = MediaQuery.of(context).size.height;
+    User user = User.users[0];
+    double fontSize1 = widget.fontSize1;
+    double fontSize2 = widget.fontSize2;
 
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-          toolbarHeight: deviceHeight * 0.08,
-          actions: [
-            Padding(
-              padding: EdgeInsets.only(
-                right: MediaQuery.of(context).size.width * 0.06
-              ),
-              child: IconButton(
-                onPressed: (){},
-                icon: Icon(
-                  Icons.settings,
-                  color: const Color.fromARGB(255, 0, 71, 133),
-                  size: deviceHeight * 0.06,
-                ),
-              ),
-            )
-          ],
-        ),
-        body: ProfileMainPage(),
+        body: ProfileMainPage(user: user, fontSize1: fontSize1, fontSize2: fontSize2,),
       ),
     );
   }

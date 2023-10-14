@@ -17,15 +17,19 @@ class UserCard extends StatefulWidget{
 class _UserCardState extends State<UserCard> {
   void _next() {
     setState(() {
-      if (widget.currentIndex < widget.user.urlFotos.length -1) {
+      if (widget.currentIndex > widget.user.urlFotos.length -1){
+        widget.currentIndex = 0;
+      } else if (widget.currentIndex < widget.user.urlFotos.length -1) {
         widget.currentIndex++;
-      }
+      } 
     });
   }
 
   void _preve() {
     setState(() {
-      if (widget.currentIndex > 0) {
+      if (widget.currentIndex > widget.user.urlFotos.length -1){
+        widget.currentIndex = 0;
+      } else if (widget.currentIndex > 0) {
         widget.currentIndex--;
       }
     });

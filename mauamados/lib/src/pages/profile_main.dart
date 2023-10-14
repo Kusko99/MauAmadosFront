@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:mauamados/models/models.dart';
-import 'package:mauamados/src/widgets/widgets.dart';
+import 'package:mauamados/src/pages/pages.dart';
 
 class ProfileMainPage extends StatefulWidget {
-  const ProfileMainPage({super.key});
+  final User user;
+  final double fontSize1;
+  final double fontSize2;
+  const ProfileMainPage({required this.user, required this.fontSize1, required this.fontSize2 ,super.key});
 
   @override
   State<ProfileMainPage> createState() {
@@ -12,68 +15,109 @@ class ProfileMainPage extends StatefulWidget {
 }
 
 class _ProfileMainPageState extends State<ProfileMainPage> {
-  List<String> userPhotos = User.users[0].urlFotos;
 
   @override
   Widget build(BuildContext context) {
+    double deviceSide = MediaQuery.of(context).size.shortestSide;
+    double deviceHeight = MediaQuery.of(context).size.height;
     double deviceWidth = MediaQuery.of(context).size.width;
 
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          toolbarHeight: deviceHeight * 0.08,
+          actions: [
+            Padding(
+              padding: EdgeInsets.only(
+                right: MediaQuery.of(context).size.width * 0.04
+              ),
+              child: IconButton(
+                onPressed: (){},
+                icon: Icon(
+                  Icons.settings,
+                  color: const Color.fromARGB(255, 0, 71, 133),
+                  size: deviceHeight * 0.06,
+                ),
+              ),
+            )
+          ],
+        ),
         body: SingleChildScrollView(
           child: Center(
             child: Column(
               children: [
-                Wrap(
-                  alignment: WrapAlignment.center,
-                  spacing: 5,
-                  runSpacing: 5,
-                  children: [
-                    for (final photoUrl in userPhotos)
-                      ProfileImage(
-                        imageUrl: photoUrl,
-                        onRemove: () {
-                          final copy = List<String>.from(userPhotos);
-                          copy.remove(photoUrl);
-                          setState(() {
-                            userPhotos = copy;
-                            User.users[0].urlFotos = userPhotos;
-                          }
+                SizedBox(
+                  width: deviceSide * 0.7,
+                  height: deviceSide * 0.7,
+                  child: ClipOval(
+                    child: Image(
+                      image: NetworkImage(widget.user.urlFotos.isEmpty ? 'https://i.imgur.com/YTkSwCJ.png' : widget.user.urlFotos[0]),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.symmetric(
+                    vertical: deviceWidth * 0.1
+                  ),
+                  child: Column(
+                    children: [
+                      Text(
+                        ('${widget.user.nome}, ${widget.user.idade}'),
+                        style: TextStyle(
+                          fontSize: widget.fontSize1,
+                          fontWeight: FontWeight.bold
+                        ),
+                      ),
+                      Text(
+                        widget.user.curso,
+                        style: TextStyle(
+                          fontSize: widget.fontSize2
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+                Center(
+                  child: Container(
+                    margin: EdgeInsets.only(
+                      bottom: deviceHeight * 0.1
+                    ),
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        shape: const StadiumBorder(),
+                        backgroundColor: const Color.fromARGB(255, 0, 71, 133)
+                      ),
+                      onPressed: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(builder: (context) => ProfileEdit(
+                            user: widget.user, 
+                            fontSize1: widget.fontSize1, 
+                            fontSize2: widget.fontSize2
+                          ))
                         );
                       },
+                      child: Container(
+                        padding: EdgeInsets.all(
+                          deviceHeight * 0.02
+                        ),
+                        child: Text(
+                          'Editar Perfil',
+                          style: TextStyle(
+                            fontSize: widget.fontSize2
+                          ),
+                        ),
+                      )
                     ),
-                  if (userPhotos.length < 9)
-                    ...List.generate(
-                      9 - userPhotos.length,
-                      (index) => const ImageButton(),
-                    ),
-                  ],
-                ),
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal :deviceWidth * 0.1),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            ProfileData(titulo: 'Nome', data: User.users[0].nome),
-                            ProfileData(titulo: 'Idade', data: User.users[0].idade.toString()),
-                            ProfileData(titulo: 'Curso', data: User.users[0].curso),
-                            ProfileData(titulo: 'Interesses', data: User.users[0].interesses.join(', ')),
-                            ProfileData(titulo: 'Bio', data: User.users[0].bio),
-                          ],
-                        )
-                      ),
-                    ],
                   )
                 )
-              ],
+              ]
             ),
           ),
-        ),
+        )
       ),
     );
   }
