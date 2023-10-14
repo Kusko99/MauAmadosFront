@@ -90,28 +90,28 @@ void removeImage(String link) {
             child: Column(
               children: [
                 Wrap(
-  alignment: WrapAlignment.center,
-  spacing: 5,
-  runSpacing: 5,
-  children: [
-    ...userPhotos
-        .map((url) => ProfileImage(
-              imageUrl: url,
-              onRemove: () {
-                removeImage(url);
-              },
-            ))
-        .toList(),
-    if (userPhotos.length < 9)
-      ...List.generate(
-        9 - userPhotos.length,
-        (index) => ImageButton(
-          user: widget.user,
-          onAdd: addImage,
-        ),
-      ),
-  ],
-),
+                  alignment: WrapAlignment.center,
+                  spacing: 5,
+                  runSpacing: 5,
+                  children: [
+                    ...userPhotos
+                        .map((url) => ProfileImage(
+                              imageUrl: url,
+                              onRemove: () {
+                                removeImage(url);
+                              },
+                            ))
+                        .toList(),
+                    if (userPhotos.length < 9)
+                      ...List.generate(
+                        9 - userPhotos.length,
+                        (index) => ImageButton(
+                          user: widget.user,
+                          onAdd: addImage,
+                        ),
+                      ),
+                  ],
+                ),
                 const SizedBox(
                   height: 24,
                 ),

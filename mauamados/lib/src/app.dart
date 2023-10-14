@@ -23,7 +23,7 @@ class AppState extends State<App> {
     if (deviceHeight < deviceWidth) {
       deviceWidth = deviceHeight;
     }
-    if ((deviceHeight > deviceWidth) && (deviceHeight * 0.047 > deviceWidth * 0.072)){
+    if (deviceHeight > deviceWidth*1.6){
       fontSize1 = deviceWidth * 0.072;
       fontSize2 = deviceWidth * 0.054;
     }
