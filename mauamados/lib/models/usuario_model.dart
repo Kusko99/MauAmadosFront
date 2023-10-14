@@ -7,7 +7,7 @@ class User extends Equatable {
   List<String> urlFotos;
   String bio;
   String curso;
-  List interesses;
+  List<String> interesses;
 
   User({
     required this.id,

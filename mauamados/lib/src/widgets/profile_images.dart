@@ -16,6 +16,9 @@ class ProfileImage extends StatelessWidget {
     if (side * 0.025 < 14) {
       fontSize = 14;
     }
+    if (side * 0.025 > 25) {
+      fontSize = 25;
+    }
     return ConstrainedBox(
       constraints: const BoxConstraints(
         minWidth: 120,

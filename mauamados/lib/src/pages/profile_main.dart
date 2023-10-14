@@ -18,9 +18,11 @@ class _ProfileMainPageState extends State<ProfileMainPage> {
 
   @override
   Widget build(BuildContext context) {
-    double deviceSide = MediaQuery.of(context).size.shortestSide;
     double deviceHeight = MediaQuery.of(context).size.height;
     double deviceWidth = MediaQuery.of(context).size.width;
+    if (deviceWidth > deviceHeight) {
+      deviceWidth = deviceHeight;
+    }
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -50,8 +52,8 @@ class _ProfileMainPageState extends State<ProfileMainPage> {
             child: Column(
               children: [
                 SizedBox(
-                  width: deviceSide * 0.7,
-                  height: deviceSide * 0.7,
+                  width: deviceWidth * 1.6 <= deviceHeight ? deviceWidth * 0.7 : deviceHeight * 0.45,
+                  height: deviceWidth * 1.6 <= deviceHeight ? deviceWidth * 0.7 : deviceHeight * 0.45,
                   child: ClipOval(
                     child: Image(
                       image: NetworkImage(widget.user.urlFotos.isEmpty ? 'https://i.imgur.com/YTkSwCJ.png' : widget.user.urlFotos[0]),
@@ -61,7 +63,7 @@ class _ProfileMainPageState extends State<ProfileMainPage> {
                 ),
                 Container(
                   margin: EdgeInsets.symmetric(
-                    vertical: deviceWidth * 0.1
+                    vertical: deviceHeight * 0.1
                   ),
                   child: Column(
                     children: [
@@ -84,7 +86,7 @@ class _ProfileMainPageState extends State<ProfileMainPage> {
                 Center(
                   child: Container(
                     margin: EdgeInsets.only(
-                      bottom: deviceHeight * 0.1
+                      bottom: deviceHeight * 0.03
                     ),
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
