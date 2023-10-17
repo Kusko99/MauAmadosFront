@@ -10,3 +10,7 @@ export 'interests_builder.dart';
 export 'profile_images.dart';
 export 'add_image_button.dart';
 export 'text_field.dart';
+export 'drop_down_menu.dart';
+export 'interests_button.dart';
+export 'profile_box.dart';
+export 'add_widget.dart';

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mauamados/models/models.dart';
-import 'package:mauamados/src/pages/profile.dart';
+import 'package:mauamados/src/pages/pages.dart';
 import 'package:mauamados/src/widgets/widgets.dart';
 
 class ProfileEdit extends StatefulWidget {
@@ -22,41 +22,52 @@ class ProfileEdit extends StatefulWidget {
 }
 
 class _ProfileEditState extends State<ProfileEdit> {
-  List<String> userPhotos = [];
   TextEditingController imageLinkController = TextEditingController();
-
-  @override
-  void initState() {
-    super.initState();
-    userPhotos = List<String>.from(widget.user.urlFotos);
-  }
+  TextEditingController interestController = TextEditingController();
 
   @override
   void dispose() {
     imageLinkController.dispose();
+    interestController.dispose();
     super.dispose();
   }
 
-void addImage(String link) {
-  final updatedUserPhotos = List<String>.from(userPhotos);
-  updatedUserPhotos.add(link);
-  setState(() {
-    userPhotos = updatedUserPhotos;
-    widget.user.urlFotos = updatedUserPhotos;
-  });
-}
+  void addImage(String link) {
+    final updatedUserPhotos = List<String>.from(widget.user.urlFotos);
+    updatedUserPhotos.add(link);
+    setState(() {
+      widget.user.urlFotos = updatedUserPhotos;
+    });
+  }
 
-void removeImage(String link) {
-  final updatedUserPhotos = List<String>.from(userPhotos);
-  updatedUserPhotos.remove(link);
-  setState(() {
-    userPhotos = updatedUserPhotos;
-    widget.user.urlFotos = updatedUserPhotos;
-  });
-}
+  void removeImage(String link) {
+    final updatedUserPhotos = List<String>.from(widget.user.urlFotos);
+    updatedUserPhotos.remove(link);
+    setState(() {
+      widget.user.urlFotos = updatedUserPhotos;
+    });
+  }
+
+  void removeInterest(String interesse) {
+    final updatedUserInterests = List<String>.from(widget.user.interesses);
+    updatedUserInterests.remove(interesse);
+    setState(() {
+      widget.user.interesses = updatedUserInterests;
+    });
+  }
+
+  void addInterest(String interesse) {
+    final updatedUserInterests = List<String>.from(widget.user.interesses);
+    updatedUserInterests.add(interesse);
+    setState(() {
+      widget.user.interesses = updatedUserInterests;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
+    String generoSelecionado = widget.user.genero;
+    String orientacaoSelecionada = widget.user.orientacao;
     double deviceHeight = MediaQuery.of(context).size.height;
 
     return MaterialApp(
@@ -94,7 +105,7 @@ void removeImage(String link) {
                   spacing: 5,
                   runSpacing: 5,
                   children: [
-                    ...userPhotos
+                    ...widget.user.urlFotos
                         .map((url) => ProfileImage(
                               imageUrl: url,
                               onRemove: () {
@@ -102,9 +113,9 @@ void removeImage(String link) {
                               },
                             ))
                         .toList(),
-                    if (userPhotos.length < 9)
+                    if (widget.user.urlFotos.length < 9)
                       ...List.generate(
-                        9 - userPhotos.length,
+                        9 - widget.user.urlFotos.length,
                         (index) => ImageButton(
                           user: widget.user,
                           onAdd: addImage,
@@ -115,46 +126,106 @@ void removeImage(String link) {
                 const SizedBox(
                   height: 24,
                 ),
-                TextFieldWidget(
-                  label: 'Nome',
-                  text: widget.user.nome,
-                  fontSize: widget.fontSize2,
-                  onChanged: (nome) {
-                    setState(() {
-                      widget.user.nome = nome;
-                    });
-                  },
-                ),
-                TextFieldWidget(
-                  label: 'Idade',
-                  text: widget.user.idade.toString(),
-                  fontSize: widget.fontSize2,
-                  onChanged: (idade) {
-                    setState(() {
-                      widget.user.idade = int.parse(idade);
-                    });
-                  },
-                ),
-                TextFieldWidget(
-                  label: 'Curso',
-                  text: widget.user.curso,
-                  fontSize: widget.fontSize2,
-                  onChanged: (curso) {
-                    setState(() {
-                      widget.user.curso = curso;
-                    });
-                  },
-                ),
-                TextFieldWidget(
-                  label: 'Bio',
-                  text: widget.user.bio,
-                  fontSize: widget.fontSize2,
-                  onChanged: (bio) {
-                    setState(() {
-                      widget.user.bio = bio;
-                    });
-                  },
-                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    TextFieldWidget(
+                      label: 'Nome',
+                      text: widget.user.nome,
+                      fontSize: widget.fontSize2,
+                      onChanged: (nome) {
+                        setState(() {
+                          widget.user.nome = nome;
+                        });
+                      },
+                    ),
+                    TextFieldWidget(
+                      label: 'Idade',
+                      text: widget.user.idade.toString(),
+                      fontSize: widget.fontSize2,
+                      onChanged: (idade) {
+                        setState(() {
+                          widget.user.idade = int.parse(idade);
+                        });
+                      },
+                    ),
+                    TextFieldWidget(
+                      label: 'Curso',
+                      text: widget.user.curso,
+                      fontSize: widget.fontSize2,
+                      onChanged: (curso) {
+                        setState(() {
+                          widget.user.curso = curso;
+                        });
+                      },
+                    ),
+                    TextFieldWidget(
+                      label: 'Bio',
+                      text: widget.user.bio,
+                      fontSize: widget.fontSize2,
+                      onChanged: (bio) {
+                        setState(() {
+                          widget.user.bio = bio;
+                        });
+                      },
+                    ),
+                    DropDownMenu(
+                      label: 'Genero',
+                      items: const ['Homem', 'Mulher', 'Outro'], 
+                      fontSize: widget.fontSize2, 
+                      selectedItem: generoSelecionado, 
+                      onChanged: (value){
+                        setState(() {
+                          generoSelecionado = value;
+                          widget.user.genero = generoSelecionado;
+                        });
+                      }
+                    ),
+                    DropDownMenu(
+                      label: 'Orientação',
+                      items: const ['Heterosexual', 'Homosexual', 'Outro'], 
+                      fontSize: widget.fontSize2, 
+                      selectedItem: orientacaoSelecionada, 
+                      onChanged: (value) {
+                        setState(() {
+                          orientacaoSelecionada = value;
+                          widget.user.orientacao = orientacaoSelecionada;
+                        });
+                      } , 
+                    ),
+                    ProfileBox(
+                      label: 'Interesses', 
+                      fontSize: widget.fontSize2,
+                      data: 
+                      Wrap(
+                        children: [
+                          AddWidget(
+                            iconSize: widget.fontSize2,
+                            onPressed: () {
+                              final newInterest = interestController.text;
+                              if (newInterest.isNotEmpty) {
+                                addInterest(newInterest);
+                                interestController.clear();
+                              }
+                            },
+                          ),
+                          Wrap(
+                            alignment: WrapAlignment.start,
+                            spacing: 2,
+                            runSpacing: 2,
+                            children: widget.user.interesses.map((interesse) {
+                              return InterestsButton(
+                                interesse: interesse,
+                                fontSize: widget.fontSize2,
+                                onRemove: () => removeInterest(interesse),
+                              );
+                            }).toList(),
+                          ),
+                        ],
+                      )
+                    )
+                  ],
+                )
               ],
             ),
           ),
