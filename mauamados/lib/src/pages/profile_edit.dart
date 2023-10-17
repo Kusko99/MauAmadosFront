@@ -37,23 +37,23 @@ class _ProfileEditState extends State<ProfileEdit> {
     super.dispose();
   }
 
-void addImage(String link) {
-  final updatedUserPhotos = List<String>.from(userPhotos);
-  updatedUserPhotos.add(link);
-  setState(() {
-    userPhotos = updatedUserPhotos;
-    widget.user.urlFotos = updatedUserPhotos;
-  });
-}
+  void addImage(String link) {
+    final updatedUserPhotos = List<String>.from(userPhotos);
+    updatedUserPhotos.add(link);
+    setState(() {
+      userPhotos = updatedUserPhotos;
+      widget.user.urlFotos = updatedUserPhotos;
+    });
+  }
 
-void removeImage(String link) {
-  final updatedUserPhotos = List<String>.from(userPhotos);
-  updatedUserPhotos.remove(link);
-  setState(() {
-    userPhotos = updatedUserPhotos;
-    widget.user.urlFotos = updatedUserPhotos;
-  });
-}
+  void removeImage(String link) {
+    final updatedUserPhotos = List<String>.from(userPhotos);
+    updatedUserPhotos.remove(link);
+    setState(() {
+      userPhotos = updatedUserPhotos;
+      widget.user.urlFotos = updatedUserPhotos;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {

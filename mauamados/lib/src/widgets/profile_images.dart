@@ -36,6 +36,8 @@ class ProfileImage extends StatelessWidget {
               width: MediaQuery.of(context).size.shortestSide * 0.28,
               height: MediaQuery.of(context).size.shortestSide * 0.37,
               child: InkWell(
+                enableFeedback: false,
+                highlightColor: Colors.transparent,
                 onTap: () {
                   showModalBottomSheet(
                     context: context,
