@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mauamados/models/models.dart';
-import 'package:mauamados/src/pages/profile.dart';
+import 'package:mauamados/src/pages/pages.dart';
 import 'package:mauamados/src/widgets/widgets.dart';
 
 class ProfileEdit extends StatefulWidget {
@@ -57,6 +57,8 @@ void removeImage(String link) {
 
   @override
   Widget build(BuildContext context) {
+    String generoSelecionado = widget.user.genero;
+    String orientacaoSelecionada = widget.user.orientacao;
     double deviceHeight = MediaQuery.of(context).size.height;
 
     return MaterialApp(
@@ -115,46 +117,75 @@ void removeImage(String link) {
                 const SizedBox(
                   height: 24,
                 ),
-                TextFieldWidget(
-                  label: 'Nome',
-                  text: widget.user.nome,
-                  fontSize: widget.fontSize2,
-                  onChanged: (nome) {
-                    setState(() {
-                      widget.user.nome = nome;
-                    });
-                  },
-                ),
-                TextFieldWidget(
-                  label: 'Idade',
-                  text: widget.user.idade.toString(),
-                  fontSize: widget.fontSize2,
-                  onChanged: (idade) {
-                    setState(() {
-                      widget.user.idade = int.parse(idade);
-                    });
-                  },
-                ),
-                TextFieldWidget(
-                  label: 'Curso',
-                  text: widget.user.curso,
-                  fontSize: widget.fontSize2,
-                  onChanged: (curso) {
-                    setState(() {
-                      widget.user.curso = curso;
-                    });
-                  },
-                ),
-                TextFieldWidget(
-                  label: 'Bio',
-                  text: widget.user.bio,
-                  fontSize: widget.fontSize2,
-                  onChanged: (bio) {
-                    setState(() {
-                      widget.user.bio = bio;
-                    });
-                  },
-                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    TextFieldWidget(
+                      label: 'Nome',
+                      text: widget.user.nome,
+                      fontSize: widget.fontSize2,
+                      onChanged: (nome) {
+                        setState(() {
+                          widget.user.nome = nome;
+                        });
+                      },
+                    ),
+                    TextFieldWidget(
+                      label: 'Idade',
+                      text: widget.user.idade.toString(),
+                      fontSize: widget.fontSize2,
+                      onChanged: (idade) {
+                        setState(() {
+                          widget.user.idade = int.parse(idade);
+                        });
+                      },
+                    ),
+                    TextFieldWidget(
+                      label: 'Curso',
+                      text: widget.user.curso,
+                      fontSize: widget.fontSize2,
+                      onChanged: (curso) {
+                        setState(() {
+                          widget.user.curso = curso;
+                        });
+                      },
+                    ),
+                    TextFieldWidget(
+                      label: 'Bio',
+                      text: widget.user.bio,
+                      fontSize: widget.fontSize2,
+                      onChanged: (bio) {
+                        setState(() {
+                          widget.user.bio = bio;
+                        });
+                      },
+                    ),
+                    DropDownMenu(
+                      label: 'Genero',
+                      items: const ['Homem', 'Mulher', 'Outro'], 
+                      fontSize: widget.fontSize2, 
+                      selectedItem: generoSelecionado, 
+                      onChanged: (value){
+                        setState(() {
+                          generoSelecionado = value;
+                          widget.user.genero = generoSelecionado;
+                        });
+                      }
+                    ),
+                    DropDownMenu(
+                      label: 'Orientação',
+                      items: const ['Heterosexual', 'Homosexual', 'Outro'], 
+                      fontSize: widget.fontSize2, 
+                      selectedItem: orientacaoSelecionada, 
+                      onChanged: (value) {
+                        setState(() {
+                          orientacaoSelecionada = value;
+                          widget.user.orientacao = orientacaoSelecionada;
+                        });
+                      } , 
+                    )
+                  ],
+                )
               ],
             ),
           ),

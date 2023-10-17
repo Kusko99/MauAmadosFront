@@ -8,6 +8,8 @@ class User extends Equatable {
   String bio;
   String curso;
   List<String> interesses;
+  String genero;
+  String orientacao;
 
   User({
     required this.id,
@@ -16,10 +18,12 @@ class User extends Equatable {
     required this.urlFotos, 
     required this.bio, 
     required this.curso,
-    required this.interesses});
+    required this.interesses,
+    required this.genero,
+    required this.orientacao});
 
   @override
-  List<Object> get props => [id, nome, idade, urlFotos, bio, curso, interesses];
+  List<Object> get props => [id, nome, idade, urlFotos, bio, curso, interesses, genero, orientacao];
 
   static List<User> users = [
     User(
@@ -44,6 +48,8 @@ class User extends Equatable {
         'Sorocaba',
         'Mesa de cabeceira'
       ],
+      genero: 'Homem',
+      orientacao: 'Heterosexual'
     ),
     User(
       id: 2, 
@@ -60,7 +66,9 @@ class User extends Equatable {
       ], 
       bio: 'Oi, eu sou Goku!', 
       curso: 'Sistemas de Informação', 
-      interesses: const ['Pokemon', 'Corgi', 'Terceira Idade', 'Telefone do Gabriel', 'Aparecido']
+      interesses: const ['Pokemon', 'Corgi', 'Terceira Idade', 'Telefone do Gabriel', 'Aparecido'],
+      genero: 'Homem',
+      orientacao: 'Heterosexual'
     ),
     User(
       id: 3, 
@@ -76,7 +84,9 @@ class User extends Equatable {
       curso: 'Ciências da Computação', 
       interesses: const [
         'Japonês', 'Honda', 'Nintendo', 'Yamaha', 'Corno', 'Banheiro do H', 'Bolinho de arroz'
-      ]
+      ],
+      genero: 'Homem',
+      orientacao: 'Heterosexual'
     ),
     User(
       id: 4, 
@@ -95,7 +105,9 @@ class User extends Equatable {
       curso: 'Ciências da Computação', 
       interesses: const [
         'Avião', 'Iberê Thenorio', 'Teodoro Sampaio', 'Pizza de Calabresa', 'Escravidão', 'W500'
-      ]
+      ],
+      genero: 'Homem',
+      orientacao: 'Heterosexual'
     ),
     User(
       id: 5, 
@@ -111,7 +123,9 @@ class User extends Equatable {
       curso: 'Ciências da Computação', 
       interesses: const [
         'Calistenia', 'Corrida', 'Macaco', 'MAUÁritacas', 'Dev', 'Dev de novo', 'Tapioca', 'Corote', 'Álcool antes das 12h'
-      ]
+      ],
+      genero: 'Homem',
+      orientacao: 'Heterosexual'
     ),
     User(
       id: 6, 
@@ -126,7 +140,9 @@ class User extends Equatable {
       ],
       bio: 'Diogo ou Diego?',
       curso: 'Arquitetura',
-      interesses: const ['Sabedoria', 'PixelArt', 'RapTap', 'Astronauta', 'Revolução Francesa', 'Peixes do U']
+      interesses: const ['Sabedoria', 'PixelArt', 'RapTap', 'Astronauta', 'Revolução Francesa', 'Peixes do U'],
+      genero: 'Homem',
+      orientacao: 'Heterosexual'
     ),
     User(
       id: 7, 
@@ -141,7 +157,9 @@ class User extends Equatable {
       ],
       bio: '+55 11 97115-0204',
       curso: 'Culinária na Anhembi',
-      interesses: const ['Hambúrguer', 'Pizza', 'Morrer no D&D', 'Irmã', 'As Primas', 'Faltar', 'CPTM']
+      interesses: const ['Hambúrguer', 'Pizza', 'Morrer no D&D', 'Irmã', 'As Primas', 'Faltar', 'CPTM'],
+      genero: 'Homem',
+      orientacao: 'Heterosexual'
     ),
     User(
       id: 8, 
@@ -158,7 +176,9 @@ class User extends Equatable {
       ],
       bio: 'ZZZZZZzzzzzzzzzzzzzzzzzZZZZZZZZZZZzzzzzzzzzzzzzZZZZZZZ',
       curso: 'Ciências do sono',
-      interesses: const ['Mimir', 'Tirar cochilo', 'Nanar', 'Pregar o olho', 'Modo Soneca 24h', 'Cadeira Gamer', 'Ibere Thenorio', '494']
+      interesses: const ['Mimir', 'Tirar cochilo', 'Nanar', 'Pregar o olho', 'Modo Soneca 24h', 'Cadeira Gamer', 'Ibere Thenorio', '494'],
+      genero: 'Homem',
+      orientacao: 'Heterosexual'
     ),
     User(
       id: 9, 
@@ -172,6 +192,24 @@ class User extends Equatable {
       ], 
       bio: 'Ain, aniversário do Gatinha meu', 
       curso: 'Design', 
-      interesses: const ['Monster', 'Honda Civic 2004', 'Bolsonaro', 'Comunismo', 'Git Hub', 'Photoshop', 'Igor', 'Aniversário', 'Manikas'])
+      interesses: const ['Monster', 'Honda Civic 2004', 'Bolsonaro', 'Comunismo', 'Git Hub', 'Photoshop', 'Igor', 'Aniversário', 'Manikas', 'Boliviana', 'Flautista'],
+      genero: 'Homem',
+      orientacao: 'Heterosexual'
+      ),
+      User(id: 10,
+      nome: 'Alexander', 
+      idade: 42, 
+      urlFotos: const [
+        'https://i.imgur.com/EwCG73h.jpg',
+        'https://i.imgur.com/nvrshrj.jpg',
+        'https://i.imgur.com/fMU5Vqi.jpg',
+        'https://i.imgur.com/worsYhT.jpg',
+        'https://i.imgur.com/Z2gMLSY.jpg'
+        ], 
+      bio: '"Vocês não fizeram isso"', 
+      curso: 'Professor', 
+      interesses: const ['PII', 'MAUÁ', 'Terça-Feira', 'Professor', 'Golden Retriever', 'Casado', 'FATEC', 'Doutor'], 
+      genero: 'Homem', 
+      orientacao: 'Heterosexual')
   ];
 }

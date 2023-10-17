@@ -44,7 +44,8 @@ class _TextFieldWidgetState extends State<TextFieldWidget>{
           Text(
             widget.label,
             style: TextStyle(
-              fontWeight: FontWeight.bold, fontSize: widget.fontSize
+              fontWeight: FontWeight.bold, fontSize: widget.fontSize,
+              color: const Color.fromARGB(255, 0, 71, 133)
             ),
           ),
           TextField(
