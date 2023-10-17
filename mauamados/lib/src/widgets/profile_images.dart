@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mauamados/src/functions/remove_confirmation.dart';
 
 class ProfileImage extends StatelessWidget {
   final String imageUrl;
@@ -39,37 +40,7 @@ class ProfileImage extends StatelessWidget {
                 enableFeedback: false,
                 highlightColor: Colors.transparent,
                 onTap: () {
-                  showModalBottomSheet(
-                    context: context,
-                    builder: (context) => BottomSheet(
-                      onClosing: () {},
-                      builder: (BuildContext context) {
-                        return Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            ListTile(
-                              leading: Icon(
-                                Icons.delete,
-                                color: const Color.fromARGB(255, 0, 71, 133),
-                                size: fontSize,
-                              ),
-                              title: Text(
-                                'Remover Foto', 
-                                style: TextStyle(
-                                  fontSize: fontSize,
-                                  color: const Color.fromARGB(255, 0, 71, 133)
-                                ),
-                              ),
-                              onTap: () {
-                                Navigator.of(context).pop();
-                                onRemove();
-                              },
-                            ),
-                          ],
-                        );
-                      },
-                    ),
-                  );
+                  showRemoveConfirmation(context, 'Remover Foto', onRemove, fontSize);
                 },
               ),
             ),

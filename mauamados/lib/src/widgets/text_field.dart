@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mauamados/src/widgets/profile_box.dart';
 
 class TextFieldWidget extends StatefulWidget{
   final String label;
@@ -33,37 +34,23 @@ class _TextFieldWidgetState extends State<TextFieldWidget>{
 
   @override
   Widget build(BuildContext context){
-    return Padding(
-      padding: EdgeInsets.symmetric(
-        horizontal: MediaQuery.of(context).size.width * 0.06,
-        vertical: MediaQuery.of(context).size.height * 0.02
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            widget.label,
-            style: TextStyle(
-              fontWeight: FontWeight.bold, fontSize: widget.fontSize,
-              color: const Color.fromARGB(255, 0, 71, 133)
-            ),
+    return ProfileBox(
+      label: widget.label, 
+      fontSize: widget.fontSize,
+      data: TextField(
+        controller: controller,
+        style: TextStyle(fontSize: widget.fontSize),
+        decoration: InputDecoration(
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12)
           ),
-          TextField(
-            controller: controller,
-            style: TextStyle(fontSize: widget.fontSize),
-            decoration: InputDecoration(
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(12)
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(12),
-                borderSide: const BorderSide(color: Color.fromARGB(255, 158, 189, 255)), // Cor da borda quando em foco
-              ),
-            ),
-            maxLines: null,
-            onChanged: widget.onChanged,
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12),
+            borderSide: const BorderSide(color: Color.fromARGB(255, 158, 189, 255)), // Cor da borda quando em foco
           ),
-        ],
+        ),
+        maxLines: null,
+        onChanged: widget.onChanged,
       ),
     );
   }
