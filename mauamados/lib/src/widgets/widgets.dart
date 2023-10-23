@@ -14,3 +14,4 @@ export 'drop_down_menu.dart';
 export 'interests_button.dart';
 export 'profile_box.dart';
 export 'add_widget.dart';
+export 'chat_messages.dart';
