@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mauamados/src/pages/pages.dart';
+import'../../models/conversas.dart';
 
 class App extends StatefulWidget {
   const App({super.key});
@@ -42,7 +43,7 @@ class AppState extends State<App> {
     final screens = [
       const HomePage(),
       ProfilePage(fontSize1: fontSize1, fontSize2: fontSize2,),
-      const ChatPage()
+      ChatPage(conversas: conversas,fontSize: fontSize2 * 0.75 < 12 ? 12 : fontSize2 * 0.75, idUsuarioAtual: 1,)
     ];
 
     return MaterialApp(

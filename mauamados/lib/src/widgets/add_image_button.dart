@@ -65,7 +65,7 @@ class ImageButton extends StatelessWidget {
                                 focusedBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(12),
                                   borderSide:
-                                      const BorderSide(color: Color.fromARGB(255, 158, 189, 255)),
+                                      const BorderSide(color: Color.fromARGB(255, 0, 71, 133)),
                                 ),
                               ),
                             ),
