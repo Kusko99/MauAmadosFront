@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mauamados/models/models.dart';
-import 'package:mauamados/src/pages/chat_conversa.dart';
-import 'package:mauamados/src/widgets/widgets.dart';
+import 'package:mauamados/src/pages/pages.dart';
 
 class ChatPage extends StatefulWidget{
   final List<Map<String, dynamic>> conversas;
