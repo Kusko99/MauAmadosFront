@@ -9,6 +9,8 @@ class ChatMessages extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
+    double deviceHeight = MediaQuery.of(context).size.height;
+
     return ListView.builder(
       reverse: true,
       itemCount: conversas.length,
@@ -23,7 +25,7 @@ class ChatMessages extends StatelessWidget{
             final isMinhaMensagem = id == idUsuarioAtual;
             return Container(
               margin: EdgeInsets.only(
-                bottom: MediaQuery.of(context).size.height * 0.02,
+                bottom: deviceHeight * 0.02,
               ),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
