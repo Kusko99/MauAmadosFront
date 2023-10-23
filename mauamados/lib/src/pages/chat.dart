@@ -4,14 +4,15 @@ import 'package:mauamados/src/widgets/widgets.dart';
 
 class ChatPage extends StatelessWidget{
   final List<Map<String, dynamic>> conversas;
+  final int idUsuarioAtual;
+
   final double fontSize;
 
-  const ChatPage({required this.conversas, required this.fontSize, super.key});
+  const ChatPage({required this.conversas, required this.fontSize, required this.idUsuarioAtual, super.key});
 
   @override
   Widget build(BuildContext context) {
     double deviceHeight = MediaQuery.of(context).size.height;
-  int idUsuarioAtual = 1;
 
   int idConversa = 0;
 
@@ -60,7 +61,7 @@ class ChatPage extends StatelessWidget{
             ],
           ),
         ),
-        body: ChatMessages(conversas: conversas, fontSize: fontSize,),
+        body: ChatMessages(conversas: conversas, fontSize: fontSize, idUsuarioAtual: idUsuarioAtual,),
       ),
     );
   }

@@ -43,7 +43,7 @@ class AppState extends State<App> {
     final screens = [
       const HomePage(),
       ProfilePage(fontSize1: fontSize1, fontSize2: fontSize2,),
-      ChatPage(conversas: conversas,fontSize: fontSize2 * 0.75 < 12 ? 12 : fontSize2 * 0.75,)
+      ChatPage(conversas: conversas,fontSize: fontSize2 * 0.75 < 12 ? 12 : fontSize2 * 0.75, idUsuarioAtual: 1,)
     ];
 
     return MaterialApp(
