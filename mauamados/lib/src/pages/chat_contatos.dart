@@ -23,65 +23,168 @@ class ChatContatos extends StatelessWidget {
         conversa['mensagens'].isNotEmpty)
       .toList();
 
-    final deviceHeight = MediaQuery.of(context).size.height;
+      final matchesDoUsuario = List<Map<String, dynamic>>.from(conversas)
+      .where((conversa) =>
+        conversa['ids'].contains(idUsuarioAtual) &&
+        conversa['mensagens'].isEmpty)
+      .toList();
 
+    double deviceHeight = MediaQuery.of(context).size.height;
+    double deviceWidth = MediaQuery.of(context).size.width;
+    if (deviceHeight < deviceWidth) {
+      deviceWidth = deviceHeight;
+    }
     return Scaffold(
-      body: ListView.builder(
-        itemCount: conversasDoUsuario.length,
-        itemBuilder: (context, index) {
-          final conversa = conversasDoUsuario[index];
-          final idOutroUsuario = conversa['ids'].firstWhere(
-            (id) => id != idUsuarioAtual,
-            orElse: () => -1);
-          final outroUsuario = User.users.firstWhere(
-            (user) => user.id == idOutroUsuario
-          );
-          return InkWell(
-            onTap: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => ChatConversa(
-                    conversa: conversa,
-                    fontSize: fontSize,
-                    idUsuarioAtual: idUsuarioAtual,
-                    conversas: conversas,
-                  ),
-                ),
-              );
-            },
-            child: Container(
-              padding: EdgeInsets.symmetric(
-                vertical: deviceHeight * 0.02
+      appBar: AppBar(
+        toolbarHeight: min(max(deviceHeight * 0.05, 36.0), fontSize * 1.8)*4,
+        backgroundColor: const Color.fromARGB(255, 0, 71, 133),
+        elevation: 0,
+        title: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Matches',
+              style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+                fontSize: fontSize * 1.5
               ),
-              decoration: BoxDecoration(
-                border: Border(
-                  bottom: BorderSide(
-                    color: Colors.grey.withAlpha(50),
-                    width: 0.1
-                  )
-                )
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            SizedBox(
+              height: min(max(deviceHeight * 0.05, 36.0), fontSize * 1.8)*2,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: matchesDoUsuario.length,
+                itemBuilder: (context, index) {
+                  final match = matchesDoUsuario[index];
+                  final idOutroUsuario = match['ids'].firstWhere(
+                    (id) => id != idUsuarioAtual,
+                  );
+                  final outroUsuario = User.users.firstWhere(
+                    (user) => user.id == idOutroUsuario,
+                  );
+                  return Container(
+                    margin: EdgeInsets.only(
+                      right: deviceWidth * 0.02
+                    ),
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => ChatConversa(
+                              conversa: match,
+                              fontSize: fontSize,
+                              idUsuarioAtual: idUsuarioAtual,
+                              conversas: conversas,
+                            ),
+                          ),
+                        );
+                      }, 
+                      child: CircleAvatar(
+                        radius: min(max(deviceHeight * 0.05, 36.0), fontSize * 1.8),
+                        backgroundImage: NetworkImage(
+                          outroUsuario.urlFotos.isNotEmpty
+                            ? outroUsuario.urlFotos.first
+                            : 'https://i.imgur.com/YTkSwCJ.png'
+                        ),
+                      ),
+                    )
+                  );
+                },
               ),
-              child: ListTile(
-                leading: CircleAvatar(
-                  radius: min(max(deviceHeight * 0.05, 36.0), fontSize * 1.8),
-                  backgroundImage: NetworkImage(
-                    outroUsuario.urlFotos.isNotEmpty
-                      ? outroUsuario.urlFotos.first
-                      : 'https://i.imgur.com/YTkSwCJ.png'
-                  ),
-                ),
-                title:Text(
-                  outroUsuario.nome,
-                  style: TextStyle(
-                    fontSize: fontSize * 1.25,
-                  ),
-                  overflow: TextOverflow.ellipsis
+            ),
+          ],
+        )
+      ),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            padding: EdgeInsets.only(
+              left: 18,
+              top: deviceHeight * 0.02,
+              bottom: deviceHeight * 0.02
+            ),
+            decoration: BoxDecoration(
+              border: Border(
+                bottom: BorderSide(
+                  color: Colors.grey.withAlpha(50),
+                  width: 0.6
                 ),
               ),
             ),
-          );
-        },
-      ),
+            child: Text(
+              'Conversas',
+              style: TextStyle(
+                color: const Color.fromARGB(255, 0, 71, 133),
+                fontSize: fontSize * 1.5,
+                fontWeight: FontWeight.bold
+              ),
+            ),
+          ),
+          Expanded(
+            child: ListView.builder(
+              itemCount: conversasDoUsuario.length,
+              itemBuilder: (context, index) {
+                final conversa = conversasDoUsuario[index];
+                final idOutroUsuario = conversa['ids'].firstWhere(
+                  (id) => id != idUsuarioAtual
+                );
+                final outroUsuario = User.users.firstWhere(
+                  (user) => user.id == idOutroUsuario
+                );
+                return InkWell(
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => ChatConversa(
+                          conversa: conversa,
+                          fontSize: fontSize,
+                          idUsuarioAtual: idUsuarioAtual,
+                          conversas: conversas,
+                        ),
+                      ),
+                    );
+                  },
+                  child: Container(
+                    padding: EdgeInsets.symmetric(
+                      vertical: deviceHeight * 0.015
+                    ),
+                    decoration: BoxDecoration(
+                      border: Border(
+                        bottom: BorderSide(
+                          color: Colors.grey.withAlpha(50),
+                          width: 0.6
+                        )
+                      )
+                    ),
+                    child: ListTile(
+                      leading: CircleAvatar(
+                        radius: min(max(deviceHeight * 0.05, 36.0), fontSize * 2.25),
+                        backgroundImage: NetworkImage(
+                          outroUsuario.urlFotos.isNotEmpty
+                            ? outroUsuario.urlFotos.first
+                            : 'https://i.imgur.com/YTkSwCJ.png'
+                        ),
+                      ),
+                      title:Text(
+                        outroUsuario.nome,
+                        style: TextStyle(
+                          fontSize: fontSize * 1.5,
+                        ),
+                        overflow: TextOverflow.ellipsis
+                      ),
+                    ),
+                  ),
+                );
+              },
+            ),
+          )
+        ],
+      )
     );
   }
 }

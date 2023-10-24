@@ -49,7 +49,7 @@ class _ChatConversaState extends State<ChatConversa>{
             onPressed: () {
               Navigator.of(context).push(
                 MaterialPageRoute(
-                  builder: (context) => ChatContatos(
+                  builder: (context) => ChatPage(
                     fontSize: widget.fontSize,
                     idUsuarioAtual: widget.idUsuarioAtual,
                     conversas: widget.conversas

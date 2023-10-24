@@ -81,4 +81,11 @@ List<Map<String, dynamic>> conversas = [
       {'id': 10, 'texto': 'Terceira resposta do usuário 10'},
     ],
   },
+  {
+    'ids': [2, 3],
+    'mensagens': [
+      {'id': 2, 'texto': 'Olá!'},
+      {'id': 3, 'texto': 'Olá!'},
+    ],
+  },
 ];
