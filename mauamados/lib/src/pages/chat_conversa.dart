@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mauamados/models/models.dart';
-import 'package:mauamados/src/pages/chat_contatos.dart';
+import 'package:mauamados/src/pages/pages.dart';
 import 'package:mauamados/src/widgets/widgets.dart';
 
 class ChatConversa extends StatefulWidget{
@@ -36,8 +36,6 @@ class _ChatConversaState extends State<ChatConversa>{
 
     User? outroUsuario = User.users.firstWhere((user) => user.id == idOutroUsuario);
 
-    String imageUrlOutroUsuario = outroUsuario.urlFotos.isNotEmpty ? outroUsuario.urlFotos.first : 'https://i.imgur.com/YTkSwCJ.png';
-
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
@@ -69,7 +67,9 @@ class _ChatConversaState extends State<ChatConversa>{
             children: [
               ClipOval(
                 child: Image.network(
-                  imageUrlOutroUsuario,
+                  outroUsuario.urlFotos.isNotEmpty 
+                    ? outroUsuario.urlFotos.first 
+                    : 'https://i.imgur.com/YTkSwCJ.png',
                   width: deviceHeight * 0.06,
                   height: deviceHeight * 0.06,
                   fit: BoxFit.cover,

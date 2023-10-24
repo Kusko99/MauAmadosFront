@@ -44,15 +44,18 @@ class ChatMessages extends StatelessWidget {
               if (!isMinhaMensagem)
                 Stack(
                   children: [
-                    Container(
-                      width: 10,
-                      height: 20,
-                      color: isMinhaMensagem
-                          ? const Color.fromARGB(255, 0, 71, 133)
-                          : const Color.fromARGB(255, 158, 189, 255),
+                    Positioned(
+                      right: 0,
+                      child: Container(
+                        width: 10,
+                        height: 20,
+                        color: isMinhaMensagem
+                            ? const Color.fromARGB(255, 0, 71, 133)
+                            : const Color.fromARGB(255, 158, 189, 255),
+                      ),
                     ),
                     Container(
-                      width: 10,
+                      width: 12,
                       height: 22,
                       decoration: BoxDecoration(
                         borderRadius: isMinhaMensagem
@@ -62,7 +65,7 @@ class ChatMessages extends StatelessWidget {
                             : const BorderRadius.only(
                                 topRight: Radius.circular(90),
                               ),
-                        color: Colors.white,
+                        color: const Color.fromARGB(255,250,250,255),
                       ),
                     ),
                   ],
@@ -118,7 +121,7 @@ class ChatMessages extends StatelessWidget {
                             : const BorderRadius.only(
                                 topRight: Radius.circular(90),
                               ),
-                        color: Colors.white,
+                        color: const Color.fromARGB(255,250,250,255),
                       ),
                     ),
                   ],

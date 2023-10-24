@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mauamados/src/pages/chat_contatos.dart';
 import 'package:mauamados/src/pages/pages.dart';
 
 class ChatPage extends StatefulWidget{

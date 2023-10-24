@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mauamados/models/models.dart';
-import 'package:mauamados/src/pages/chat_conversa.dart'; // Importe a tela de conversa
+import 'package:mauamados/src/pages/pages.dart';
+import 'dart:math';
 
 class ChatContatos extends StatelessWidget {
   final int idUsuarioAtual;
@@ -22,6 +23,8 @@ class ChatContatos extends StatelessWidget {
         conversa['mensagens'].isNotEmpty)
       .toList();
 
+    final deviceHeight = MediaQuery.of(context).size.height;
+
     return Scaffold(
       body: ListView.builder(
         itemCount: conversasDoUsuario.length,
@@ -33,7 +36,7 @@ class ChatContatos extends StatelessWidget {
           final outroUsuario = User.users.firstWhere(
             (user) => user.id == idOutroUsuario
           );
-          return ListTile(
+          return InkWell(
             onTap: () {
               Navigator.of(context).push(
                 MaterialPageRoute(
@@ -46,14 +49,36 @@ class ChatContatos extends StatelessWidget {
                 ),
               );
             },
-            leading: CircleAvatar(
-              backgroundImage: NetworkImage(
-                outroUsuario.urlFotos.isNotEmpty
-                  ? outroUsuario.urlFotos.first
-                  : 'https://i.imgur.com/YTkSwCJ.png'
+            child: Container(
+              padding: EdgeInsets.symmetric(
+                vertical: deviceHeight * 0.02
+              ),
+              decoration: BoxDecoration(
+                border: Border(
+                  bottom: BorderSide(
+                    color: Colors.grey.withAlpha(50),
+                    width: 0.1
+                  )
+                )
+              ),
+              child: ListTile(
+                leading: CircleAvatar(
+                  radius: min(max(deviceHeight * 0.05, 36.0), fontSize * 1.8),
+                  backgroundImage: NetworkImage(
+                    outroUsuario.urlFotos.isNotEmpty
+                      ? outroUsuario.urlFotos.first
+                      : 'https://i.imgur.com/YTkSwCJ.png'
+                  ),
+                ),
+                title:Text(
+                  outroUsuario.nome,
+                  style: TextStyle(
+                    fontSize: fontSize * 1.25,
+                  ),
+                  overflow: TextOverflow.ellipsis
+                ),
               ),
             ),
-            title: Text(outroUsuario.nome),
           );
         },
       ),
