@@ -21,7 +21,7 @@ class _ChatPageState extends State<ChatPage>{
    return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        body: ChatConversa(conversas: widget.conversas, fontSize: widget.fontSize, idUsuarioAtual: widget.idUsuarioAtual),
+        body: ChatContatos(conversas: widget.conversas, idUsuarioAtual: widget.idUsuarioAtual, fontSize: widget.fontSize,),
       ),
     );
   }

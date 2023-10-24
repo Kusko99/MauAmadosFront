@@ -1,13 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:mauamados/models/models.dart';
+import 'package:mauamados/src/pages/pages.dart';
 import 'package:mauamados/src/widgets/widgets.dart';
 
 class ChatConversa extends StatefulWidget{
-  final List<Map<String, dynamic>> conversas;
+  final Map<String, dynamic> conversa;
   final int idUsuarioAtual;
   final double fontSize;
+  final List<Map<String, dynamic>> conversas;
 
-  const ChatConversa({required this.conversas, required this.fontSize, required this.idUsuarioAtual, super.key});
+  const ChatConversa({
+    required this.conversa, 
+    required this.fontSize, 
+    required this.idUsuarioAtual,
+    required this.conversas, 
+    super.key
+  });
 
   @override
   State<ChatConversa> createState() {
@@ -23,14 +31,10 @@ class _ChatConversaState extends State<ChatConversa>{
     double deviceWidth = MediaQuery.of(context).size.width;
     TextEditingController controller = TextEditingController();
 
-    int idConversa = 0;
-
-    List<int> idsConversa = widget.conversas[idConversa]['ids'];
+    List<int> idsConversa = widget.conversa['ids'];
     int idOutroUsuario = idsConversa.firstWhere((id) => id != widget.idUsuarioAtual);
 
     User? outroUsuario = User.users.firstWhere((user) => user.id == idOutroUsuario);
-
-    String imageUrlOutroUsuario = outroUsuario.urlFotos.isNotEmpty ? outroUsuario.urlFotos.first : 'https://i.imgur.com/YTkSwCJ.png';
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -42,7 +46,17 @@ class _ChatConversaState extends State<ChatConversa>{
           toolbarHeight: deviceHeight * 0.08,
           leadingWidth: deviceHeight * 0.08,
           leading: IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => ChatPage(
+                    fontSize: widget.fontSize,
+                    idUsuarioAtual: widget.idUsuarioAtual,
+                    conversas: widget.conversas
+                  ),
+                ),
+              );
+            },
             icon: Icon(
               Icons.arrow_back,
               color: const Color.fromARGB(255, 0, 71, 133),
@@ -53,7 +67,9 @@ class _ChatConversaState extends State<ChatConversa>{
             children: [
               ClipOval(
                 child: Image.network(
-                  imageUrlOutroUsuario,
+                  outroUsuario.urlFotos.isNotEmpty 
+                    ? outroUsuario.urlFotos.first 
+                    : 'https://i.imgur.com/YTkSwCJ.png',
                   width: deviceHeight * 0.06,
                   height: deviceHeight * 0.06,
                   fit: BoxFit.cover,
@@ -76,7 +92,7 @@ class _ChatConversaState extends State<ChatConversa>{
         body: Column(
           children: [
             Expanded(
-              child: ChatMessages(conversas: widget.conversas, fontSize: widget.fontSize, idUsuarioAtual: widget.idUsuarioAtual,),
+              child: ChatMessages(conversa: widget.conversa, fontSize: widget.fontSize, idUsuarioAtual: widget.idUsuarioAtual,),
             ),
             Padding(
               padding: EdgeInsets.symmetric(
