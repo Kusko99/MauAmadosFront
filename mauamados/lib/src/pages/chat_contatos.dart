@@ -38,7 +38,7 @@ class ChatContatos extends StatelessWidget {
       appBar: AppBar(
         toolbarHeight: min(max(deviceHeight * 0.05, 36.0), fontSize * 1.8)*4,
         backgroundColor: const Color.fromARGB(255, 0, 71, 133),
-        elevation: 0,
+        elevation: 4,
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -170,13 +170,28 @@ class ChatContatos extends StatelessWidget {
                             : 'https://i.imgur.com/YTkSwCJ.png'
                         ),
                       ),
-                      title:Text(
-                        outroUsuario.nome,
-                        style: TextStyle(
-                          fontSize: fontSize * 1.5,
-                        ),
-                        overflow: TextOverflow.ellipsis
-                      ),
+                      title: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            outroUsuario.nome,
+                            style: TextStyle(
+                              fontSize: fontSize * 1.2,
+                              fontWeight: FontWeight.bold
+                            ),
+                            overflow: TextOverflow.ellipsis
+                          ),
+                          Text(
+                            conversa['mensagens'].last['id'] == idUsuarioAtual ? 
+                              'Você: ${conversa['mensagens'].last['texto']}' : 
+                              '${outroUsuario.nome}: ${conversa['mensagens'].last['texto']}',
+                            style: TextStyle(
+                              fontSize: fontSize
+                            ),
+                            overflow: TextOverflow.ellipsis
+                          )
+                        ],
+                      )
                     ),
                   ),
                 );
