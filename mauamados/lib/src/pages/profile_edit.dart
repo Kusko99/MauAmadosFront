@@ -201,13 +201,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                         children: [
                           AddWidget(
                             iconSize: widget.fontSize2,
-                            onPressed: () {
-                              final newInterest = interestController.text;
-                              if (newInterest.isNotEmpty) {
-                                addInterest(newInterest);
-                                interestController.clear();
-                              }
-                            },
+                            onAdd: addInterest,
                           ),
                           Wrap(
                             alignment: WrapAlignment.start,
