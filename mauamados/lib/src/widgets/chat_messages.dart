@@ -33,7 +33,8 @@ class ChatMessages extends StatelessWidget {
         final isMinhaMensagem = id == idUsuarioAtual;
         return Container(
           margin: EdgeInsets.only(
-            bottom: deviceHeight * 0.02,
+            top: deviceHeight * 0.01,
+            bottom: deviceHeight * 0.01,
             left: MediaQuery.of(context).size.width * 0.02,
             right: MediaQuery.of(context).size.width * 0.02,
           ),

@@ -2,19 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:mauamados/models/models.dart';
 import 'package:mauamados/src/pages/pages.dart';
 
-class ProfileMainPage extends StatefulWidget {
+class ProfileMainPage extends StatelessWidget {
   final User user;
   final double fontSize1;
   final double fontSize2;
   const ProfileMainPage({required this.user, required this.fontSize1, required this.fontSize2 ,super.key});
-
-  @override
-  State<ProfileMainPage> createState() {
-    return _ProfileMainPageState();
-  }
-}
-
-class _ProfileMainPageState extends State<ProfileMainPage> {
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +48,7 @@ class _ProfileMainPageState extends State<ProfileMainPage> {
                   height: deviceWidth * 1.6 <= deviceHeight ? deviceWidth * 0.7 : deviceHeight * 0.45,
                   child: ClipOval(
                     child: Image(
-                      image: NetworkImage(widget.user.urlFotos.isEmpty ? 'https://i.imgur.com/YTkSwCJ.png' : widget.user.urlFotos[0]),
+                      image: NetworkImage(user.urlFotos.isEmpty ? 'https://i.imgur.com/YTkSwCJ.png' : user.urlFotos[0]),
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -68,16 +60,16 @@ class _ProfileMainPageState extends State<ProfileMainPage> {
                   child: Column(
                     children: [
                       Text(
-                        ('${widget.user.nome}, ${widget.user.idade}'),
+                        ('${user.nome}, ${user.idade}'),
                         style: TextStyle(
-                          fontSize: widget.fontSize1,
+                          fontSize: fontSize1,
                           fontWeight: FontWeight.bold
                         ),
                       ),
                       Text(
-                        widget.user.curso,
+                        user.curso,
                         style: TextStyle(
-                          fontSize: widget.fontSize2
+                          fontSize: fontSize2
                         ),
                       )
                     ],
@@ -96,9 +88,9 @@ class _ProfileMainPageState extends State<ProfileMainPage> {
                       onPressed: () {
                         Navigator.of(context).push(
                           MaterialPageRoute(builder: (context) => ProfileEdit(
-                            user: widget.user, 
-                            fontSize1: widget.fontSize1, 
-                            fontSize2: widget.fontSize2
+                            user: user, 
+                            fontSize1: fontSize1, 
+                            fontSize2: fontSize2
                           ))
                         );
                       },
@@ -109,7 +101,7 @@ class _ProfileMainPageState extends State<ProfileMainPage> {
                         child: Text(
                           'Editar Perfil',
                           style: TextStyle(
-                            fontSize: widget.fontSize2
+                            fontSize: fontSize2
                           ),
                         ),
                       )

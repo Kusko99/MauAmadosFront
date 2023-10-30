@@ -40,8 +40,8 @@ class _ChatConversaState extends State<ChatConversa> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        backgroundColor: Colors.transparent,
-        elevation: 0,
+        backgroundColor: Colors.white,
+        elevation: 1,
         toolbarHeight: deviceHeight * 0.08,
         leadingWidth: deviceHeight * 0.08,
         leading: IconButton(

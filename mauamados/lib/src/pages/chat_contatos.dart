@@ -39,6 +39,11 @@ class ChatContatos extends StatelessWidget {
         toolbarHeight: min(max(deviceHeight * 0.05, 36.0), fontSize * 1.8)*4,
         backgroundColor: const Color.fromARGB(255, 0, 71, 133),
         elevation: 4,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(
+            bottom: Radius.circular(20)
+          )
+        ),
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
