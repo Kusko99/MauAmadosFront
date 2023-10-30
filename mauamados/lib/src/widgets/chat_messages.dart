@@ -4,18 +4,19 @@ class ChatMessages extends StatelessWidget {
   final Map<String, dynamic> conversa;
   final double fontSize;
   final int idUsuarioAtual;
+  final ScrollController controller;
 
   const ChatMessages({
     required this.conversa,
     required this.fontSize,
     required this.idUsuarioAtual,
-    super.key,
+    required this.controller,
+    super.key
   });
 
   @override
   Widget build(BuildContext context) {
     double deviceHeight = MediaQuery.of(context).size.height;
-    ScrollController controller = ScrollController();
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       controller.jumpTo(controller.position.maxScrollExtent);
@@ -65,7 +66,7 @@ class ChatMessages extends StatelessWidget {
                             : const BorderRadius.only(
                                 topRight: Radius.circular(90),
                               ),
-                        color: const Color.fromARGB(255,250,250,255),
+                        color: const Color.fromARGB(255, 250, 250, 255),
                       ),
                     ),
                   ],
@@ -121,7 +122,7 @@ class ChatMessages extends StatelessWidget {
                             : const BorderRadius.only(
                                 topRight: Radius.circular(90),
                               ),
-                        color: const Color.fromARGB(255,250,250,255),
+                        color: const Color.fromARGB(255, 250, 250, 255),
                       ),
                     ),
                   ],
