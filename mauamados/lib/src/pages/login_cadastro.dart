@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 
 class LoginCadastro extends StatelessWidget{
+  const LoginCadastro({super.key});
+
   @override
   Widget build(BuildContext context) {
     
-    throw UnimplementedError();
+    return Center();
   }
 }
