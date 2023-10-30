@@ -1,19 +1,31 @@
 import 'package:flutter/material.dart';
 
 class LoginCadastro extends StatelessWidget {
-  const LoginCadastro({Key? key}) : super(key: key);
+  const LoginCadastro({
+    super.key
+  });
 
   @override
   Widget build(BuildContext context) {
+    double fontSize = MediaQuery.of(context).size.shortestSide * 0.04;
+    double imageSize = (fontSize/4)*49.5;
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         body: Column(
           children: [
-            Image.network(
-              'https://i.imgur.com/hbl9YoF.png',
-              width: MediaQuery.of(context).size.shortestSide,
-              height: MediaQuery.of(context).size.shortestSide,
+            Container(
+              margin: EdgeInsets.symmetric(
+                vertical: imageSize / 10
+              ),
+              width: imageSize,
+              height: imageSize,
+              child: const Image(
+                image: NetworkImage(
+                  'https://i.imgur.com/mgKFZtj.jpg',
+                ),
+                fit: BoxFit.cover,
+              ),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -27,12 +39,12 @@ class LoginCadastro extends StatelessWidget {
                       ),
                     ),
                   ),
-                  child: const Text(
+                  child: Text(
                     'MAUÁ',
                     style: TextStyle(
-                      color: Color.fromARGB(255,1,75,173),
+                      color: const Color.fromARGB(255,1,75,173),
                       fontWeight: FontWeight.bold,
-                      fontSize: 45,
+                      fontSize: fontSize * 2,
                     ),
                   ),
                 ),
@@ -40,19 +52,20 @@ class LoginCadastro extends StatelessWidget {
                   margin: const EdgeInsets.symmetric(
                     vertical: 20
                   ),
-                  child: const Text(
+                  child: Text(
                     'mados',
                     style: TextStyle(
-                      color: Color.fromARGB(255,1,75,173),
+                      color: const Color.fromARGB(255,1,75,173),
                       fontWeight: FontWeight.bold,
-                      fontSize: 45,
+                      fontSize: fontSize * 2,
                     ),
                   ),
                 )
               ],
-            )
+            ),
+            
           ],
-        )
+        ),
       )
     );
   }

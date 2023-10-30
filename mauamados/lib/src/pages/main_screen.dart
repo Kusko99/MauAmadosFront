@@ -3,7 +3,13 @@ import 'package:mauamados/src/pages/pages.dart';
 import 'package:mauamados/models/models.dart';
 
 class MainScreen extends StatefulWidget {
-  const MainScreen({super.key});
+  final double fontSize1;
+  final double fontSize2;
+  const MainScreen({
+    required this.fontSize1,
+    required this.fontSize2,
+    super.key
+    });
 
   @override
   State<MainScreen> createState() {
@@ -16,24 +22,8 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
-    
-    double deviceHeight = MediaQuery.of(context).size.height;
-    double deviceWidth = MediaQuery.of(context).size.width;
-    double fontSize1 = deviceHeight * 0.04;
-    double fontSize2 = deviceHeight * 0.03;
-    if (deviceHeight < deviceWidth) {
-      deviceWidth = deviceHeight;
-    }
-    if (deviceHeight > deviceWidth*1.6){
-      fontSize1 = deviceWidth * 0.072;
-      fontSize2 = deviceWidth * 0.054;
-    }
-    if (fontSize1 < 15) {
-      fontSize1 = 15;
-    }
-    if (fontSize2 < 11) {
-      fontSize2 = 11;
-    }
+    late double fontSize1 = widget.fontSize1;
+    late double fontSize2 = widget.fontSize2;
     
     double bottomNavBarSize = MediaQuery.of(context).size.height *  0.09;
     if (bottomNavBarSize < 40) {

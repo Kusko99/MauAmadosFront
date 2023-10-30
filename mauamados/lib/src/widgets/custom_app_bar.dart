@@ -18,7 +18,7 @@ class CustomAppBar extends StatelessWidget {
       centerTitle: true, 
       toolbarHeight: deviceHeigh * 0.08, 
       leadingWidth: deviceHeigh * 0.08,
-      leading: Image.network('https://i.imgur.com/hbl9YoF.png'),
+      leading: Image.network('https://i.imgur.com/mgKFZtj.jpg'),
       title: Text(
         'MAUÁmados', 
         style: TextStyle(
