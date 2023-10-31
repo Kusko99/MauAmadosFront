@@ -25,6 +25,14 @@ class User extends Equatable {
   @override
   List<Object> get props => [id, nome, idade, urlFotos, bio, curso, interesses, genero, orientacao];
 
+  static User? getUserById(int targetId) {
+    for (User user in users) {
+      if (user.id == targetId) {
+        return user;
+      }
+    }
+  }
+
   static List<User> users = [
     User(
       id: 1,

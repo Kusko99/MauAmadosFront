@@ -1,22 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:mauamados/src/pages/pages.dart';
-import'../../models/conversas.dart';
 
-class App extends StatefulWidget {
+class App extends StatelessWidget {
   const App({super.key});
 
   @override
-  State<App> createState() {
-    return AppState();
-  }
-}
-
-class AppState extends State<App> {
-  int currentIndex = 0;
-
-  @override
   Widget build(BuildContext context) {
-    
+        
     double deviceHeight = MediaQuery.of(context).size.height;
     double deviceWidth = MediaQuery.of(context).size.width;
     double fontSize1 = deviceHeight * 0.04;
@@ -35,60 +25,9 @@ class AppState extends State<App> {
       fontSize2 = 11;
     }
     
-    double bottomNavBarSize = MediaQuery.of(context).size.height *  0.09;
-    if (bottomNavBarSize < 40) {
-      bottomNavBarSize = 40;
-    }
-
-    final screens = [
-      const HomePage(),
-      ProfilePage(fontSize1: fontSize1, fontSize2: fontSize2,),
-      ChatPage(conversas: conversas,fontSize: fontSize2 * 0.75 < 12 ? 12 : fontSize2 * 0.75, idUsuarioAtual: 1,)
-    ];
-
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Scaffold(    
-        body: IndexedStack(
-          index: currentIndex,
-          children: screens
-        ),
-        bottomNavigationBar: Container(
-          constraints: BoxConstraints(
-            minHeight: bottomNavBarSize,
-          ),
-          child: SizedBox(                
-            height: bottomNavBarSize,
-            child: BottomNavigationBar(
-              type: BottomNavigationBarType.fixed,
-              backgroundColor: Colors.white,
-              selectedItemColor: const Color.fromARGB(255, 0, 71, 133),
-              unselectedItemColor: const Color.fromARGB(255, 158, 189, 255),
-              showUnselectedLabels: false,
-              currentIndex: currentIndex,
-              onTap: (index) => setState(() => currentIndex = index),
-              iconSize: bottomNavBarSize * 0.4,
-              selectedFontSize: bottomNavBarSize * 0.2,
-              items: const [
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.favorite), 
-                  label: 'Home'
-                ),
-
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.person), 
-                  label: 'Perfil'
-                ),
-
-                BottomNavigationBarItem(
-                  icon: Icon(Icons.chat), 
-                  label: 'Chat'
-                )
-              ]
-            ),
-          )
-        )
-      )
+      home: LoginCadastro(deviceHeight: deviceHeight, fontSize1: fontSize1, fontSize2: fontSize2)
     );
   }
 }

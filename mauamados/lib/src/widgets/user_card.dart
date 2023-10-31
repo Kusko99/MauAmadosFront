@@ -174,7 +174,7 @@ class _UserCardState extends State<UserCard> {
                             isScrollControlled: true,
                             backgroundColor: Colors.transparent,
                             context: context,
-                            builder: (context) => BuildSheet(user: widget.user),
+                            builder: (context) => BuildSheet(user: widget.user, fontSize: fontSize2*1.25,),
                           ),
                           icon: Icon(
                             Icons.info_outline,

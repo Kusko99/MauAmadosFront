@@ -4,22 +4,12 @@ import 'package:mauamados/src/widgets/widgets.dart';
 
 class BuildSheet extends StatelessWidget {
   final User user;
+  final double fontSize;
 
-  const BuildSheet({required this.user, super.key});
+  const BuildSheet({required this.user, required this.fontSize, super.key});
 
   @override
   Widget build(BuildContext context) {
-    double side = MediaQuery.of(context).size.longestSide;
-    double fontSize = 0;
-    if (side * 0.025 > 12) {
-      if (side * 0.025 > 35) {
-        fontSize = 35;
-      } else {
-        fontSize = side * 0.025;
-      }
-    } else {
-      fontSize = 12;
-    }
     return MakeDismissable(
       child: DraggableScrollableSheet(
         initialChildSize: 0.7,

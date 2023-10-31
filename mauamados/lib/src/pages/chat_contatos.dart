@@ -36,7 +36,7 @@ class ChatContatos extends StatelessWidget {
     }
     return Scaffold(
       appBar: AppBar(
-        toolbarHeight: min(max(deviceHeight * 0.05, 36.0), fontSize * 1.8)*4,
+        toolbarHeight: min(max(deviceHeight * 0.05, 36.0), fontSize * 1.8)*4.2,
         backgroundColor: const Color.fromARGB(255, 0, 71, 133),
         elevation: 4,
         shape: const RoundedRectangleBorder(
@@ -56,10 +56,10 @@ class ChatContatos extends StatelessWidget {
               ),
             ),
             const SizedBox(
-              height: 10,
+              height: 5,
             ),
             SizedBox(
-              height: min(max(deviceHeight * 0.05, 36.0), fontSize * 1.8)*2,
+              height: min(max(deviceHeight * 0.05, 36.0), fontSize * 1.8)*2.8,
               child: ListView.builder(
                 scrollDirection: Axis.horizontal,
                 itemCount: matchesDoUsuario.length,
@@ -88,14 +88,25 @@ class ChatContatos extends StatelessWidget {
                           ),
                         );
                       }, 
-                      child: CircleAvatar(
-                        radius: min(max(deviceHeight * 0.05, 36.0), fontSize * 1.8),
-                        backgroundImage: NetworkImage(
-                          outroUsuario.urlFotos.isNotEmpty
-                            ? outroUsuario.urlFotos.first
-                            : 'https://i.imgur.com/YTkSwCJ.png'
-                        ),
-                      ),
+                      child: Column(
+                        children: [
+                          CircleAvatar(
+                            radius: min(max(deviceHeight * 0.05, 36.0), fontSize * 1.8),
+                            backgroundImage: NetworkImage(
+                              outroUsuario.urlFotos.isNotEmpty
+                                ? outroUsuario.urlFotos.first
+                                : 'https://i.imgur.com/YTkSwCJ.png'
+                            ),
+                          ),
+                          Text(
+                            outroUsuario.nome,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: fontSize * 0.8
+                            ),
+                          )
+                        ],
+                      ) 
                     )
                   );
                 },
