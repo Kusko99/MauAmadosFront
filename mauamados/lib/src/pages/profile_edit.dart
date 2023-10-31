@@ -7,11 +7,13 @@ class ProfileEdit extends StatefulWidget {
   final User user;
   final double fontSize1;
   final double fontSize2;
+  final int idUsuarioAtual;
 
   const ProfileEdit({
     required this.user,
     required this.fontSize1,
     required this.fontSize2,
+    required this.idUsuarioAtual,
     super.key,
   });
 
@@ -85,6 +87,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                   builder: (context) => ProfilePage(
                     fontSize1: widget.fontSize1,
                     fontSize2: widget.fontSize2,
+                    idUsuarioAtual: widget.idUsuarioAtual,
                   ),
                 ),
               );

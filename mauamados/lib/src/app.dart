@@ -24,7 +24,10 @@ class App extends StatelessWidget {
     if (fontSize2 < 11) {
       fontSize2 = 11;
     }
-    return LoginCadastro();
-    // return MainScreen(fontSize1: fontSize1, fontSize2: fontSize2,);
+    
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: LoginCadastro(deviceHeight: deviceHeight, fontSize1: fontSize1, fontSize2: fontSize2)
+    );
   }
 }

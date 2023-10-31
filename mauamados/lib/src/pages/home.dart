@@ -3,7 +3,11 @@ import 'package:mauamados/models/models.dart';
 import 'package:mauamados/src/widgets/widgets.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  final int idUsuarioAtual;
+  const HomePage({
+    required this.idUsuarioAtual,
+    super.key
+  });
   @override
   State<HomePage> createState() {
     return _HomePageState();
@@ -12,7 +16,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   List<User> users = User.users;
-  User currentUser = User.users[0];
+  User? currentUser = User.getUserById(1);
   int currentIndex = 0;
   Offset startPosition = Offset.zero;
   Color like = const Color.fromARGB(255, 107, 253, 168);

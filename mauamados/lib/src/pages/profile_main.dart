@@ -3,10 +3,16 @@ import 'package:mauamados/models/models.dart';
 import 'package:mauamados/src/pages/pages.dart';
 
 class ProfileMainPage extends StatelessWidget {
-  final User user;
+  final User? user;
   final double fontSize1;
   final double fontSize2;
-  const ProfileMainPage({required this.user, required this.fontSize1, required this.fontSize2 ,super.key});
+  final int idUsuarioAtual;
+  const ProfileMainPage({
+    required this.user, 
+    required this.fontSize1,
+    required this.fontSize2,
+    required this.idUsuarioAtual,
+    super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +54,7 @@ class ProfileMainPage extends StatelessWidget {
                   height: deviceWidth * 1.6 <= deviceHeight ? deviceWidth * 0.7 : deviceHeight * 0.45,
                   child: ClipOval(
                     child: Image(
-                      image: NetworkImage(user.urlFotos.isEmpty ? 'https://i.imgur.com/YTkSwCJ.png' : user.urlFotos[0]),
+                      image: NetworkImage(user!.urlFotos.isEmpty ? 'https://i.imgur.com/YTkSwCJ.png' : user!.urlFotos[0]),
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -60,14 +66,14 @@ class ProfileMainPage extends StatelessWidget {
                   child: Column(
                     children: [
                       Text(
-                        ('${user.nome}, ${user.idade}'),
+                        ('${user!.nome}, ${user!.idade}'),
                         style: TextStyle(
                           fontSize: fontSize1,
                           fontWeight: FontWeight.bold
                         ),
                       ),
                       Text(
-                        user.curso,
+                        user!.curso,
                         style: TextStyle(
                           fontSize: fontSize2
                         ),
@@ -88,9 +94,10 @@ class ProfileMainPage extends StatelessWidget {
                       onPressed: () {
                         Navigator.of(context).push(
                           MaterialPageRoute(builder: (context) => ProfileEdit(
-                            user: user, 
+                            user: user!, 
                             fontSize1: fontSize1, 
-                            fontSize2: fontSize2
+                            fontSize2: fontSize2,
+                            idUsuarioAtual: idUsuarioAtual,
                           ))
                         );
                       },

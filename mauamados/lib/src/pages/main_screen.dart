@@ -5,9 +5,12 @@ import 'package:mauamados/models/models.dart';
 class MainScreen extends StatefulWidget {
   final double fontSize1;
   final double fontSize2;
+  final int idUsuarioAtual;
+
   const MainScreen({
     required this.fontSize1,
     required this.fontSize2,
+    required this.idUsuarioAtual,
     super.key
     });
 
@@ -31,8 +34,8 @@ class _MainScreenState extends State<MainScreen> {
     }
 
     final screens = [
-      const HomePage(),
-      ProfilePage(fontSize1: fontSize1, fontSize2: fontSize2,),
+      HomePage(idUsuarioAtual: widget.idUsuarioAtual),
+      ProfilePage(fontSize1: fontSize1, fontSize2: fontSize2, idUsuarioAtual: widget.idUsuarioAtual),
       ChatPage(conversas: conversas,fontSize: fontSize2 * 0.75 < 12 ? 12 : fontSize2 * 0.75, idUsuarioAtual: 1,)
     ];
 

@@ -5,16 +5,21 @@ import 'package:mauamados/src/pages/pages.dart';
 class ProfilePage extends StatelessWidget {
   final double fontSize1;
   final double fontSize2;
-  const ProfilePage({required this.fontSize1, required this.fontSize2, super.key});
+  final int idUsuarioAtual;
+  const ProfilePage({
+    required this.fontSize1, 
+    required this.fontSize2,
+    required this.idUsuarioAtual, 
+    super.key});
 
 @override
   Widget build(BuildContext context) {
-    User user = User.users[0];
+    User? user = User.getUserById(idUsuarioAtual);
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        body: ProfileMainPage(user: user, fontSize1: fontSize1, fontSize2: fontSize2,),
+        body: ProfileMainPage(user: user, fontSize1: fontSize1, fontSize2: fontSize2, idUsuarioAtual: idUsuarioAtual,),
       ),
     );
   }
