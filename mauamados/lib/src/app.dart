@@ -28,6 +28,8 @@ class App extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: LoginCadastro(deviceHeight: deviceHeight, fontSize1: fontSize1, fontSize2: fontSize2)
+      // home:UserProfileForm()
+      // home: LoginApp()
     );
   }
 }
