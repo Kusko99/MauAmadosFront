@@ -25,67 +25,52 @@ class _LoginPageState extends State<LoginPage> {
   TextEditingController passwordController = TextEditingController();
 
   Future<void> login() async {
-  final username = usernameController.text;
-  final password = passwordController.text;
+    final username = usernameController.text;
+    final password = passwordController.text;
 
-  final url = Uri.parse('http://127.0.0.1:8000/login/?username=$username&password=$password');
+    final response = await http.get(Uri.parse('http://127.0.0.1:8000/login/?username=$username&password=$password'));
+    
+    if (response.statusCode == 200) {
 
-  final response = await http.get(
-    url,
-    // headers: {'accept': 'application/json'},
-  );
-  
-  if (response.statusCode == 200) {
+      final data = json.decode(response.body);
+      final userId = int.parse(data['ID']);
 
-    final data = json.decode(response.body);
-    final userId = int.parse(data['ID']);
-    print(userId);
-
-    // Agora, faça uma nova requisição GET para obter os dados do usuário
-    final userResponse = await http.get(
-      Uri.parse('http://127.0.0.1:8000/user/$userId'),
-      // headers: {'accept': 'application/json'},
-    );
-
-      print('AAAAAAAAAAAAA');
-      print(userResponse.statusCode);
-
-    if (userResponse.statusCode == 200) {
-      final userData = json.decode(userResponse.body);
-      print(userData.runtimeType);
-      print(userData);
-      // final user = User.fromJson(userData);
-
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => HomeScreen(),
-        ),
+      final userResponse = await http.get(
+        Uri.parse('http://127.0.0.1:8000/user/$userId'),
       );
+
+      if (userResponse.statusCode == 200) {
+        final userData = json.decode(userResponse.body);
+        final user = User.fromJson(userData[0]);
+
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => HomeScreen(
+              user: user,
+            ),
+          ),
+        );
+      } else {
+        final userMessage = json.decode(userResponse.body)['message'];
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(userMessage),
+          ),
+        );
+      }
     } else {
-      final userMessage = json.decode(userResponse.body)['message'];
+      final message = json.decode(response.body)['message'];
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text(userMessage),
+          content: Text(message),
         ),
       );
     }
-  } else {
-    final message = json.decode(response.body)['message'];
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(message),
-      ),
-    );
   }
-}
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Login"),
-      ),
       body: Center(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -119,9 +104,9 @@ class _LoginPageState extends State<LoginPage> {
 }
 
 class HomeScreen extends StatelessWidget {
-  // final User user;
+  final User user;
 
-  // HomeScreen({required this.user});
+  HomeScreen({required this.user});
 
   @override
   Widget build(BuildContext context) {
@@ -129,12 +114,12 @@ class HomeScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text("Bem-vindo!"),
       ),
-      body: Center(
+      body:  Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text("Você está logado com sucesso!"),
-            Text("ID do usuário: {user.id}"),
+            Text("ID do usuário: ${user.id}"),
             // Adicione outros widgets para exibir os detalhes do usuário
           ],
         ),

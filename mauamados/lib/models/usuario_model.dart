@@ -4,12 +4,14 @@ class User extends Equatable {
   int id;
   String nome;
   int idade;
-  List<String> urlFotos;
+  List<dynamic> urlFotos;
   String bio;
   String curso;
-  List<String> interesses;
+  List<dynamic> interesses;
   String genero;
   String orientacao;
+  List<dynamic> likes;
+  List<dynamic> match;
 
   User({
     required this.id,
@@ -20,7 +22,10 @@ class User extends Equatable {
     required this.curso,
     required this.interesses,
     required this.genero,
-    required this.orientacao});
+    required this.orientacao,
+    required this.likes,
+    required this.match,
+    });
 
   @override
   List<Object> get props => [id, nome, idade, urlFotos, bio, curso, interesses, genero, orientacao];
@@ -57,7 +62,9 @@ class User extends Equatable {
         'Mesa de cabeceira'
       ],
       genero: 'Homem',
-      orientacao: 'Heterosexual'
+      orientacao: 'Heterosexual',
+      likes: const [],
+      match: const [],
     ),
     User(
       id: 2, 
@@ -76,7 +83,9 @@ class User extends Equatable {
       curso: 'Sistemas de Informação', 
       interesses: const ['Pokemon', 'Corgi', 'Terceira Idade', 'Telefone do Gabriel', 'Aparecido'],
       genero: 'Homem',
-      orientacao: 'Heterosexual'
+      orientacao: 'Heterosexual',
+      likes: const [],
+      match: const [],
     ),
     User(
       id: 3, 
@@ -94,7 +103,9 @@ class User extends Equatable {
         'Japonês', 'Honda', 'Nintendo', 'Yamaha', 'Corno', 'Banheiro do H', 'Bolinho de arroz'
       ],
       genero: 'Homem',
-      orientacao: 'Heterosexual'
+      orientacao: 'Heterosexual',
+      likes: const [],
+      match: const [],
     ),
     User(
       id: 4, 
@@ -115,7 +126,9 @@ class User extends Equatable {
         'Avião', 'Iberê Thenorio', 'Teodoro Sampaio', 'Pizza de Calabresa', 'Escravidão', 'W500'
       ],
       genero: 'Homem',
-      orientacao: 'Heterosexual'
+      orientacao: 'Heterosexual',
+      likes: const [],
+      match: const [],
     ),
     User(
       id: 5, 
@@ -133,7 +146,9 @@ class User extends Equatable {
         'Calistenia', 'Corrida', 'Macaco', 'MAUÁritacas', 'Dev', 'Dev de novo', 'Tapioca', 'Corote', 'Álcool antes das 12h'
       ],
       genero: 'Homem',
-      orientacao: 'Heterosexual'
+      orientacao: 'Heterosexual',
+      likes: const [],
+      match: const [],
     ),
     User(
       id: 6, 
@@ -150,7 +165,9 @@ class User extends Equatable {
       curso: 'Arquitetura',
       interesses: const ['Sabedoria', 'PixelArt', 'RapTap', 'Astronauta', 'Revolução Francesa', 'Peixes do U'],
       genero: 'Homem',
-      orientacao: 'Heterosexual'
+      orientacao: 'Heterosexual',
+      likes: const [],
+      match: const [],
     ),
     User(
       id: 7, 
@@ -167,7 +184,9 @@ class User extends Equatable {
       curso: 'Culinária na Anhembi',
       interesses: const ['Hambúrguer', 'Pizza', 'Morrer no D&D', 'Irmã', 'As Primas', 'Faltar', 'CPTM'],
       genero: 'Homem',
-      orientacao: 'Heterosexual'
+      orientacao: 'Heterosexual',
+      likes: const [],
+      match: const [],
     ),
     User(
       id: 8, 
@@ -186,7 +205,9 @@ class User extends Equatable {
       curso: 'Ciências do sono',
       interesses: const ['Mimir', 'Tirar cochilo', 'Nanar', 'Pregar o olho', 'Modo Soneca 24h', 'Cadeira Gamer', 'Ibere Thenorio', '494'],
       genero: 'Homem',
-      orientacao: 'Heterosexual'
+      orientacao: 'Heterosexual',
+      likes: const [],
+      match: const [],
     ),
     User(
       id: 9, 
@@ -202,9 +223,12 @@ class User extends Equatable {
       curso: 'Design', 
       interesses: const ['Monster', 'Honda Civic 2004', 'Bolsonaro', 'Comunismo', 'Git Hub', 'Photoshop', 'Igor', 'Aniversário', 'Manikas', 'Boliviana', 'Flautista'],
       genero: 'Homem',
-      orientacao: 'Heterosexual'
+      orientacao: 'Heterosexual',
+      likes: const [],
+      match: const [],
       ),
-      User(id: 10,
+    User(
+      id: 10,
       nome: 'Alexander', 
       idade: 42, 
       urlFotos: const [
@@ -218,7 +242,10 @@ class User extends Equatable {
       curso: 'Professor', 
       interesses: const ['PII', 'MAUÁ', 'Terça-Feira', 'Professor', 'Golden Retriever', 'Casado', 'FATEC', 'Doutor'], 
       genero: 'Homem', 
-      orientacao: 'Heterosexual')
+      orientacao: 'Heterosexual',
+      likes: const [],
+      match: const [],
+    )
   ];
 
   factory User.fromJson(Map<String, dynamic> json) {
@@ -232,7 +259,8 @@ class User extends Equatable {
       interesses:  List<String>.from(json['tags_preferences']),
       genero: json['genero'],
       orientacao: json['sexual_orientation'],
-      
+      likes: json['likes'],
+      match: json['match'],      
     );
   }
 }
