@@ -36,36 +36,30 @@ class _LoginPageState extends State<LoginPage> {
   );
   
   if (response.statusCode == 200) {
-    print('AAAAAAAAAAAAA');
-    print('AAAAAAAAAAAAA');
-    print('AAAAAAAAAAAAA');
-    print('AAAAAAAAAAAAA');
-    print('AAAAAAAAAAAAA');
-    print('AAAAAAAAAAAAA');
-    print('AAAAAAAAAAAAA');
-    print('AAAAAAAAAAAAA');
-    print('AAAAAAAAAAAAA');
-    print('AAAAAAAAAAAAA');
-    print('AAAAAAAAAAAAA');
-
 
     final data = json.decode(response.body);
-    final userId = data['ma_id'];
+    final userId = int.parse(data['ID']);
+    print(userId);
 
     // Agora, faça uma nova requisição GET para obter os dados do usuário
     final userResponse = await http.get(
       Uri.parse('http://127.0.0.1:8000/user/$userId'),
-      headers: {'accept': 'application/json'},
+      // headers: {'accept': 'application/json'},
     );
+
+      print('AAAAAAAAAAAAA');
+      print(userResponse.statusCode);
 
     if (userResponse.statusCode == 200) {
       final userData = json.decode(userResponse.body);
-      final user = User.fromJson(userData);
+      print(userData.runtimeType);
+      print(userData);
+      // final user = User.fromJson(userData);
 
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => HomeScreen(user: user),
+          builder: (context) => HomeScreen(),
         ),
       );
     } else {
@@ -83,11 +77,6 @@ class _LoginPageState extends State<LoginPage> {
         content: Text(message),
       ),
     );
-    // print('BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB');
-    // print('BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB');
-    // print('BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB');
-    // print('BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB');
-    // print('BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB');
   }
 }
 
@@ -130,9 +119,9 @@ class _LoginPageState extends State<LoginPage> {
 }
 
 class HomeScreen extends StatelessWidget {
-  final User user;
+  // final User user;
 
-  HomeScreen({required this.user});
+  // HomeScreen({required this.user});
 
   @override
   Widget build(BuildContext context) {
@@ -145,7 +134,7 @@ class HomeScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text("Você está logado com sucesso!"),
-            Text("ID do usuário: ${user.id}"),
+            Text("ID do usuário: {user.id}"),
             // Adicione outros widgets para exibir os detalhes do usuário
           ],
         ),
