@@ -220,4 +220,19 @@ class User extends Equatable {
       genero: 'Homem', 
       orientacao: 'Heterosexual')
   ];
+
+  factory User.fromJson(Map<String, dynamic> json) {
+    return User(
+      id: json['ma_id'],
+      nome: json['name'],
+      idade: json['age'],
+      urlFotos: List<String>.from(json['profile_picture']),
+      bio: json['bio'],
+      curso: json['course'],
+      interesses:  List<String>.from(json['tags_preferences']),
+      genero: json['genero'],
+      orientacao: json['sexual_orientation'],
+      
+    );
+  }
 }

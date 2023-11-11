@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+import 'package:mauamados/models/models.dart';
+
 void main() => runApp(LoginApp());
 
 class LoginApp extends StatelessWidget {
@@ -26,33 +28,66 @@ class _LoginPageState extends State<LoginPage> {
   final username = usernameController.text;
   final password = passwordController.text;
 
-  final url = Uri.parse('http://127.0.0.1:8000/login'); // Remova o '/$userId' da URL
+  final url = Uri.parse('http://127.0.0.1:8000/login/?username=$username&password=$password');
 
-  final response = await http.post(
+  final response = await http.get(
     url,
-    headers: {'Content-Type': 'application/json'},
-    body: jsonEncode({'login': username, 'senha': password}),
+    // headers: {'accept': 'application/json'},
   );
-
+  
   if (response.statusCode == 200) {
+    print('AAAAAAAAAAAAA');
+    print('AAAAAAAAAAAAA');
+    print('AAAAAAAAAAAAA');
+    print('AAAAAAAAAAAAA');
+    print('AAAAAAAAAAAAA');
+    print('AAAAAAAAAAAAA');
+    print('AAAAAAAAAAAAA');
+    print('AAAAAAAAAAAAA');
+    print('AAAAAAAAAAAAA');
+    print('AAAAAAAAAAAAA');
+    print('AAAAAAAAAAAAA');
+
+
     final data = json.decode(response.body);
     final userId = data['ma_id'];
 
-    // Defina o 'userId' após receber a resposta bem-sucedida
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => HomeScreen(userId: userId),
-      ),
+    // Agora, faça uma nova requisição GET para obter os dados do usuário
+    final userResponse = await http.get(
+      Uri.parse('http://127.0.0.1:8000/user/$userId'),
+      headers: {'accept': 'application/json'},
     );
+
+    if (userResponse.statusCode == 200) {
+      final userData = json.decode(userResponse.body);
+      final user = User.fromJson(userData);
+
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => HomeScreen(user: user),
+        ),
+      );
+    } else {
+      final userMessage = json.decode(userResponse.body)['message'];
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(userMessage),
+        ),
+      );
+    }
   } else {
-    final data = json.decode(response.body);
-    final message = data['message'];
+    final message = json.decode(response.body)['message'];
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(message),
       ),
     );
+    // print('BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB');
+    // print('BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB');
+    // print('BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB');
+    // print('BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB');
+    // print('BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB');
   }
 }
 
@@ -95,9 +130,9 @@ class _LoginPageState extends State<LoginPage> {
 }
 
 class HomeScreen extends StatelessWidget {
-  final String userId;
+  final User user;
 
-  HomeScreen({required this.userId});
+  HomeScreen({required this.user});
 
   @override
   Widget build(BuildContext context) {
@@ -106,8 +141,16 @@ class HomeScreen extends StatelessWidget {
         title: Text("Bem-vindo!"),
       ),
       body: Center(
-        child: Text("Você está logado com sucesso!\nID do usuário: $userId"),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text("Você está logado com sucesso!"),
+            Text("ID do usuário: ${user.id}"),
+            // Adicione outros widgets para exibir os detalhes do usuário
+          ],
+        ),
       ),
     );
   }
 }
+

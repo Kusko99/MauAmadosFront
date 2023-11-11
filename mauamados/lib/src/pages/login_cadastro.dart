@@ -138,7 +138,16 @@ class LoginCadastro extends StatelessWidget {
                           deviceHeight: deviceHeight,
                           fontSize: fontSize,
                           texto: 'Novo Usuário',
-                          onTap: () {},
+                          onTap: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => LoginApp(
+                                  // fontSize1: fontSize1,
+                                  // fontSize2: fontSize2,
+                                ),
+                              ),
+                            );
+                          },
                         ),
                       ],
                     ),

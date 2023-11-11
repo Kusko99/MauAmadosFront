@@ -38,8 +38,10 @@ class _HomePageState extends State<HomePage> {
       print('PUT request successful');
     } else {
       print('Failed to send PUT request with status code: ${response.statusCode}');
+      print('Response body: ${response.body}');
     }
   }
+
 
   void _next() {
     if (currentIndex < User.users.length - 1) {
@@ -47,7 +49,7 @@ class _HomePageState extends State<HomePage> {
         currentIndex++;
         currentUser = User.users[currentIndex];
         proxUserId = currentUser!.id;
-        
+        print('${widget.idUsuarioAtual},$proxUserId');
         executePutRequest(widget.idUsuarioAtual, proxUserId);
       });
     } else if (currentIndex == User.users.length - 1) {
