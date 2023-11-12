@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mauamados/models/models.dart';
 import 'package:mauamados/src/widgets/widgets.dart';
+import 'package:http/http.dart' as http;
 
 class HomePage extends StatefulWidget {
   final int idUsuarioAtual;
@@ -27,12 +28,29 @@ class _HomePageState extends State<HomePage> {
   Color superBack = Colors.white;
   double deltaY = 0;
   double deltaX = 0;
+  int proxUserId = -1;
+
+  void executePutRequest(int idUsuarioAtual, int proxUserId) async {
+    var url = Uri.parse('http://127.0.0.1:8000/user/put_like/$idUsuarioAtual/$proxUserId');
+    var response = await http.put(url);
+
+    if (response.statusCode == 200) {
+      print('PUT request successful');
+    } else {
+      print('Failed to send PUT request with status code: ${response.statusCode}');
+      print('Response body: ${response.body}');
+    }
+  }
+
 
   void _next() {
     if (currentIndex < User.users.length - 1) {
       setState(() {
         currentIndex++;
         currentUser = User.users[currentIndex];
+        proxUserId = currentUser!.id;
+        print('${widget.idUsuarioAtual},$proxUserId');
+        executePutRequest(widget.idUsuarioAtual, proxUserId);
       });
     } else if (currentIndex == User.users.length - 1) {
       setState(() {
