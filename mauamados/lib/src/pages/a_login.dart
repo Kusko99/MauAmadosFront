@@ -3,10 +3,17 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 import 'package:mauamados/models/models.dart';
-
-void main() => runApp(LoginApp());
+import 'package:mauamados/src/pages/home.dart';
 
 class LoginApp extends StatelessWidget {
+  final double fontSize1;
+  final double fontSize2;
+
+  const LoginApp({
+    required this.fontSize1,
+    required this.fontSize2,
+  });
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -45,8 +52,8 @@ class _LoginPageState extends State<LoginPage> {
 
         Navigator.of(context).push(
           MaterialPageRoute(
-            builder: (context) => HomeScreen(
-              user: user,
+            builder: (context) => HomePage(
+              idUsuarioAtual: user.id,
             ),
           ),
         );
@@ -103,28 +110,5 @@ class _LoginPageState extends State<LoginPage> {
   }
 }
 
-class HomeScreen extends StatelessWidget {
-  final User user;
 
-  HomeScreen({required this.user});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Bem-vindo!"),
-      ),
-      body:  Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text("Você está logado com sucesso!"),
-            Text("ID do usuário: ${user.id}"),
-            // Adicione outros widgets para exibir os detalhes do usuário
-          ],
-        ),
-      ),
-    );
-  }
-}
 

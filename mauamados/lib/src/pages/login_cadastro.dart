@@ -142,8 +142,8 @@ class LoginCadastro extends StatelessWidget {
                             Navigator.of(context).push(
                               MaterialPageRoute(
                                 builder: (context) => LoginApp(
-                                  // fontSize1: fontSize1,
-                                  // fontSize2: fontSize2,
+                                  fontSize1: fontSize1,
+                                  fontSize2: fontSize2,
                                 ),
                               ),
                             );
