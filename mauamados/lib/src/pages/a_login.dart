@@ -3,28 +3,22 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 import 'package:mauamados/models/models.dart';
-import 'package:mauamados/src/pages/home.dart';
+import 'package:mauamados/src/pages/pages.dart';
 
-class LoginApp extends StatelessWidget {
+class LoginPage extends StatefulWidget {
   final double fontSize1;
   final double fontSize2;
 
-  const LoginApp({
+  const LoginPage({
     required this.fontSize1,
     required this.fontSize2,
+    super.key
   });
 
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: LoginPage(),
-    );
+  State<LoginPage> createState() {
+    return _LoginPageState();
   }
-}
-
-class LoginPage extends StatefulWidget {
-  @override
-  _LoginPageState createState() => _LoginPageState();
 }
 
 class _LoginPageState extends State<LoginPage> {
@@ -52,7 +46,9 @@ class _LoginPageState extends State<LoginPage> {
 
         Navigator.of(context).push(
           MaterialPageRoute(
-            builder: (context) => HomePage(
+            builder: (context) => MainScreen(
+              fontSize1: widget.fontSize1,
+              fontSize2: widget.fontSize2,
               idUsuarioAtual: user.id,
             ),
           ),

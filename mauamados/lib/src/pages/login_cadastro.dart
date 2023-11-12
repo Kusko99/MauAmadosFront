@@ -24,8 +24,6 @@ class LoginCadastro extends StatelessWidget {
       altura = deviceHeight * 0.5;
     }
 
-    int idUsuarioAtual = 1;
-
     double fontSize = MediaQuery.of(context).size.shortestSide * 0.04;
     double imageSize = (fontSize * 12);
 
@@ -119,10 +117,9 @@ class LoginCadastro extends StatelessWidget {
                           onTap: () {
                             Navigator.of(context).push(
                               MaterialPageRoute(
-                                builder: (context) => MainScreen(
+                                builder: (context) => LoginPage(
                                   fontSize1: fontSize1,
                                   fontSize2: fontSize2,
-                                  idUsuarioAtual: idUsuarioAtual,
                                 ),
                               ),
                             );
@@ -138,16 +135,7 @@ class LoginCadastro extends StatelessWidget {
                           deviceHeight: deviceHeight,
                           fontSize: fontSize,
                           texto: 'Novo Usuário',
-                          onTap: () {
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (context) => LoginApp(
-                                  fontSize1: fontSize1,
-                                  fontSize2: fontSize2,
-                                ),
-                              ),
-                            );
-                          },
+                          onTap: () {},
                         ),
                       ],
                     ),
