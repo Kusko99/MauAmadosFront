@@ -8,4 +8,3 @@ export 'chat_contatos.dart';
 export 'main_screen.dart';
 export 'login_cadastro.dart';
 export 'a_registros.dart';
-export 'a_login.dart';
