@@ -51,7 +51,7 @@ class User extends Equatable {
       ],
       bio:
           'Shrek é um ogro rabugento e nada sociável que se vê com um problema enorme: todas as criaturas de contos de fadas foram despejadas no pântano onde vive. Determinado a tirá-las dali e voltar a viver em paz, ele faz um trato com o príncipe do reino, que por sua vez precisa de alguém bruto e forte para resgatar a princesa Fiona, com quem o monarca pretende se casar para virar rei. Porém, a moça está guardada em uma torre por um dragão feroz. Se conseguir trazer a princesa, Shrek terá suas terras de volta. Assim, ele logo parte em sua missão, mas não sem a companhia de um inconveniente burro falante.',
-      curso: 'Ciências da Computação',
+      curso: 'Ciência da Computação',
       interesses: const [
         'Hacker',
         'Rei do Hambúrguer',
@@ -98,7 +98,7 @@ class User extends Equatable {
         'https://i.imgur.com/6kja6e4.jpg'
       ], 
       bio: '1.63, 49kg', 
-      curso: 'Ciências da Computação', 
+      curso: 'Ciência da Computação', 
       interesses: const [
         'Japonês', 'Honda', 'Nintendo', 'Yamaha', 'Corno', 'Banheiro do H', 'Bolinho de arroz'
       ],
@@ -121,7 +121,7 @@ class User extends Equatable {
         'https://i.imgur.com/DK4FX3e.jpg'
       ], 
       bio: 'Escravo do Aero', 
-      curso: 'Ciências da Computação', 
+      curso: 'Ciência da Computação', 
       interesses: const [
         'Avião', 'Iberê Thenorio', 'Teodoro Sampaio', 'Pizza de Calabresa', 'Escravidão', 'W500'
       ],
@@ -141,7 +141,7 @@ class User extends Equatable {
         'https://i.imgur.com/RIF6Bzc.jpg'
       ], 
       bio: 'Você não sabe programar', 
-      curso: 'Ciências da Computação', 
+      curso: 'Ciência da Computação', 
       interesses: const [
         'Calistenia', 'Corrida', 'Macaco', 'MAUÁritacas', 'Dev', 'Dev de novo', 'Tapioca', 'Corote', 'Álcool antes das 12h'
       ],
@@ -162,7 +162,7 @@ class User extends Equatable {
         'https://i.imgur.com/A6zC6Gl.jpg'
       ],
       bio: 'Diogo ou Diego?',
-      curso: 'Arquitetura',
+      curso: 'Arquitetura e Urbanismo',
       interesses: const ['Sabedoria', 'PixelArt', 'RapTap', 'Astronauta', 'Revolução Francesa', 'Peixes do U'],
       genero: 'Homem',
       orientacao: 'Heterosexual',
@@ -181,7 +181,7 @@ class User extends Equatable {
         'https://i.imgur.com/2F2Y6TJ.jpg'
       ],
       bio: '+55 11 97115-0204',
-      curso: 'Culinária na Anhembi',
+      curso: 'Engenharia de Alimentos',
       interesses: const ['Hambúrguer', 'Pizza', 'Morrer no D&D', 'Irmã', 'As Primas', 'Faltar', 'CPTM'],
       genero: 'Homem',
       orientacao: 'Heterosexual',
@@ -202,7 +202,7 @@ class User extends Equatable {
         'https://i.imgur.com/11pL9Hu.jpg'
       ],
       bio: 'ZZZZZZzzzzzzzzzzzzzzzzzZZZZZZZZZZZzzzzzzzzzzzzzZZZZZZZ',
-      curso: 'Ciências do sono',
+      curso: 'Inteligência Artificial e Ciência de Dados',
       interesses: const ['Mimir', 'Tirar cochilo', 'Nanar', 'Pregar o olho', 'Modo Soneca 24h', 'Cadeira Gamer', 'Ibere Thenorio', '494'],
       genero: 'Homem',
       orientacao: 'Heterosexual',

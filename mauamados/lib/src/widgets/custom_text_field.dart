@@ -9,6 +9,8 @@ class CustomTextField extends StatelessWidget {
   final ValueChanged<String> onChanged;
   final String? errorText;
   final bool obscureText;
+  final int? maxLines;
+  final int minLines;
 
   const CustomTextField({
     required this.controller,
@@ -16,6 +18,8 @@ class CustomTextField extends StatelessWidget {
     required this.hintText,
     required this.label,
     required this.onChanged,
+    this.maxLines = 1,
+    this.minLines = 1,
     this.obscureText = false,
     this.errorText,
     super.key
@@ -27,6 +31,8 @@ class CustomTextField extends StatelessWidget {
       data: Column(
         children: [
           TextField(
+            maxLines: maxLines,
+            minLines: minLines,
             controller: controller,
             obscureText: obscureText,
             style: TextStyle(

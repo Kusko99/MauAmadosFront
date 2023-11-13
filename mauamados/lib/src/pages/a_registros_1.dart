@@ -1,7 +1,6 @@
 // import 'dart:ffi';
-
 import 'dart:math';
-
+import 'package:mauamados/src/pages/pages.dart';
 import 'package:mauamados/src/widgets/widgets.dart';
 // import 'dart:convert';
 import 'package:flutter/material.dart';
@@ -14,8 +13,11 @@ class Registros extends StatefulWidget {
     required this.fontSize,
     super.key
     });
+
   @override
-  _RegistrosState createState() => _RegistrosState();
+    State<Registros> createState() {
+    return _RegistrosState();
+  }
 }
 
 class _RegistrosState extends State<Registros> {
@@ -25,7 +27,7 @@ class _RegistrosState extends State<Registros> {
   TextEditingController ageController = TextEditingController();
   TextEditingController nameController = TextEditingController();
   late double fontSize = widget.fontSize * 0.9;
-  final Map<String, dynamic> userData = {};
+  // final Map<String, dynamic> userData = {};
   bool isPasswordValid = false;
   bool isNameValid = false;
   bool isAgeValid = false;
@@ -70,9 +72,9 @@ class _RegistrosState extends State<Registros> {
           )
         ),
         title: Text(
-          'Bem Vindo!',
+          'Primeiros passos',
           style: TextStyle(
-            fontSize: max(MediaQuery.of(context).size.height * 0.05, 15.0)
+            fontSize: max(MediaQuery.of(context).size.height * 0.035, 15.0)
           ),
           ),
         toolbarHeight: max(MediaQuery.of(context).size.height * 0.1, 36.0),
@@ -82,6 +84,7 @@ class _RegistrosState extends State<Registros> {
           top: 20
         ),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             CustomTextField(
               controller: nameController, 
@@ -215,32 +218,46 @@ class _RegistrosState extends State<Registros> {
               },
               errorText: isPasswordConfirmationValid ? null : 'Senhas não coincidem',
             ),
-            Padding(
-              padding: const EdgeInsets.only(
-                bottom: 20
-              ),
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: isNextButtonEnabled ? const Color.fromARGB(255, 0, 71, 133) : Colors.grey,
+            Align(
+              alignment: Alignment.bottomRight,
+              child: Padding(
+                padding: const EdgeInsets.only(
+                  right: 20,
+                  bottom: 20
                 ),
-                onPressed: () {
-                  if (isNextButtonEnabled) {
-                    
-                  }
-                },
-                child: Padding(
-                  padding: const EdgeInsets.all(10),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text('Próximo', style: TextStyle(fontSize: fontSize)),
-                      Icon(
-                        Icons.arrow_forward,
-                        size: fontSize,
-                      ),
-                    ],
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: isNextButtonEnabled ? const Color.fromARGB(255, 0, 71, 133) : Colors.grey,
                   ),
-                )
+                  onPressed: () {
+                    if (isNextButtonEnabled) {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder:(context) => Registros2(
+                            fontSize: fontSize,
+                            email: emailController.text,
+                            senha: passwordController.text,
+                            nome: nameController.text,
+                            idade: int.parse(ageController.text),
+                          ),
+                        )
+                      );
+                    }
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text('Próximo', style: TextStyle(fontSize: fontSize)),
+                        Icon(
+                          Icons.arrow_forward,
+                          size: fontSize,
+                        ),
+                      ],
+                    ),
+                  )
+                ),
               ),
             )
           ],

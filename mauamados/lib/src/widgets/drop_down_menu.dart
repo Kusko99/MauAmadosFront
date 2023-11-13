@@ -47,6 +47,7 @@ class _DropDownMenuState extends State<DropDownMenu> {
               style: TextStyle(
                 fontSize: widget.fontSize,
               ),
+              softWrap: true,
             ),
           );
         }).toList(),
