@@ -35,6 +35,7 @@ class _RegistrosState extends State<Registros> {
   }
   bool emailValidator = false;
   bool isPasswordConfirmationValid = false;
+  bool isNextButtonEnabled   = false;
 
   // Future<void> submitForm() async {
 
@@ -91,11 +92,17 @@ class _RegistrosState extends State<Registros> {
               onChanged: (value) {
                 if (value == '') {
                   setState(() {
+                    isNextButtonEnabled  = false;
                     isNameValid = false;
                   });
                 } else {
                   setState(() {
                     isNameValid = true;
+                    if (isNameValid && isAgeValid && emailValidator && isPasswordValid && isPasswordConfirmationValid) {
+                      setState(() {
+                        isNextButtonEnabled  = true;
+                      });
+                    }
                   });
                 }
               } ,
@@ -109,11 +116,17 @@ class _RegistrosState extends State<Registros> {
               onChanged: (value) {
                 if (int.parse(value) < 18) {
                   setState(() {
+                    isNextButtonEnabled  = false;
                     isAgeValid = false;
                   });
                 } else {
                   setState(() {
                     isAgeValid = true;
+                    if (isNameValid && isAgeValid && emailValidator && isPasswordValid && isPasswordConfirmationValid) {
+                      setState(() {
+                        isNextButtonEnabled  = true;
+                      });
+                    }
                   });
                 }
               },
@@ -127,11 +140,17 @@ class _RegistrosState extends State<Registros> {
               onChanged: (value) {
                 if (!isEmailValid(value)) {
                   setState(() {
+                    isNextButtonEnabled  = false;
                     emailValidator = false;
                   });
                 } else {
                   setState(() {
                     emailValidator = true;
+                    if (isNameValid && isAgeValid && emailValidator && isPasswordValid && isPasswordConfirmationValid) {
+                      setState(() {
+                        isNextButtonEnabled  = true;
+                      });
+                    }
                   });
                 }
               },
@@ -146,11 +165,27 @@ class _RegistrosState extends State<Registros> {
               onChanged: (value) {
                 if (value.length < 8) {
                   setState(() {
+                    isNextButtonEnabled  = false;
                     isPasswordValid = false;
                   });
                 } else {
                   setState(() {
                     isPasswordValid = true;
+                  });
+                }
+                if (value != passwordConfirmationController.text) {
+                  setState(() {
+                    isPasswordConfirmationValid = false;
+                    isNextButtonEnabled  = false;
+                  });
+                } else {
+                  setState(() {
+                    isPasswordConfirmationValid = true;
+                    if (isNameValid && isAgeValid && emailValidator && isPasswordValid && isPasswordConfirmationValid) {
+                      setState(() {
+                        isNextButtonEnabled  = true;
+                      });
+                    }
                   });
                 }
               } 
@@ -165,14 +200,45 @@ class _RegistrosState extends State<Registros> {
                 if (value != passwordController.text) {
                   setState(() {
                     isPasswordConfirmationValid = false;
+                    isNextButtonEnabled  = false;
                   });
                 } else {
                   setState(() {
                     isPasswordConfirmationValid = true;
+                    if (isNameValid && isAgeValid && emailValidator && isPasswordValid && isPasswordConfirmationValid) {
+                      setState(() {
+                        isNextButtonEnabled  = true;
+                      });
+                    }
                   });
                 }
               },
               errorText: isPasswordConfirmationValid ? null : 'Senhas não coincidem',
+            ),
+            Padding(
+              padding: const EdgeInsets.only(
+                bottom: 20
+              ),
+                child: ElevatedButton(
+                onPressed: () {
+                  if (isNextButtonEnabled) {
+                    
+                  }
+                },
+                child: Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text('Próximo', style: TextStyle(fontSize: fontSize)),
+                      Icon(
+                        Icons.arrow_forward,
+                        size: fontSize,
+                      ),
+                    ],
+                  ),
+                )
+              ),
             )
           ],
         ),
