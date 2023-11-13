@@ -219,7 +219,10 @@ class _RegistrosState extends State<Registros> {
               padding: const EdgeInsets.only(
                 bottom: 20
               ),
-                child: ElevatedButton(
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: isNextButtonEnabled ? const Color.fromARGB(255, 0, 71, 133) : Colors.grey,
+                ),
                 onPressed: () {
                   if (isNextButtonEnabled) {
                     
