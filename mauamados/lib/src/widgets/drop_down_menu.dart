@@ -38,6 +38,7 @@ class _DropDownMenuState extends State<DropDownMenu> {
       label: widget.label, 
       fontSize: widget.fontSize,
       data: DropdownButton<String>(
+        isExpanded: true,
         value: _selectedItem,
         items: widget.items.map((String item) {
           return DropdownMenuItem<String>(

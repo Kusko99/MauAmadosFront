@@ -282,15 +282,8 @@ class LoginCadastro extends StatelessWidget {
                             Navigator.of(context).push(
                               MaterialPageRoute(
                                 builder: (context) => 
-                                // Registros(
-                                //   fontSize: fontSize,
-                                // )
-                                Registros2(
-                                  fontSize: fontSize, 
-                                  email: '22.22222-2@maua.br', 
-                                  senha: '12345678', 
-                                  nome: 'Usuário', 
-                                  idade: 20
+                                Registros(
+                                  fontSize: fontSize,
                                 )
                               )
                             );
