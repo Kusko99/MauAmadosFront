@@ -26,6 +26,15 @@ class _RegistrosState extends State<Registros> {
   TextEditingController nameController = TextEditingController();
   late double fontSize = widget.fontSize * 0.9;
   final Map<String, dynamic> userData = {};
+  bool isPasswordValid = false;
+  bool isNameValid = false;
+  bool isAgeValid = false;
+  bool isEmailValid(String email) {
+    final RegExp emailRegex = RegExp(r'^\d{2}\.\d{5}-\d@maua\.br$');
+    return emailRegex.hasMatch(email);
+  }
+  bool emailValidator = false;
+  bool isPasswordConfirmationValid = false;
 
   // Future<void> submitForm() async {
 
@@ -62,7 +71,7 @@ class _RegistrosState extends State<Registros> {
         title: Text(
           'Bem Vindo!',
           style: TextStyle(
-            fontSize: max(MediaQuery.of(context).size.height * 0.1, 36.0)
+            fontSize: max(MediaQuery.of(context).size.height * 0.05, 15.0)
           ),
           ),
         toolbarHeight: max(MediaQuery.of(context).size.height * 0.1, 36.0),
@@ -78,31 +87,93 @@ class _RegistrosState extends State<Registros> {
               fontSize: fontSize,
               hintText: 'Seu nome',
               label: 'Nome',
+              errorText: isNameValid ? null : 'O nome não pode estar vazio',
+              onChanged: (value) {
+                if (value == '') {
+                  setState(() {
+                    isNameValid = false;
+                  });
+                } else {
+                  setState(() {
+                    isNameValid = true;
+                  });
+                }
+              } ,
             ),
             CustomTextField(
               controller: ageController, 
               fontSize: fontSize,
               hintText: 'Idade',
               label: 'Idade',
+              errorText: isAgeValid ? null : 'Usuários com menos de 18 anos não podem se cadastrar',
+              onChanged: (value) {
+                if (int.parse(value) < 18) {
+                  setState(() {
+                    isAgeValid = false;
+                  });
+                } else {
+                  setState(() {
+                    isAgeValid = true;
+                  });
+                }
+              },
             ),
             CustomTextField(
               controller: emailController, 
               fontSize: fontSize,
               hintText: 'seuRA@maua.br',
               label: 'Email',
+              errorText: emailValidator ? null : 'O E-mail deve ser no formato xx.xxxxx-x@maua.br',
+              onChanged: (value) {
+                if (!isEmailValid(value)) {
+                  setState(() {
+                    emailValidator = false;
+                  });
+                } else {
+                  setState(() {
+                    emailValidator = true;
+                  });
+                }
+              },
             ),
             CustomTextField(
               controller: passwordController, 
               fontSize: fontSize,
               hintText: 'Sua senha',
               label: 'Senha',
+              obscureText: true,
+              errorText: isPasswordValid ? null : 'A senha deve conter pelo menos 8 caracteres',
+              onChanged: (value) {
+                if (value.length < 8) {
+                  setState(() {
+                    isPasswordValid = false;
+                  });
+                } else {
+                  setState(() {
+                    isPasswordValid = true;
+                  });
+                }
+              } 
             ),
             CustomTextField(
-              controller: passwordConfirmationController, 
+              controller: passwordConfirmationController,
               fontSize: fontSize,
               hintText: 'Sua senha',
-              label: 'Confirme sua senha ',
-            ),
+              label: 'Confirme sua senha',
+              obscureText: true,
+              onChanged: (value) {
+                if (value != passwordController.text) {
+                  setState(() {
+                    isPasswordConfirmationValid = false;
+                  });
+                } else {
+                  setState(() {
+                    isPasswordConfirmationValid = true;
+                  });
+                }
+              },
+              errorText: isPasswordConfirmationValid ? null : 'Senhas não coincidem',
+            )
           ],
         ),
        )
