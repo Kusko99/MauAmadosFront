@@ -283,6 +283,8 @@ class LoginCadastro extends StatelessWidget {
                               MaterialPageRoute(
                                 builder: (context) => 
                                 Registros(
+                                  fontSize1: fontSize1,
+                                  fontSize2: fontSize2,
                                   fontSize: fontSize,
                                 )
                               )

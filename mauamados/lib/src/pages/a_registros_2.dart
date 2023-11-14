@@ -11,6 +11,8 @@ class Registros2 extends StatefulWidget {
   final String nome;
   final int idade;
   final User user;
+  final double fontSize1;
+  final double fontSize2;
 
   const Registros2({
     required this.fontSize,
@@ -19,6 +21,8 @@ class Registros2 extends StatefulWidget {
     required this.nome, 
     required this.idade,
     required this.user,
+    required this.fontSize1,
+    required this.fontSize2,
     super.key, 
     });
 
@@ -200,6 +204,8 @@ class _RegistrosState2 extends State<Registros2> {
                       Navigator.of(context).push(
                         MaterialPageRoute(
                           builder:(context) => Registros3(
+                            fontSize1: widget.fontSize1,
+                            fontSize2: widget.fontSize2,
                             user: widget.user,
                             fontSize: widget.fontSize,
                             userData: userData,

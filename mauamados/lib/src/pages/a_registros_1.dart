@@ -6,9 +6,13 @@ import 'package:flutter/material.dart';
 
 class Registros extends StatefulWidget {
   final double fontSize;
+  final double fontSize1;
+  final double fontSize2;
 
   const Registros({
     required this.fontSize,
+    required this.fontSize1,
+    required this.fontSize2,
     super.key
     });
 
@@ -216,6 +220,8 @@ class _RegistrosState extends State<Registros> {
                       Navigator.of(context).push(
                         MaterialPageRoute(
                           builder:(context) => Registros2(
+                            fontSize1: widget.fontSize1,
+                            fontSize2: widget.fontSize2,
                             user: user,
                             fontSize: fontSize,
                             email: emailController.text,

@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:mauamados/models/models.dart';
+import 'package:mauamados/src/pages/pages.dart';
 import 'package:mauamados/src/widgets/widgets.dart';
 import 'package:http/http.dart' as http;
 
@@ -9,11 +10,15 @@ class Registros3 extends StatefulWidget {
   final Map<String, dynamic> userData;
   final double fontSize;
   final User user;
+  final double fontSize1;
+  final double fontSize2;
 
   const Registros3({
     required this.userData,
     required this.fontSize,
     required this.user,
+    required this.fontSize1,
+    required this.fontSize2,
     super.key
     });
 
@@ -54,7 +59,15 @@ class _RegistrosState3 extends State<Registros3> {
     );
 
     if (response.statusCode == 200) {
-      // Lidar com a resposta da API em caso de sucesso
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (context) => MainScreen(
+            idUsuarioAtual: 0,
+            fontSize1: widget.fontSize1,
+            fontSize2: widget.fontSize2,
+          )
+        )
+      );
     } else {
       // Lidar com erros da solicitação
     }
@@ -64,12 +77,9 @@ void addImage(String link) {
   final updatedUserPhotos = List<String>.from(widget.user.urlFotos);
   updatedUserPhotos.add(link);
   setState(() {
-    // user.urlFotos = updatedUserPhotos;
     widget.user.urlFotos.add(link);
     isNextButtonEnabled = true;
   });
-  print(widget.user.interesses);
-  print(widget.user.urlFotos);
 }
 
   void removeImage(String link) {
@@ -98,10 +108,7 @@ void addImage(String link) {
     updatedUserInterests.add(interesse);
     setState(() {
       widget.user.interesses.add(interesse);
-      // user.interesses = updatedUserInterests;
     });
-  print(widget.user.interesses);
-  print(widget.user.urlFotos);
   }
 
     return Scaffold(
@@ -128,32 +135,35 @@ void addImage(String link) {
         ),
         child: Column(
           children: [
-            ProfileBox(
-              data: Wrap(
-                alignment: WrapAlignment.center,
-                spacing: 5,
-                runSpacing: 5,
-                children: [
-                  ...widget.user.urlFotos
-                      .map((url) => ProfileImage(
-                            imageUrl: url,
-                            onRemove: () {
-                              removeImage(url);
-                            },
-                          ))
-                      .toList(),
-                  if (widget.user.urlFotos.length < 9)
-                    ...List.generate(
-                      9 - widget.user.urlFotos.length,
-                      (index) => ImageButton(
-                        user: widget.user,
-                        onAdd: addImage,
-                      ),
+            Text(
+              'Adicione uma Foto',
+              style: TextStyle(
+                fontWeight: FontWeight.bold, fontSize: widget.fontSize,
+                color: const Color.fromARGB(255, 0, 71, 133)
+              )
+            ),
+            Wrap(
+              alignment: WrapAlignment.center,
+              spacing: 5,
+              runSpacing: 5,
+              children: [
+                ...widget.user.urlFotos
+                    .map((url) => ProfileImage(
+                          imageUrl: url,
+                          onRemove: () {
+                            removeImage(url);
+                          },
+                        ))
+                    .toList(),
+                if (widget.user.urlFotos.length < 9)
+                  ...List.generate(
+                    9 - widget.user.urlFotos.length,
+                    (index) => ImageButton(
+                      user: widget.user,
+                      onAdd: addImage,
                     ),
-                ],
-              ),
-              label: 'Adicione Imagens', 
-              fontSize: widget.fontSize
+                  ),
+              ],
             ),
             ProfileBox(
               label: 'Interesses', 
@@ -198,7 +208,6 @@ void addImage(String link) {
                         userData['tags_preferences'] = widget.user.interesses;
                       });
                       submitForm();
-                      print(userData);
                     }
                   },
                   child: Padding(
