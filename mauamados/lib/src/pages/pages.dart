@@ -9,3 +9,4 @@ export 'main_screen.dart';
 export 'login_cadastro.dart';
 export 'a_registros_1.dart';
 export 'a_registros_2.dart';
+export 'a_registros_3.dart';

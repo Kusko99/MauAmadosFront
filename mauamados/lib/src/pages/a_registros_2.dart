@@ -1,9 +1,7 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:mauamados/src/pages/pages.dart';
 import 'package:mauamados/src/widgets/widgets.dart';
-// import 'dart:ffi';
-import 'dart:convert';
-import 'package:http/http.dart' as http;
 
 class Registros2 extends StatefulWidget {
   final double fontSize;
@@ -39,26 +37,6 @@ class _RegistrosState2 extends State<Registros2> {
   bool isNextButtonEnabled = false;
 
   Map<String, dynamic> userData = {};
-
-  Future<void> submitForm() async {
-
-    final jsonData = jsonEncode(userData);
-
-    final response = await http.post(
-      Uri.parse('http://127.0.0.1:8000/user'),
-      headers: {
-        'accept': 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: jsonData,
-    );
-
-    if (response.statusCode == 200) {
-      // Lidar com a resposta da API em caso de sucesso
-    } else {
-      // Lidar com erros da solicitação
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -199,24 +177,27 @@ class _RegistrosState2 extends State<Registros2> {
                         {
                           "ma_id": 4,
                           "name": widget.nome,
-                          "profile_picture": [
-                            "string"
-                          ],
+                          "profile_picture": [],
                           "age": widget.idade,
                           "course": cursoSelecionado,
                           "bio": bioController.text.isNotEmpty ? bioController.text : '',
                           "genero": generoSelecionado.toLowerCase(),
                           "sexual_orientation": orientacaoSelecionada.toLowerCase(),
-                          "tags_preferences": [
-                            "string"
-                          ],
+                          "tags_preferences": [],
                           "match": [],
                           "likes": [],
                           "login": widget.email,
                           "senha": widget.senha
                         };
                       });
-                      submitForm();
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder:(context) => Registros3(
+                            fontSize: widget.fontSize,
+                            userData: userData,
+                          ),
+                        )
+                      );
                     }
                   },
                   child: Padding(

@@ -2,6 +2,7 @@ import 'dart:math';
 import 'package:mauamados/src/pages/pages.dart';
 import 'package:mauamados/src/widgets/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:mauamados/models/usuario_cadastro.dart';
 
 class Registros extends StatefulWidget {
   final double fontSize;
@@ -23,6 +24,7 @@ class _RegistrosState extends State<Registros> {
   TextEditingController passwordConfirmationController = TextEditingController();
   TextEditingController ageController = TextEditingController();
   TextEditingController nameController = TextEditingController();
+  UserCadastro user =
   late double fontSize = widget.fontSize * 0.9;
   bool isPasswordValid = false;
   bool isNameValid = false;
