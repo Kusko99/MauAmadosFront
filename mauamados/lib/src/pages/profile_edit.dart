@@ -69,6 +69,7 @@ class _ProfileEditState extends State<ProfileEdit> {
   @override
   Widget build(BuildContext context) {
     String generoSelecionado = widget.user.genero;
+    String cursoSelecionado = widget.user.curso;
     String orientacaoSelecionada = widget.user.orientacao;
     double deviceHeight = MediaQuery.of(context).size.height;
 
@@ -152,15 +153,20 @@ class _ProfileEditState extends State<ProfileEdit> {
                         });
                       },
                     ),
-                    TextFieldWidget(
-                      label: 'Curso',
-                      text: widget.user.curso,
-                      fontSize: widget.fontSize2,
-                      onChanged: (curso) {
+                    DropDownMenu(
+                      items: const ['--Selecione--','Administração', 'Arquitetura e Urbanismo', 'Ciência da Computação', 'Design', 
+              'Engenharia Civil', 'Engenharia de Alimentos', 'Engenharia de Computação', 'Engenharia de Controle e Automoção',
+              'Engenharia de Produção', 'Engenharia Elétrica', 'Engenharia Eletrônica', 'Engenharia Mecânica', 'Engenharia Química',
+              'Inteligência Artificial e Ciência de Dados', 'Relações Internacionais', 'Sistemas de Informação', 'Professor'], 
+                      fontSize: widget.fontSize2, 
+                      selectedItem: widget.user.curso, 
+                      onChanged: (value) {
                         setState(() {
-                          widget.user.curso = curso;
+                          cursoSelecionado = value;
+                          widget.user.curso = cursoSelecionado;
                         });
-                      },
+                      }, 
+                      label: 'Curso'
                     ),
                     TextFieldWidget(
                       label: 'Bio',

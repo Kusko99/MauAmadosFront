@@ -2,6 +2,9 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:mauamados/src/pages/pages.dart';
 import 'package:mauamados/src/widgets/widgets.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'package:mauamados/models/models.dart';
 
 class LoginCadastro extends StatelessWidget {
   final double deviceHeight;
@@ -23,8 +26,6 @@ class LoginCadastro extends StatelessWidget {
     if (deviceHeight * 0.8 < deviceWidth) {
       altura = deviceHeight * 0.5;
     }
-
-    int idUsuarioAtual = 1;
 
     double fontSize = MediaQuery.of(context).size.shortestSide * 0.04;
     double imageSize = (fontSize * 12);
@@ -117,14 +118,153 @@ class LoginCadastro extends StatelessWidget {
                           fontSize: fontSize,
                           texto: 'Entrar',
                           onTap: () {
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (context) => MainScreen(
-                                  fontSize1: fontSize1,
-                                  fontSize2: fontSize2,
-                                  idUsuarioAtual: idUsuarioAtual,
-                                ),
-                              ),
+                            showDialog(
+                              context: context,
+                              builder: (context) {
+                                
+                                TextEditingController usernameController = TextEditingController();
+                                TextEditingController passwordController = TextEditingController();
+
+                                Future<void> login() async {
+                                  final username = usernameController.text;
+                                  final password = passwordController.text;
+
+                                  final response = await http.get(Uri.parse('http://127.0.0.1:8000/login/?username=$username&password=$password'));
+                                  
+                                  if (response.statusCode == 200) {
+
+                                    final data = json.decode(response.body);
+                                    final userId = int.parse(data['ID']);
+
+                                    final userResponse = await http.get(
+                                      Uri.parse('http://127.0.0.1:8000/user/$userId'),
+                                    );
+
+                                    if (userResponse.statusCode == 200) {
+                                      final userData = json.decode(userResponse.body);
+                                      final user = User.fromJson(userData[0]);
+
+                                      Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                          builder: (context) => MainScreen(
+                                            fontSize1: fontSize1,
+                                            fontSize2: fontSize2,
+                                            idUsuarioAtual: user.id,
+                                          ),
+                                        ),
+                                      );
+                                    } else {
+                                      final userMessage = json.decode(userResponse.body)['message'];
+                                      ScaffoldMessenger.of(context).showSnackBar(
+                                        SnackBar(
+                                          content: Text(userMessage),
+                                        ),
+                                      );
+                                    }
+                                  } else {
+                                    final message = json.decode(response.body)['message'];
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        content: Text(message),
+                                      ),
+                                    );
+                                  }
+                                }
+                                return Center(
+                                  child: SingleChildScrollView(
+                                    child: AlertDialog(
+                                      contentPadding: const EdgeInsets.only(
+                                        left: 16,
+                                        right: 16,
+                                        bottom: 16
+                                      ),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(30),
+                                      ),
+                                      content: Container(
+                                        height: deviceHeight * 0.38,
+                                        width: deviceWidth * 0.75,
+                                        constraints: const BoxConstraints(
+                                          minHeight: 206,
+                                          minWidth: 300
+                                        ),
+                                        child: Column(
+                                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                          crossAxisAlignment: CrossAxisAlignment.end,
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            IconButton(
+                                              iconSize: fontSize2,
+                                              icon: const Icon(Icons.close_rounded),
+                                              onPressed: Navigator.of(context).pop,
+                                              splashColor: Colors.transparent,
+                                              highlightColor: Colors.transparent,
+                                            ),
+                                            TextField(
+                                              controller: usernameController,
+                                              style: TextStyle(
+                                                fontSize: fontSize
+                                              ),
+                                              decoration: InputDecoration(
+                                                labelText: "Login",
+                                                hintText: 'seuRA@maua.br',
+                                                border: OutlineInputBorder(
+                                                  borderRadius: BorderRadius.circular(12),
+                                                ),
+                                                focusedBorder: OutlineInputBorder(
+                                                  borderRadius: BorderRadius.circular(12),
+                                                  borderSide:
+                                                      const BorderSide(color: Color.fromARGB(255, 0, 71, 133)),
+                                                ),
+                                              ),
+                                            ),
+                                            TextField(
+                                              style: TextStyle(
+                                                fontSize: fontSize
+                                              ),
+                                              obscureText: true,
+                                              controller: passwordController,
+                                              decoration: InputDecoration(
+                                                labelText: "Senha",
+                                                border: OutlineInputBorder(
+                                                  borderRadius: BorderRadius.circular(12),
+                                                ),
+                                                focusedBorder: OutlineInputBorder(
+                                                  borderRadius: BorderRadius.circular(12),
+                                                  borderSide:
+                                                      const BorderSide(color: Color.fromARGB(255, 0, 71, 133)),
+                                                ),
+                                              ),
+                                            ),
+                                            Center(
+                                              child: ElevatedButton(
+                                                style: ElevatedButton.styleFrom(
+                                                  backgroundColor: const Color.fromARGB(255, 0, 71, 133),
+                                                  shape: RoundedRectangleBorder(
+                                                    borderRadius: BorderRadius.circular(20)
+                                                  )
+                                                ),
+                                                onPressed: login,
+                                                child: Padding(
+                                                  padding: EdgeInsets.symmetric(
+                                                    vertical: deviceHeight * 0.01
+                                                  ),
+                                                  child: Text(
+                                                    "Entrar",
+                                                    style: TextStyle(
+                                                      fontSize: fontSize
+                                                    ),
+                                                  ),
+                                                )
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      )
+                                    ),
+                                  )
+                                );
+                              },
                             );
                           },
                         ),
@@ -141,11 +281,11 @@ class LoginCadastro extends StatelessWidget {
                           onTap: () {
                             Navigator.of(context).push(
                               MaterialPageRoute(
-                                builder: (context) => LoginApp(
-                                  fontSize1: fontSize1,
-                                  fontSize2: fontSize2,
-                                ),
-                              ),
+                                builder: (context) => 
+                                Registros(
+                                  fontSize: fontSize,
+                                )
+                              )
                             );
                           },
                         ),
