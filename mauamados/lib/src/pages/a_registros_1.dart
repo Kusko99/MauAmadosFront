@@ -1,8 +1,8 @@
 import 'dart:math';
+import 'package:mauamados/models/models.dart';
 import 'package:mauamados/src/pages/pages.dart';
 import 'package:mauamados/src/widgets/widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:mauamados/models/usuario_cadastro.dart';
 
 class Registros extends StatefulWidget {
   final double fontSize;
@@ -24,7 +24,7 @@ class _RegistrosState extends State<Registros> {
   TextEditingController passwordConfirmationController = TextEditingController();
   TextEditingController ageController = TextEditingController();
   TextEditingController nameController = TextEditingController();
-  UserCadastro user =
+  User user = User.users[0];
   late double fontSize = widget.fontSize * 0.9;
   bool isPasswordValid = false;
   bool isNameValid = false;
@@ -209,9 +209,14 @@ class _RegistrosState extends State<Registros> {
                   ),
                   onPressed: () {
                     if (isNextButtonEnabled) {
+                      setState(() {
+                        user.nome = nameController.text;
+                        user.idade = int.parse(ageController.text);
+                      });
                       Navigator.of(context).push(
                         MaterialPageRoute(
                           builder:(context) => Registros2(
+                            user: user,
                             fontSize: fontSize,
                             email: emailController.text,
                             senha: passwordController.text,

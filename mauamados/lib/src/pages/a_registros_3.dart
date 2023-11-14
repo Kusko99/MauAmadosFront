@@ -8,10 +8,12 @@ import 'package:http/http.dart' as http;
 class Registros3 extends StatefulWidget {
   final Map<String, dynamic> userData;
   final double fontSize;
+  final User user;
 
   const Registros3({
     required this.userData,
     required this.fontSize,
+    required this.user,
     super.key
     });
 
@@ -37,9 +39,7 @@ class _RegistrosState3 extends State<Registros3> {
   Widget build (BuildContext context){
 
     
-  Map<String, dynamic> userData = {'ma_id': 4, 'name': 'aa', 'profile_picture': [], 'age': 22, 'course': 'Engenharia Civil', 'bio': '', 'genero': 'masculino', 'sexual_orientation': 'heterosexual',
-'tags_preferences': [], 'match': [], 'likes': [], 'login': '22.22222-9@maua.br', 'senha': 22222222};
-  User user = User.fromJson(widget.userData);
+  Map<String, dynamic> userData = widget.userData;
 
   Future<void> submitForm() async {
     final jsonData = jsonEncode(userData);
@@ -61,24 +61,24 @@ class _RegistrosState3 extends State<Registros3> {
   }
 
 void addImage(String link) {
-  final updatedUserPhotos = List<String>.from(user.urlFotos);
+  final updatedUserPhotos = List<String>.from(widget.user.urlFotos);
   updatedUserPhotos.add(link);
   setState(() {
     // user.urlFotos = updatedUserPhotos;
-    user.urlFotos.add(link);
+    widget.user.urlFotos.add(link);
     isNextButtonEnabled = true;
   });
-  print(user.interesses);
-  print(user.urlFotos);
+  print(widget.user.interesses);
+  print(widget.user.urlFotos);
 }
 
   void removeImage(String link) {
-    final updatedUserPhotos = List<String>.from(user.urlFotos);
+    final updatedUserPhotos = List<String>.from(widget.user.urlFotos);
     updatedUserPhotos.remove(link);
     setState(() {
-      user.urlFotos = updatedUserPhotos;
+      widget.user.urlFotos = updatedUserPhotos;
     });
-    if (user.urlFotos.isEmpty) {
+    if (widget.user.urlFotos.isEmpty) {
       setState(() {
         isNextButtonEnabled = false;
       });
@@ -86,22 +86,22 @@ void addImage(String link) {
   }
 
   void removeInterest(String interesse) {
-    final updatedUserInterests = List<String>.from(user.interesses);
+    final updatedUserInterests = List<String>.from(widget.user.interesses);
     updatedUserInterests.remove(interesse);
     setState(() {
-      user.interesses = updatedUserInterests;
+      widget.user.interesses = updatedUserInterests;
     });
   }
 
   void addInterest(String interesse) {
-    final updatedUserInterests = List<String>.from(user.interesses);
+    final updatedUserInterests = List<String>.from(widget.user.interesses);
     updatedUserInterests.add(interesse);
     setState(() {
-      user.interesses.add(interesse);
+      widget.user.interesses.add(interesse);
       // user.interesses = updatedUserInterests;
     });
-  print(user.interesses);
-  print(user.urlFotos);
+  print(widget.user.interesses);
+  print(widget.user.urlFotos);
   }
 
     return Scaffold(
@@ -134,7 +134,7 @@ void addImage(String link) {
                 spacing: 5,
                 runSpacing: 5,
                 children: [
-                  ...user.urlFotos
+                  ...widget.user.urlFotos
                       .map((url) => ProfileImage(
                             imageUrl: url,
                             onRemove: () {
@@ -142,11 +142,11 @@ void addImage(String link) {
                             },
                           ))
                       .toList(),
-                  if (user.urlFotos.length < 9)
+                  if (widget.user.urlFotos.length < 9)
                     ...List.generate(
-                      9 - user.urlFotos.length,
+                      9 - widget.user.urlFotos.length,
                       (index) => ImageButton(
-                        user: user,
+                        user: widget.user,
                         onAdd: addImage,
                       ),
                     ),
@@ -169,7 +169,7 @@ void addImage(String link) {
                     alignment: WrapAlignment.start,
                     spacing: 2,
                     runSpacing: 2,
-                    children: user.interesses.map((interesse) {
+                    children: widget.user.interesses.map((interesse) {
                       return InterestsButton(
                         interesse: interesse,
                         fontSize: widget.fontSize,
@@ -194,8 +194,8 @@ void addImage(String link) {
                   onPressed: () {
                     if (isNextButtonEnabled) {
                       setState(() {
-                        userData['profile_picture'] = user.urlFotos;
-                        userData['tags_preferences'] = user.interesses;
+                        userData['profile_picture'] = widget.user.urlFotos;
+                        userData['tags_preferences'] = widget.user.interesses;
                       });
                       submitForm();
                       print(userData);

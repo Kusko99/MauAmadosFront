@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:mauamados/models/models.dart';
 import 'package:mauamados/src/pages/pages.dart';
 import 'package:mauamados/src/widgets/widgets.dart';
 
@@ -9,6 +10,7 @@ class Registros2 extends StatefulWidget {
   final String senha;
   final String nome;
   final int idade;
+  final User user;
 
   const Registros2({
     required this.fontSize,
@@ -16,6 +18,7 @@ class Registros2 extends StatefulWidget {
     required this.senha, 
     required this.nome, 
     required this.idade,
+    required this.user,
     super.key, 
     });
 
@@ -93,7 +96,7 @@ class _RegistrosState2 extends State<Registros2> {
             ),
             DropDownMenu(
               label: 'Orientação',
-              items: const ['--Selecione--','Heterosexual', 'Homosexual', 'Bisexual'], 
+              items: const ['--Selecione--','Heterossexual', 'Homossexual', 'Bissexual'], 
               fontSize: widget.fontSize, 
               selectedItem: orientacaoSelecionada,
               onChanged: (value) {
@@ -181,18 +184,23 @@ class _RegistrosState2 extends State<Registros2> {
                           "age": widget.idade,
                           "course": cursoSelecionado,
                           "bio": bioController.text.isNotEmpty ? bioController.text : '',
-                          "genero": generoSelecionado.toLowerCase(),
-                          "sexual_orientation": orientacaoSelecionada.toLowerCase(),
+                          "genero": generoSelecionado,
+                          "sexual_orientation": orientacaoSelecionada,
                           "tags_preferences": [],
                           "match": [],
                           "likes": [],
                           "login": widget.email,
                           "senha": widget.senha
                         };
+                        widget.user.curso = cursoSelecionado;
+                        widget.user.genero = generoSelecionado;
+                        widget.user.orientacao = orientacaoSelecionada;
+                        widget.user.bio = bioController.text.isNotEmpty ? bioController.text : '';
                       });
                       Navigator.of(context).push(
                         MaterialPageRoute(
                           builder:(context) => Registros3(
+                            user: widget.user,
                             fontSize: widget.fontSize,
                             userData: userData,
                           ),
