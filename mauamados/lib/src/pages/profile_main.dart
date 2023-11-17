@@ -6,12 +6,10 @@ class ProfileMainPage extends StatelessWidget {
   final User? user;
   final double fontSize1;
   final double fontSize2;
-  final int idUsuarioAtual;
   const ProfileMainPage({
     required this.user, 
     required this.fontSize1,
     required this.fontSize2,
-    required this.idUsuarioAtual,
     super.key});
 
   @override
@@ -97,7 +95,6 @@ class ProfileMainPage extends StatelessWidget {
                             user: user!, 
                             fontSize1: fontSize1, 
                             fontSize2: fontSize2,
-                            idUsuarioAtual: idUsuarioAtual,
                           ))
                         );
                       },

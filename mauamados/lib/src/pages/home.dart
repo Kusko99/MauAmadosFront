@@ -5,8 +5,11 @@ import 'package:http/http.dart' as http;
 
 class HomePage extends StatefulWidget {
   final int idUsuarioAtual;
+  final List pretendentes;
+
   const HomePage({
     required this.idUsuarioAtual,
+    required this.pretendentes,
     super.key
   });
   @override
@@ -16,7 +19,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  List<User> users = User.users;
+  List<User> users = [];
+
   User? currentUser = User.getUserById(1);
   int currentIndex = 0;
   Offset startPosition = Offset.zero;
@@ -62,6 +66,9 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    for (Map<String, dynamic> usuario in widget.pretendentes) {
+      users.add(User.fromJson(usuario));
+    }
     double deviceHeight = MediaQuery.of(context).size.height;
     double deviceWidth = MediaQuery.of(context).size.width;
     double size = (deviceHeight* 0.1);

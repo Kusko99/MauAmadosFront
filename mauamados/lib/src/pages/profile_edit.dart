@@ -7,13 +7,11 @@ class ProfileEdit extends StatefulWidget {
   final User user;
   final double fontSize1;
   final double fontSize2;
-  final int idUsuarioAtual;
 
   const ProfileEdit({
     required this.user,
     required this.fontSize1,
     required this.fontSize2,
-    required this.idUsuarioAtual,
     super.key,
   });
 
@@ -86,9 +84,9 @@ class _ProfileEditState extends State<ProfileEdit> {
               Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (context) => ProfilePage(
+                    usuarioAtual: widget.user,
                     fontSize1: widget.fontSize1,
                     fontSize2: widget.fontSize2,
-                    idUsuarioAtual: widget.idUsuarioAtual,
                   ),
                 ),
               );
@@ -154,7 +152,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                       },
                     ),
                     DropDownMenu(
-                      items: const ['--Selecione--','Administração', 'Arquitetura e Urbanismo', 'Ciência da Computação', 'Design', 
+                      items: const ['Administração', 'Arquitetura e Urbanismo', 'Ciências da Computação', 'Design', 
               'Engenharia Civil', 'Engenharia de Alimentos', 'Engenharia de Computação', 'Engenharia de Controle e Automoção',
               'Engenharia de Produção', 'Engenharia Elétrica', 'Engenharia Eletrônica', 'Engenharia Mecânica', 'Engenharia Química',
               'Inteligência Artificial e Ciência de Dados', 'Relações Internacionais', 'Sistemas de Informação', 'Professor'], 
@@ -180,7 +178,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                     ),
                     DropDownMenu(
                       label: 'Genero',
-                      items: const ['Homem', 'Mulher', 'Outro'], 
+                      items: const ['Masculino', 'Feminino', 'Não-Binário'], 
                       fontSize: widget.fontSize2, 
                       selectedItem: generoSelecionado, 
                       onChanged: (value){
@@ -192,7 +190,7 @@ class _ProfileEditState extends State<ProfileEdit> {
                     ),
                     DropDownMenu(
                       label: 'Orientação',
-                      items: const ['Heterosexual', 'Homosexual', 'Outro'], 
+                      items: const ['Heterossexual', 'Homossexual', 'Bissexual'], 
                       fontSize: widget.fontSize2, 
                       selectedItem: orientacaoSelecionada, 
                       onChanged: (value) {

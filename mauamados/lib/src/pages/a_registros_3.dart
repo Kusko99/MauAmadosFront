@@ -45,6 +45,14 @@ class _RegistrosState3 extends State<Registros3> {
 
     
   Map<String, dynamic> userData = widget.userData;
+  List<Map<String, dynamic>> pretendentes = [];
+
+  Future<void> getPretendentes(int id) async {
+    final response = await http.get(Uri.parse('http://127.0.0.1:8000/user/get_possible_matches/$id'));
+    setState(() {
+      pretendentes = json.decode(response.body);
+    });
+  }
 
   Future<void> submitForm() async {
     final jsonData = jsonEncode(userData);
@@ -59,17 +67,20 @@ class _RegistrosState3 extends State<Registros3> {
     );
 
     if (response.statusCode == 200) {
+      getPretendentes(userData['ma_id']);
+
       Navigator.of(context).push(
         MaterialPageRoute(
           builder: (context) => MainScreen(
+            pretendentes: pretendentes,
             idUsuarioAtual: 0,
+            usuarioAtual: User.fromJson(userData),
             fontSize1: widget.fontSize1,
             fontSize2: widget.fontSize2,
           )
         )
       );
     } else {
-      // Lidar com erros da solicitação
     }
   }
 
