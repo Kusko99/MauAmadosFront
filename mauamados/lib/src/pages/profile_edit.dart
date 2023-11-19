@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:mauamados/models/models.dart';
 import 'package:mauamados/src/pages/pages.dart';
 import 'package:mauamados/src/widgets/widgets.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class ProfileEdit extends StatefulWidget {
   final User user;
@@ -30,6 +32,15 @@ class _ProfileEditState extends State<ProfileEdit> {
     imageLinkController.dispose();
     interestController.dispose();
     super.dispose();
+  }
+
+  Future<void> changeData(int id, String value, String dataType, bool idade) async {
+    if (idade) {
+      await http.post(Uri.parse('http://127.0.0.1:8000/user/$dataType/$id/${int.parse(value)}'));
+    }
+    else {
+      await http.post(Uri.parse('http://127.0.0.1:8000/user/$dataType/$id/$value'));
+    }
   }
 
   void addImage(String link) {
@@ -136,6 +147,12 @@ class _ProfileEditState extends State<ProfileEdit> {
                       text: widget.user.nome,
                       fontSize: widget.fontSize2,
                       onChanged: (nome) {
+                        changeData(
+                          widget.user.id, 
+                          nome,
+                          'change_name',
+                          false
+                        );
                         setState(() {
                           widget.user.nome = nome;
                         });
@@ -146,6 +163,12 @@ class _ProfileEditState extends State<ProfileEdit> {
                       text: widget.user.idade.toString(),
                       fontSize: widget.fontSize2,
                       onChanged: (idade) {
+                        changeData(
+                          widget.user.id, 
+                          idade,
+                          'change_age',
+                          true
+                        );
                         setState(() {
                           widget.user.idade = int.parse(idade);
                         });
@@ -159,6 +182,12 @@ class _ProfileEditState extends State<ProfileEdit> {
                       fontSize: widget.fontSize2, 
                       selectedItem: widget.user.curso, 
                       onChanged: (value) {
+                        changeData(
+                          widget.user.id, 
+                          value,
+                          'change_course', 
+                          false
+                        );
                         setState(() {
                           cursoSelecionado = value;
                           widget.user.curso = cursoSelecionado;
@@ -171,6 +200,12 @@ class _ProfileEditState extends State<ProfileEdit> {
                       text: widget.user.bio,
                       fontSize: widget.fontSize2,
                       onChanged: (bio) {
+                        changeData(
+                          widget.user.id, 
+                          bio, 
+                          'change_bio',
+                          false
+                        );
                         setState(() {
                           widget.user.bio = bio;
                         });
@@ -182,6 +217,12 @@ class _ProfileEditState extends State<ProfileEdit> {
                       fontSize: widget.fontSize2, 
                       selectedItem: generoSelecionado, 
                       onChanged: (value){
+                        changeData(
+                          widget.user.id, 
+                          value, 
+                          'change_genero', 
+                          false
+                        );
                         setState(() {
                           generoSelecionado = value;
                           widget.user.genero = generoSelecionado;
@@ -194,6 +235,12 @@ class _ProfileEditState extends State<ProfileEdit> {
                       fontSize: widget.fontSize2, 
                       selectedItem: orientacaoSelecionada, 
                       onChanged: (value) {
+                        changeData(
+                          widget.user.id, 
+                          value, 
+                          'change_sexual_orientation', 
+                          false
+                        );
                         setState(() {
                           orientacaoSelecionada = value;
                           widget.user.orientacao = orientacaoSelecionada;

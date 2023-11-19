@@ -42,10 +42,10 @@ class _RegistrosState3 extends State<Registros3> {
 
   @override
   Widget build (BuildContext context){
-
+  var random = Random();
     
   Map<String, dynamic> userData = widget.userData;
-  List<Map<String, dynamic>> pretendentes = [];
+  List<dynamic> pretendentes = [];
 
   Future<void> getPretendentes(int id) async {
     final response = await http.get(Uri.parse('http://127.0.0.1:8000/user/get_possible_matches/$id'));
@@ -67,7 +67,8 @@ class _RegistrosState3 extends State<Registros3> {
     );
 
     if (response.statusCode == 200) {
-      getPretendentes(userData['ma_id']);
+      await getPretendentes(userData['ma_id']);
+      print(pretendentes);
 
       Navigator.of(context).push(
         MaterialPageRoute(
@@ -217,6 +218,7 @@ void addImage(String link) {
                       setState(() {
                         userData['profile_picture'] = widget.user.urlFotos;
                         userData['tags_preferences'] = widget.user.interesses;
+                        userData['ma_id'] = random.nextInt(99999) + 1;
                       });
                       submitForm();
                     }
