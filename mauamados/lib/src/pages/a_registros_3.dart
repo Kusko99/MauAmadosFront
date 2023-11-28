@@ -46,11 +46,32 @@ class _RegistrosState3 extends State<Registros3> {
     
   Map<String, dynamic> userData = widget.userData;
   List<dynamic> pretendentes = [];
+  int maId = -1;
 
   Future<void> getPretendentes(int id) async {
     final response = await http.get(Uri.parse('http://127.0.0.1:8000/user/get_possible_matches/$id'));
     setState(() {
       pretendentes = json.decode(response.body);
+    });
+  }
+
+  Future<void> getMaId() async {
+    int id = random.nextInt(99999) + 1;
+    bool userFound = true;
+
+    do {
+      http.Response response = await http.get(Uri.parse('http://127.0.0.1:8000/user/$id'));
+      dynamic responseData = json.decode(response.body);
+
+      if (responseData.isEmpty) {
+        userFound = false;
+      } else {
+        id = random.nextInt(99999) + 1;
+      }
+    } while (userFound);
+
+    setState(() {
+      maId = id;
     });
   }
 
@@ -68,13 +89,12 @@ class _RegistrosState3 extends State<Registros3> {
 
     if (response.statusCode == 200) {
       await getPretendentes(userData['ma_id']);
-      print(pretendentes);
 
       Navigator.of(context).push(
         MaterialPageRoute(
           builder: (context) => MainScreen(
             pretendentes: pretendentes,
-            idUsuarioAtual: 0,
+            idUsuarioAtual: maId,
             usuarioAtual: User.fromJson(userData),
             fontSize1: widget.fontSize1,
             fontSize2: widget.fontSize2,
@@ -213,12 +233,13 @@ void addImage(String link) {
                   style: ElevatedButton.styleFrom(
                     backgroundColor: isNextButtonEnabled ? const Color.fromARGB(255, 0, 71, 133) : Colors.grey,
                   ),
-                  onPressed: () {
+                  onPressed: () async {
                     if (isNextButtonEnabled) {
+                      await getMaId();
                       setState(() {
                         userData['profile_picture'] = widget.user.urlFotos;
                         userData['tags_preferences'] = widget.user.interesses;
-                        userData['ma_id'] = random.nextInt(99999) + 1;
+                        userData['ma_id'] = maId;
                       });
                       submitForm();
                     }

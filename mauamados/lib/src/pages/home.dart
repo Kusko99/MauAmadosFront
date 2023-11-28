@@ -34,32 +34,23 @@ class _HomePageState extends State<HomePage> {
   double deltaX = 0;
   int proxUserId = -1;
 
-  void executePutRequest(int idUsuarioAtual, int proxUserId) async {
-    var url = Uri.parse('http://127.0.0.1:8000/user/put_like/$idUsuarioAtual/$proxUserId');
-    var response = await http.put(url);
-
-    if (response.statusCode == 200) {
-      print('PUT request successful');
-    } else {
-      print('Failed to send PUT request with status code: ${response.statusCode}');
-      print('Response body: ${response.body}');
-    }
+  void executePostRequest(int idUsuarioAtual, int proxUserId) async {
+    await http.post(Uri.parse('http://127.0.0.1:8000/user/post_like/$idUsuarioAtual/$proxUserId'));
   }
 
 
   void _next() {
-    if (currentIndex < User.users.length - 1) {
+    executePostRequest(widget.idUsuarioAtual, users[currentIndex].id);
+    if (currentIndex < users.length - 1) {
       setState(() {
         currentIndex++;
-        currentUser = User.users[currentIndex];
+        currentUser = users[currentIndex];
         proxUserId = currentUser!.id;
-        print('${widget.idUsuarioAtual},$proxUserId');
-        executePutRequest(widget.idUsuarioAtual, proxUserId);
       });
-    } else if (currentIndex == User.users.length - 1) {
+    } else if (currentIndex == users.length - 1) {
       setState(() {
         currentIndex = 0;
-        currentUser = User.users[currentIndex];
+        currentUser = users[currentIndex];
       });
     }
   }
