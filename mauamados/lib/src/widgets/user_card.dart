@@ -5,8 +5,15 @@ import 'package:mauamados/src/widgets/widgets.dart';
 class UserCard extends StatefulWidget{
   final User user;
   Function(User) onUserChanged;
+  final bool match;
   int currentIndex = 0;
-  UserCard({required this.user, this.currentIndex = 0, required this.onUserChanged,super.key});
+  
+  UserCard({
+    required this.user, 
+    this.currentIndex = 0, 
+    required this.onUserChanged,
+    this.match = false,
+    super.key});
 
   @override
   State<UserCard> createState() {
@@ -169,20 +176,25 @@ class _UserCardState extends State<UserCard> {
                       SizedBox(
                         width: iconSize * 3,
                         height: iconSize * 3,
-                        child: IconButton(
-                          onPressed: () => showModalBottomSheet(
-                            isScrollControlled: true,
-                            backgroundColor: Colors.transparent,
-                            context: context,
-                            builder: (context) => BuildSheet(user: widget.user, fontSize: fontSize2*1.25,),
-                          ),
-                          icon: Icon(
-                            Icons.info_outline,
-                            size: iconSize,
-                            color: Colors.grey[350],
+                        child: Visibility(
+                          visible: !widget.match,
+                          child: IconButton(
+                            onPressed: !widget.match
+                              ? () => showModalBottomSheet(
+                                    isScrollControlled: true,
+                                    backgroundColor: Colors.transparent,
+                                    context: context,
+                                    builder: (context) => BuildSheet(user: widget.user, fontSize: fontSize2 * 1.25),
+                                  )
+                              : null,
+                            icon: Icon(
+                              Icons.info_outline,
+                              size: iconSize,
+                              color: Colors.grey[350],
+                            ),
                           ),
                         ),
-                      )
+                      ),
                     ],
                   ),
                 ],
