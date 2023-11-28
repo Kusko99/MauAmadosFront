@@ -4,13 +4,11 @@ import 'package:mauamados/src/widgets/widgets.dart';
 
 class UserCard extends StatefulWidget{
   final User user;
-  Function(User) onUserChanged;
+  final Function(User) onUserChanged;
   final bool match;
-  int currentIndex = 0;
   
-  UserCard({
+  const UserCard({
     required this.user, 
-    this.currentIndex = 0, 
     required this.onUserChanged,
     this.match = false,
     super.key});
@@ -22,22 +20,24 @@ class UserCard extends StatefulWidget{
 }
 
 class _UserCardState extends State<UserCard> {
+  int currentIndex = 0;
+
   void _next() {
     setState(() {
-      if (widget.currentIndex > widget.user.urlFotos.length -1){
-        widget.currentIndex = 0;
-      } else if (widget.currentIndex < widget.user.urlFotos.length -1) {
-        widget.currentIndex++;
+      if (currentIndex > widget.user.urlFotos.length -1){
+        currentIndex = 0;
+      } else if (currentIndex < widget.user.urlFotos.length -1) {
+        currentIndex++;
       } 
     });
   }
 
   void _preve() {
     setState(() {
-      if (widget.currentIndex > widget.user.urlFotos.length -1){
-        widget.currentIndex = 0;
-      } else if (widget.currentIndex > 0) {
-        widget.currentIndex--;
+      if (currentIndex > widget.user.urlFotos.length -1){
+        currentIndex = 0;
+      } else if (currentIndex > 0) {
+        currentIndex--;
       }
     });
   }
@@ -82,7 +82,7 @@ class _UserCardState extends State<UserCard> {
                 image: DecorationImage(
                   image: NetworkImage(
                     widget.user.urlFotos.isEmpty ? 'https://i.imgur.com/YTkSwCJ.png'
-                      : widget.user.urlFotos[widget.currentIndex],
+                      : widget.user.urlFotos[currentIndex],
                   ),
                   fit: BoxFit.cover,
                 ),
@@ -119,7 +119,7 @@ class _UserCardState extends State<UserCard> {
                       margin: const EdgeInsets.all(15),
                       child: Row(
                         children: IndicatorBuilder(
-                          currentIndex: widget.currentIndex,
+                          currentIndex: currentIndex,
                           urlFotos: widget.user.urlFotos,
                         ).buildIndicators(),
                       ),

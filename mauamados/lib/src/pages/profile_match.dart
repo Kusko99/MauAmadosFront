@@ -5,14 +5,12 @@ import 'package:mauamados/models/models.dart';
 import 'package:mauamados/src/widgets/widgets.dart';
 
 class ProfileMatch extends StatefulWidget {
-  int currentIndex = 0;
   final User user;
   final double fontSize;
 
-  ProfileMatch ({
+  const ProfileMatch ({
     required this.user,
     required this.fontSize,
-    this.currentIndex = 0,
     super.key
   });
 

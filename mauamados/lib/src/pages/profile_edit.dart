@@ -3,7 +3,6 @@ import 'package:mauamados/models/models.dart';
 import 'package:mauamados/src/pages/pages.dart';
 import 'package:mauamados/src/widgets/widgets.dart';
 import 'package:http/http.dart' as http;
-import 'dart:convert';
 
 class ProfileEdit extends StatefulWidget {
   final User user;
