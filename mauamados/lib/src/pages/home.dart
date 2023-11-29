@@ -34,13 +34,37 @@ class _HomePageState extends State<HomePage> {
   double deltaX = 0;
   int proxUserId = -1;
 
+  @override
+  void initState() {
+    super.initState();
+    for (Map<String, dynamic> usuario in widget.pretendentes) {
+      users.add(User.fromJson(usuario));
+    }
+  }
+
   void executePostRequest(int idUsuarioAtual, int proxUserId) async {
     await http.post(Uri.parse('http://127.0.0.1:8000/user/post_like/$idUsuarioAtual/$proxUserId'));
   }
 
-
-  void _next() {
+  void _like() {
     executePostRequest(widget.idUsuarioAtual, users[currentIndex].id);
+    if (currentIndex < users.length - 1) {
+      final int previousIndex = currentIndex;
+      setState(() {
+        currentIndex++;
+        currentUser = users[currentIndex];
+        proxUserId = currentUser!.id;
+        users.remove(users[previousIndex]);
+      });
+    } else if (currentIndex == users.length - 1) {
+      setState(() {
+        currentIndex = 0;
+        currentUser = users[currentIndex];
+      });
+    }
+  }
+
+  void _dislike() {
     if (currentIndex < users.length - 1) {
       setState(() {
         currentIndex++;
@@ -57,9 +81,6 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    for (Map<String, dynamic> usuario in widget.pretendentes) {
-      users.add(User.fromJson(usuario));
-    }
     double deviceHeight = MediaQuery.of(context).size.height;
     double deviceWidth = MediaQuery.of(context).size.width;
     double size = (deviceHeight* 0.1);
@@ -147,8 +168,10 @@ class _HomePageState extends State<HomePage> {
                     disBack = Colors.white;
                     superBack = Colors.white;
                   });
-                  if ((deltaX > deviceWidth * 0.27) || (deltaX < -(deviceWidth * 0.27)) || (deltaY < -(deviceHeight / 3))) {
-                    _next();
+                  if ((deltaX > deviceWidth * 0.27) || (deltaY < -(deviceHeight / 3))) {
+                    _like();
+                  } else if (deltaX < -(deviceWidth * 0.27)) {
+                    _dislike();
                   }
                 },
                 child: userCard
@@ -161,21 +184,21 @@ class _HomePageState extends State<HomePage> {
                     color: dislike, 
                     icon: Icons.clear_rounded,
                     size: size / 2,
-                    onPressed: _next,
+                    onPressed: _dislike,
                     backgroundColor: disBack,
                   ),
                   ChoiceButton(
                     color: superlike, 
                     icon: Icons.star_rounded,
                     size: size /3,
-                    onPressed: _next,
+                    onPressed: _like,
                     backgroundColor: superBack,
                   ),
                   ChoiceButton(
                     color: like, 
                     icon: Icons.favorite_rounded,
                     size: size /2,
-                    onPressed: _next,
+                    onPressed: _like,
                     backgroundColor: likeBack,
                   ),
                 ],

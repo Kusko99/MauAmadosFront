@@ -25,11 +25,34 @@ class LoginCadastro extends StatefulWidget {
 class _LoginCadastroState extends State<LoginCadastro> {
 
   List pretendentes = [];
+  List likes = [];
+
+  Future<void> getLikes(int id) async {
+    final response = await http.get(Uri.parse('http://127.0.0.1:8000/user/likes/$id'));
+    final likeds = json.decode(response.body);
+    for (String liker in likeds) {
+      setState(() {
+        likes.add(int.parse(liker));
+      });
+    }
+  }
 
   Future<void> getPretendentes(int id) async {
     final response = await http.get(Uri.parse('http://127.0.0.1:8000/user/get_possible_matches/$id'));
+    await getLikes(id);
     setState(() {
       pretendentes = json.decode(response.body);
+      for (Map pretendente in pretendentes) {
+        print(pretendente['ma_id']);
+      }
+
+      pretendentes.removeWhere((pretendente) => likes.contains(pretendente['ma_id']));
+      print(likes);
+
+      for (Map pretendente in pretendentes) {
+        print(pretendente['ma_id']);
+      }
+      pretendentes.shuffle();
     });
   }
 
