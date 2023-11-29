@@ -35,15 +35,23 @@ class _ProfileEditState extends State<ProfileEdit> {
 
   Future<void> changeData(int id, String value, String dataType, bool idade) async {
     if (idade) {
-      await http.post(Uri.parse('http://127.0.0.1:8000/user/$dataType/$id/${int.parse(value)}'));
+      await http.put(Uri.parse('http://127.0.0.1:8000/user/$dataType/$id/${int.parse(value)}'));
     }
     else {
-      await http.post(Uri.parse('http://127.0.0.1:8000/user/$dataType/$id/$value'));
+      await http.put(Uri.parse('http://127.0.0.1:8000/user/$dataType/$id/$value'));
     }
   }
 
   Future<void> addImageRoute(int id, String link) async {
     await http.post(Uri.parse('http://127.0.0.1:8000/user/add_photo/$id?new_photo=$link'));
+  }
+
+  Future<void> addInterestRoute(int id, String tag) async {
+    await http.post(Uri.parse('http://127.0.0.1:8000/user/add_tag_preferences/$id/$tag'));
+  }
+
+  Future<void> removeInterestRoute(int id, String tag) async {
+    await http.delete(Uri.parse('http://127.0.0.1:8000/user/remove_tag_preference/$id/$tag'));
   }
 
   void addImage(String link) {
@@ -66,6 +74,7 @@ class _ProfileEditState extends State<ProfileEdit> {
   void removeInterest(String interesse) {
     final updatedUserInterests = List<String>.from(widget.user.interesses);
     updatedUserInterests.remove(interesse);
+    removeInterestRoute(widget.user.id, interesse);
     setState(() {
       widget.user.interesses = updatedUserInterests;
     });
@@ -74,6 +83,7 @@ class _ProfileEditState extends State<ProfileEdit> {
   void addInterest(String interesse) {
     final updatedUserInterests = List<String>.from(widget.user.interesses);
     updatedUserInterests.add(interesse);
+    addInterestRoute(widget.user.id, interesse);
     setState(() {
       widget.user.interesses = updatedUserInterests;
     });

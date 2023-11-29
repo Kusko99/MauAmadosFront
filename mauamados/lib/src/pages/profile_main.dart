@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mauamados/models/models.dart';
 import 'package:mauamados/src/app.dart';
 import 'package:mauamados/src/pages/pages.dart';
+import 'package:http/http.dart' as http;
 
 class ProfileMainPage extends StatelessWidget {
   final User? user;
@@ -15,6 +16,10 @@ class ProfileMainPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+  Future<void> deleteUser(int id) async {
+    await http.delete(Uri.parse('http://127.0.0.1:8000/user/$id'));
+  }
     double deviceHeight = MediaQuery.of(context).size.height;
     double deviceWidth = MediaQuery.of(context).size.width;
     if (deviceWidth > deviceHeight) {
@@ -102,7 +107,127 @@ class ProfileMainPage extends StatelessWidget {
                   }
                 );
               },
-            )
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(
+                vertical: deviceHeight*0.01,
+                horizontal: deviceWidth * 0.05
+              ),
+              child: Container(
+                height: 1,
+                color: Colors.grey.withAlpha(100),
+              ),
+            ),
+            ListTile(
+              title: const Text('Deletar conta'),
+              onTap: () {
+                Navigator.of(context).pop();
+                showDialog(
+                  context: context, 
+                  builder: (context) {
+                    return Center(
+                      child: SingleChildScrollView(
+                        child: AlertDialog(
+                          title: Text(
+                            "Deseja mesmo deletar sua conta?",
+                            style: TextStyle(
+                              fontSize: fontSize2,
+                            ),
+                          ),
+                          actions: <Widget>[
+                            TextButton(
+                              style: ButtonStyle(
+                                overlayColor: MaterialStateColor.resolveWith((states) => Colors.grey.withAlpha(50)),
+                              ),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                              child: Text(
+                                "Cancelar",
+                                style: TextStyle(
+                                  color: Colors.grey,
+                                  fontSize: fontSize2 * 0.8,
+                                ),
+                              ),
+                            ),
+                            TextButton(
+                              style: ButtonStyle(
+                                overlayColor: MaterialStateColor.resolveWith((states) => Colors.grey.withAlpha(50)),
+                              ),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                                showDialog(
+                                  context: context, 
+                                  builder: (context) {
+                                    return Center(
+                                      child: SingleChildScrollView(
+                                        child: AlertDialog(
+                                          title: Text(
+                                            "Essa ação não poderá ser desfeita",
+                                            style: TextStyle(
+                                              fontSize: fontSize2,
+                                            ),
+                                          ),
+                                          actions: <Widget>[
+                                            TextButton(
+                                              style: ButtonStyle(
+                                                overlayColor: MaterialStateColor.resolveWith((states) => Colors.grey.withAlpha(50)),
+                                              ),
+                                              onPressed: () {
+                                                Navigator.of(context).pop();
+                                              },
+                                              child: Text(
+                                                "Cancelar",
+                                                style: TextStyle(
+                                                  color: Colors.grey,
+                                                  fontSize: fontSize2 * 0.8,
+                                                ),
+                                              ),
+                                            ),
+                                            TextButton(
+                                              style: ButtonStyle(
+                                                overlayColor: MaterialStateColor.resolveWith((states) => Colors.grey.withAlpha(50)),
+                                              ),
+                                              onPressed: () {
+                                                Navigator.of(context).pop();
+                                                Navigator.of(context).push(
+                                                  MaterialPageRoute(
+                                                    builder: (context) => const App()
+                                                  )
+                                                );
+                                                deleteUser(user!.id);
+                                              },
+                                              child: Text(
+                                                "Confirmar",
+                                                style: TextStyle(
+                                                  color: const Color.fromARGB(255, 0, 71, 133),
+                                                  fontSize: fontSize2 * 0.8,
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    );
+                                  }
+                                );
+                              },
+                              child: Text(
+                                "Confirmar",
+                                style: TextStyle(
+                                  color: const Color.fromARGB(255, 0, 71, 133),
+                                  fontSize: fontSize2 * 0.8,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  }
+                );
+              },
+            ),
           ],
         ),
       ),
