@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mauamados/models/models.dart';
+import 'package:mauamados/src/app.dart';
 import 'package:mauamados/src/pages/pages.dart';
+import 'package:mauamados/src/widgets/widgets.dart';
 
 class ProfileMainPage extends StatelessWidget {
   final User? user;
@@ -22,6 +24,7 @@ class ProfileMainPage extends StatelessWidget {
 
     return Scaffold(
       endDrawer: Drawer(
+        width: deviceWidth/2,
         child: ListView(
           children: [
             ListTile(
@@ -30,7 +33,63 @@ class ProfileMainPage extends StatelessWidget {
             ),
             ListTile(
               title: const Text('Deslogar'),
-              onTap: () {},
+              onTap: () {
+                Navigator.of(context).pop();
+                showDialog(
+                  context: context, 
+                  builder: (context) {
+                    return Center(
+                      child: SingleChildScrollView(
+                        child: AlertDialog(
+                          title: Text(
+                            "Deseja mesmo sair?",
+                            style: TextStyle(
+                              fontSize: fontSize2,
+                            ),
+                          ),
+                          actions: <Widget>[
+                            TextButton(
+                              style: ButtonStyle(
+                                overlayColor: MaterialStateColor.resolveWith((states) => Colors.grey.withAlpha(50)),
+                              ),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                              child: Text(
+                                "Cancelar",
+                                style: TextStyle(
+                                  color: Colors.grey,
+                                  fontSize: fontSize2 * 0.8,
+                                ),
+                              ),
+                            ),
+                            TextButton(
+                              style: ButtonStyle(
+                                overlayColor: MaterialStateColor.resolveWith((states) => Colors.grey.withAlpha(50)),
+                              ),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (context) => const App()
+                                  )
+                                );
+                              },
+                              child: Text(
+                                "Confirmar",
+                                style: TextStyle(
+                                  color: const Color.fromARGB(255, 0, 71, 133),
+                                  fontSize: fontSize2 * 0.8,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  }
+                );
+              },
             )
           ],
         ),
