@@ -20,20 +20,35 @@ class ProfileMainPage extends StatelessWidget {
       deviceWidth = deviceHeight;
     }
 
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-          toolbarHeight: deviceHeight * 0.08,
-          actions: [
-            Padding(
+    return Scaffold(
+      endDrawer: Drawer(
+        child: ListView(
+          children: [
+            ListTile(
+              title: const Text('Fale Conosco'),
+              onTap: () {},
+            ),
+            ListTile(
+              title: const Text('Deslogar'),
+              onTap: () {},
+            )
+          ],
+        ),
+      ),
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        toolbarHeight: deviceHeight * 0.08,
+        actions: [
+          Builder(
+            builder: (context) => Padding(
               padding: EdgeInsets.only(
                 right: MediaQuery.of(context).size.width * 0.04
               ),
               child: IconButton(
-                onPressed: (){},
+                onPressed: (){
+                  Scaffold.of(context).openEndDrawer();
+                },
                 icon: Icon(
                   Icons.settings,
                   color: const Color.fromARGB(255, 0, 71, 133),
@@ -41,82 +56,82 @@ class ProfileMainPage extends StatelessWidget {
                 ),
               ),
             )
-          ],
-        ),
-        body: SingleChildScrollView(
-          child: Center(
-            child: Column(
-              children: [
-                SizedBox(
-                  width: deviceWidth * 1.6 <= deviceHeight ? deviceWidth * 0.7 : deviceHeight * 0.45,
-                  height: deviceWidth * 1.6 <= deviceHeight ? deviceWidth * 0.7 : deviceHeight * 0.45,
-                  child: ClipOval(
-                    child: Image(
-                      image: NetworkImage(user!.urlFotos.isEmpty ? 'https://i.imgur.com/YTkSwCJ.png' : user!.urlFotos[0]),
-                      fit: BoxFit.cover,
-                    ),
+          )
+        ],
+      ),
+      body: SingleChildScrollView(
+        child: Center(
+          child: Column(
+            children: [
+              SizedBox(
+                width: deviceWidth * 1.6 <= deviceHeight ? deviceWidth * 0.7 : deviceHeight * 0.45,
+                height: deviceWidth * 1.6 <= deviceHeight ? deviceWidth * 0.7 : deviceHeight * 0.45,
+                child: ClipOval(
+                  child: Image(
+                    image: NetworkImage(user!.urlFotos.isEmpty ? 'https://i.imgur.com/YTkSwCJ.png' : user!.urlFotos[0]),
+                    fit: BoxFit.cover,
                   ),
                 ),
-                Container(
-                  margin: EdgeInsets.symmetric(
-                    vertical: deviceHeight * 0.1
-                  ),
-                  child: Column(
-                    children: [
-                      Text(
-                        ('${user!.nome}, ${user!.idade}'),
-                        style: TextStyle(
-                          fontSize: fontSize1,
-                          fontWeight: FontWeight.bold
-                        ),
+              ),
+              Container(
+                margin: EdgeInsets.symmetric(
+                  vertical: deviceHeight * 0.1
+                ),
+                child: Column(
+                  children: [
+                    Text(
+                      ('${user!.nome}, ${user!.idade}'),
+                      style: TextStyle(
+                        fontSize: fontSize1,
+                        fontWeight: FontWeight.bold
                       ),
-                      Text(
-                        user!.curso,
+                    ),
+                    Text(
+                      user!.curso,
+                      style: TextStyle(
+                        fontSize: fontSize2
+                      ),
+                    )
+                  ],
+                ),
+              ),
+              Center(
+                child: Container(
+                  margin: EdgeInsets.only(
+                    bottom: deviceHeight * 0.03
+                  ),
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      shape: const StadiumBorder(),
+                      backgroundColor: const Color.fromARGB(255, 0, 71, 133)
+                    ),
+                    onPressed: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(builder: (context) => ProfileEdit(
+                          user: user!, 
+                          fontSize1: fontSize1, 
+                          fontSize2: fontSize2,
+                        ))
+                      );
+                    },
+                    child: Container(
+                      padding: EdgeInsets.all(
+                        deviceHeight * 0.02
+                      ),
+                      child: Text(
+                        'Editar Perfil',
                         style: TextStyle(
                           fontSize: fontSize2
                         ),
-                      )
-                    ],
-                  ),
-                ),
-                Center(
-                  child: Container(
-                    margin: EdgeInsets.only(
-                      bottom: deviceHeight * 0.03
-                    ),
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        shape: const StadiumBorder(),
-                        backgroundColor: const Color.fromARGB(255, 0, 71, 133)
                       ),
-                      onPressed: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(builder: (context) => ProfileEdit(
-                            user: user!, 
-                            fontSize1: fontSize1, 
-                            fontSize2: fontSize2,
-                          ))
-                        );
-                      },
-                      child: Container(
-                        padding: EdgeInsets.all(
-                          deviceHeight * 0.02
-                        ),
-                        child: Text(
-                          'Editar Perfil',
-                          style: TextStyle(
-                            fontSize: fontSize2
-                          ),
-                        ),
-                      )
-                    ),
-                  )
+                    )
+                  ),
                 )
-              ]
-            ),
+              )
+            ]
           ),
-        )
-      ),
+        ),
+      )
     );
   }
 }
