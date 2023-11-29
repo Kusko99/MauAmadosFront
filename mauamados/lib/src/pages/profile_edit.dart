@@ -42,9 +42,14 @@ class _ProfileEditState extends State<ProfileEdit> {
     }
   }
 
+  Future<void> addImageRoute(int id, String link) async {
+    await http.post(Uri.parse('http://127.0.0.1:8000/user/add_photo/$id?new_photo=$link'));
+  }
+
   void addImage(String link) {
     final updatedUserPhotos = List<String>.from(widget.user.urlFotos);
     updatedUserPhotos.add(link);
+    addImageRoute(widget.user.id, link);
     setState(() {
       widget.user.urlFotos = updatedUserPhotos;
     });
