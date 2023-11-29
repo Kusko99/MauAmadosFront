@@ -62,31 +62,44 @@ class _ChatConversaState extends State<ChatConversa> {
             size: deviceHeight * 0.06,
           ),
         ),
-        title: Row(
-          children: [
-            ClipOval(
-              child: Image.network(
-                outroUsuario.urlFotos.isNotEmpty
-                    ? outroUsuario.urlFotos.first
-                    : 'https://i.imgur.com/YTkSwCJ.png',
-                width: deviceHeight * 0.06,
-                height: deviceHeight * 0.06,
-                fit: BoxFit.cover,
-              ),
-            ),
-            const SizedBox(width: 10),
-            Flexible(
-              child: Text(
-                outroUsuario.nome,
-                style: TextStyle(
-                  fontSize: widget.fontSize * 4 / 3,
-                  color: Colors.black,
+        title: InkWell(
+          onTap: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder:(context) => ProfileMatch(
+                  user: outroUsuario,
+                  fontSize: widget.fontSize,
+                )
+              )
+            );
+          },
+          child: Row(
+            children: [
+              ClipOval(
+                child: Image.network(
+                  outroUsuario.urlFotos.isNotEmpty
+                      ? outroUsuario.urlFotos.first
+                      : 'https://i.imgur.com/YTkSwCJ.png',
+                  width: deviceHeight * 0.06,
+                  height: deviceHeight * 0.06,
+                  fit: BoxFit.cover,
                 ),
-                overflow: TextOverflow.ellipsis,
               ),
-            ),
-          ],
-        ),
+              const SizedBox(width: 10),
+              Flexible(
+                child: Text(
+                  outroUsuario.nome,
+                  style: TextStyle(
+                    fontSize: widget.fontSize * 4 / 3,
+                    color: Colors.black,
+                  ),
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+            ],
+          ),
+        )
+        
       ),
       body: Column(
         children: [

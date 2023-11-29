@@ -6,7 +6,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:mauamados/models/models.dart';
 
-class LoginCadastro extends StatelessWidget {
+class LoginCadastro extends StatefulWidget {
   final double deviceHeight;
   final double fontSize1;
   final double fontSize2;
@@ -19,12 +19,28 @@ class LoginCadastro extends StatelessWidget {
   }) : super(key: key);
 
   @override
+  State<LoginCadastro> createState() => _LoginCadastroState();
+}
+
+class _LoginCadastroState extends State<LoginCadastro> {
+
+  List pretendentes = [];
+
+  Future<void> getPretendentes(int id) async {
+    final response = await http.get(Uri.parse('http://127.0.0.1:8000/user/get_possible_matches/$id'));
+    setState(() {
+      pretendentes = json.decode(response.body);
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    double altura = deviceHeight;
+    
+    double altura = widget.deviceHeight;
     double deviceWidth = MediaQuery.of(context).size.width;
 
-    if (deviceHeight * 0.8 < deviceWidth) {
-      altura = deviceHeight * 0.5;
+    if (widget.deviceHeight * 0.8 < deviceWidth) {
+      altura = widget.deviceHeight * 0.5;
     }
 
     double fontSize = MediaQuery.of(context).size.shortestSide * 0.04;
@@ -102,11 +118,11 @@ class LoginCadastro extends StatelessWidget {
                     ],
                   ),
                   SizedBox(
-                    height: deviceHeight * 0.1,
+                    height: widget.deviceHeight * 0.1,
                   ),
                   Container(
                     margin: EdgeInsets.only(
-                      bottom: deviceHeight*0.1
+                      bottom: widget.deviceHeight*0.1
                     ),
                     child: Column(
                       children: [
@@ -114,7 +130,7 @@ class LoginCadastro extends StatelessWidget {
                           corFundo: const Color.fromARGB(255, 1, 75, 173),
                           corBorda: const Color.fromARGB(255, 1, 75, 173),
                           corFonte: Colors.white,
-                          deviceHeight: deviceHeight,
+                          deviceHeight: widget.deviceHeight,
                           fontSize: fontSize,
                           texto: 'Entrar',
                           onTap: () {
@@ -129,7 +145,9 @@ class LoginCadastro extends StatelessWidget {
                                   final username = usernameController.text;
                                   final password = passwordController.text;
 
-                                  final response = await http.get(Uri.parse('http://127.0.0.1:8000/login/?username=$username&password=$password'));
+                                  final response = await http.get(
+                                    Uri.parse('http://127.0.0.1:8000/login/?username=$username&password=$password'),
+                                  );
                                   
                                   if (response.statusCode == 200) {
 
@@ -138,17 +156,23 @@ class LoginCadastro extends StatelessWidget {
 
                                     final userResponse = await http.get(
                                       Uri.parse('http://127.0.0.1:8000/user/$userId'),
+                                      headers: {
+                                        'Accept-Charset': 'utf-8',
+                                      },
                                     );
 
                                     if (userResponse.statusCode == 200) {
-                                      final userData = json.decode(userResponse.body);
+                                      final userData = json.decode(utf8.decode(userResponse.bodyBytes));
                                       final user = User.fromJson(userData[0]);
+                                      await getPretendentes(userId);
 
                                       Navigator.of(context).push(
                                         MaterialPageRoute(
                                           builder: (context) => MainScreen(
-                                            fontSize1: fontSize1,
-                                            fontSize2: fontSize2,
+                                            pretendentes: pretendentes,
+                                            usuarioAtual: user,
+                                            fontSize1: widget.fontSize1,
+                                            fontSize2: widget.fontSize2,
                                             idUsuarioAtual: user.id,
                                           ),
                                         ),
@@ -182,7 +206,7 @@ class LoginCadastro extends StatelessWidget {
                                         borderRadius: BorderRadius.circular(30),
                                       ),
                                       content: Container(
-                                        height: deviceHeight * 0.38,
+                                        height: widget.deviceHeight * 0.38,
                                         width: deviceWidth * 0.75,
                                         constraints: const BoxConstraints(
                                           minHeight: 206,
@@ -194,7 +218,7 @@ class LoginCadastro extends StatelessWidget {
                                           mainAxisSize: MainAxisSize.min,
                                           children: [
                                             IconButton(
-                                              iconSize: fontSize2,
+                                              iconSize: widget.fontSize2,
                                               icon: const Icon(Icons.close_rounded),
                                               onPressed: Navigator.of(context).pop,
                                               splashColor: Colors.transparent,
@@ -247,7 +271,7 @@ class LoginCadastro extends StatelessWidget {
                                                 onPressed: login,
                                                 child: Padding(
                                                   padding: EdgeInsets.symmetric(
-                                                    vertical: deviceHeight * 0.01
+                                                    vertical: widget.deviceHeight * 0.01
                                                   ),
                                                   child: Text(
                                                     "Entrar",
@@ -275,7 +299,7 @@ class LoginCadastro extends StatelessWidget {
                           corBorda: Colors.white,
                           corFundo: Colors.transparent,
                           corFonte: Colors.white,
-                          deviceHeight: deviceHeight,
+                          deviceHeight: widget.deviceHeight,
                           fontSize: fontSize,
                           texto: 'Novo Usuário',
                           onTap: () {
@@ -283,6 +307,8 @@ class LoginCadastro extends StatelessWidget {
                               MaterialPageRoute(
                                 builder: (context) => 
                                 Registros(
+                                  fontSize1: widget.fontSize1,
+                                  fontSize2: widget.fontSize2,
                                   fontSize: fontSize,
                                 )
                               )

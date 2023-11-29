@@ -6,11 +6,15 @@ class MainScreen extends StatefulWidget {
   final double fontSize1;
   final double fontSize2;
   final int idUsuarioAtual;
+  final User usuarioAtual;
+  final List pretendentes;
 
   const MainScreen({
     required this.fontSize1,
     required this.fontSize2,
     required this.idUsuarioAtual,
+    required this.usuarioAtual,
+    required this.pretendentes,
     super.key
     });
 
@@ -34,8 +38,8 @@ class _MainScreenState extends State<MainScreen> {
     }
 
     final screens = [
-      HomePage(idUsuarioAtual: widget.idUsuarioAtual),
-      ProfilePage(fontSize1: fontSize1, fontSize2: fontSize2, idUsuarioAtual: widget.idUsuarioAtual),
+      HomePage(idUsuarioAtual: widget.idUsuarioAtual, pretendentes: widget.pretendentes,),
+      ProfilePage(fontSize1: fontSize1, fontSize2: fontSize2, usuarioAtual: widget.usuarioAtual),
       ChatPage(conversas: conversas,fontSize: fontSize2 * 0.75 < 12 ? 12 : fontSize2 * 0.75, idUsuarioAtual: 1,)
     ];
 

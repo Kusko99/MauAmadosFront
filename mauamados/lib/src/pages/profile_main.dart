@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:mauamados/models/models.dart';
+import 'package:mauamados/src/app.dart';
 import 'package:mauamados/src/pages/pages.dart';
+import 'package:mauamados/src/widgets/widgets.dart';
 
 class ProfileMainPage extends StatelessWidget {
   final User? user;
   final double fontSize1;
   final double fontSize2;
-  final int idUsuarioAtual;
   const ProfileMainPage({
     required this.user, 
     required this.fontSize1,
     required this.fontSize2,
-    required this.idUsuarioAtual,
     super.key});
 
   @override
@@ -22,20 +22,92 @@ class ProfileMainPage extends StatelessWidget {
       deviceWidth = deviceHeight;
     }
 
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-          toolbarHeight: deviceHeight * 0.08,
-          actions: [
-            Padding(
+    return Scaffold(
+      endDrawer: Drawer(
+        width: deviceWidth/2,
+        child: ListView(
+          children: [
+            ListTile(
+              title: const Text('Fale Conosco'),
+              onTap: () {},
+            ),
+            ListTile(
+              title: const Text('Deslogar'),
+              onTap: () {
+                Navigator.of(context).pop();
+                showDialog(
+                  context: context, 
+                  builder: (context) {
+                    return Center(
+                      child: SingleChildScrollView(
+                        child: AlertDialog(
+                          title: Text(
+                            "Deseja mesmo sair?",
+                            style: TextStyle(
+                              fontSize: fontSize2,
+                            ),
+                          ),
+                          actions: <Widget>[
+                            TextButton(
+                              style: ButtonStyle(
+                                overlayColor: MaterialStateColor.resolveWith((states) => Colors.grey.withAlpha(50)),
+                              ),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                              child: Text(
+                                "Cancelar",
+                                style: TextStyle(
+                                  color: Colors.grey,
+                                  fontSize: fontSize2 * 0.8,
+                                ),
+                              ),
+                            ),
+                            TextButton(
+                              style: ButtonStyle(
+                                overlayColor: MaterialStateColor.resolveWith((states) => Colors.grey.withAlpha(50)),
+                              ),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (context) => const App()
+                                  )
+                                );
+                              },
+                              child: Text(
+                                "Confirmar",
+                                style: TextStyle(
+                                  color: const Color.fromARGB(255, 0, 71, 133),
+                                  fontSize: fontSize2 * 0.8,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  }
+                );
+              },
+            )
+          ],
+        ),
+      ),
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        toolbarHeight: deviceHeight * 0.08,
+        actions: [
+          Builder(
+            builder: (context) => Padding(
               padding: EdgeInsets.only(
                 right: MediaQuery.of(context).size.width * 0.04
               ),
               child: IconButton(
-                onPressed: (){},
+                onPressed: (){
+                  Scaffold.of(context).openEndDrawer();
+                },
                 icon: Icon(
                   Icons.settings,
                   color: const Color.fromARGB(255, 0, 71, 133),
@@ -43,83 +115,82 @@ class ProfileMainPage extends StatelessWidget {
                 ),
               ),
             )
-          ],
-        ),
-        body: SingleChildScrollView(
-          child: Center(
-            child: Column(
-              children: [
-                SizedBox(
-                  width: deviceWidth * 1.6 <= deviceHeight ? deviceWidth * 0.7 : deviceHeight * 0.45,
-                  height: deviceWidth * 1.6 <= deviceHeight ? deviceWidth * 0.7 : deviceHeight * 0.45,
-                  child: ClipOval(
-                    child: Image(
-                      image: NetworkImage(user!.urlFotos.isEmpty ? 'https://i.imgur.com/YTkSwCJ.png' : user!.urlFotos[0]),
-                      fit: BoxFit.cover,
-                    ),
+          )
+        ],
+      ),
+      body: SingleChildScrollView(
+        child: Center(
+          child: Column(
+            children: [
+              SizedBox(
+                width: deviceWidth * 1.6 <= deviceHeight ? deviceWidth * 0.7 : deviceHeight * 0.45,
+                height: deviceWidth * 1.6 <= deviceHeight ? deviceWidth * 0.7 : deviceHeight * 0.45,
+                child: ClipOval(
+                  child: Image(
+                    image: NetworkImage(user!.urlFotos.isEmpty ? 'https://i.imgur.com/YTkSwCJ.png' : user!.urlFotos[0]),
+                    fit: BoxFit.cover,
                   ),
                 ),
-                Container(
-                  margin: EdgeInsets.symmetric(
-                    vertical: deviceHeight * 0.1
-                  ),
-                  child: Column(
-                    children: [
-                      Text(
-                        ('${user!.nome}, ${user!.idade}'),
-                        style: TextStyle(
-                          fontSize: fontSize1,
-                          fontWeight: FontWeight.bold
-                        ),
+              ),
+              Container(
+                margin: EdgeInsets.symmetric(
+                  vertical: deviceHeight * 0.1
+                ),
+                child: Column(
+                  children: [
+                    Text(
+                      ('${user!.nome}, ${user!.idade}'),
+                      style: TextStyle(
+                        fontSize: fontSize1,
+                        fontWeight: FontWeight.bold
                       ),
-                      Text(
-                        user!.curso,
+                    ),
+                    Text(
+                      user!.curso,
+                      style: TextStyle(
+                        fontSize: fontSize2
+                      ),
+                    )
+                  ],
+                ),
+              ),
+              Center(
+                child: Container(
+                  margin: EdgeInsets.only(
+                    bottom: deviceHeight * 0.03
+                  ),
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      shape: const StadiumBorder(),
+                      backgroundColor: const Color.fromARGB(255, 0, 71, 133)
+                    ),
+                    onPressed: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(builder: (context) => ProfileEdit(
+                          user: user!, 
+                          fontSize1: fontSize1, 
+                          fontSize2: fontSize2,
+                        ))
+                      );
+                    },
+                    child: Container(
+                      padding: EdgeInsets.all(
+                        deviceHeight * 0.02
+                      ),
+                      child: Text(
+                        'Editar Perfil',
                         style: TextStyle(
                           fontSize: fontSize2
                         ),
-                      )
-                    ],
-                  ),
-                ),
-                Center(
-                  child: Container(
-                    margin: EdgeInsets.only(
-                      bottom: deviceHeight * 0.03
-                    ),
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        shape: const StadiumBorder(),
-                        backgroundColor: const Color.fromARGB(255, 0, 71, 133)
                       ),
-                      onPressed: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(builder: (context) => ProfileEdit(
-                            user: user!, 
-                            fontSize1: fontSize1, 
-                            fontSize2: fontSize2,
-                            idUsuarioAtual: idUsuarioAtual,
-                          ))
-                        );
-                      },
-                      child: Container(
-                        padding: EdgeInsets.all(
-                          deviceHeight * 0.02
-                        ),
-                        child: Text(
-                          'Editar Perfil',
-                          style: TextStyle(
-                            fontSize: fontSize2
-                          ),
-                        ),
-                      )
-                    ),
-                  )
+                    )
+                  ),
                 )
-              ]
-            ),
+              )
+            ]
           ),
-        )
-      ),
+        ),
+      )
     );
   }
 }

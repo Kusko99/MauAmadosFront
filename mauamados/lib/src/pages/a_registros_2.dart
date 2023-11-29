@@ -1,9 +1,8 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:mauamados/models/models.dart';
+import 'package:mauamados/src/pages/pages.dart';
 import 'package:mauamados/src/widgets/widgets.dart';
-// import 'dart:ffi';
-import 'dart:convert';
-import 'package:http/http.dart' as http;
 
 class Registros2 extends StatefulWidget {
   final double fontSize;
@@ -11,6 +10,9 @@ class Registros2 extends StatefulWidget {
   final String senha;
   final String nome;
   final int idade;
+  final User user;
+  final double fontSize1;
+  final double fontSize2;
 
   const Registros2({
     required this.fontSize,
@@ -18,6 +20,9 @@ class Registros2 extends StatefulWidget {
     required this.senha, 
     required this.nome, 
     required this.idade,
+    required this.user,
+    required this.fontSize1,
+    required this.fontSize2,
     super.key, 
     });
 
@@ -39,26 +44,6 @@ class _RegistrosState2 extends State<Registros2> {
   bool isNextButtonEnabled = false;
 
   Map<String, dynamic> userData = {};
-
-  Future<void> submitForm() async {
-
-    final jsonData = jsonEncode(userData);
-
-    final response = await http.post(
-      Uri.parse('http://127.0.0.1:8000/user'),
-      headers: {
-        'accept': 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: jsonData,
-    );
-
-    if (response.statusCode == 200) {
-      // Lidar com a resposta da API em caso de sucesso
-    } else {
-      // Lidar com erros da solicitação
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -115,7 +100,7 @@ class _RegistrosState2 extends State<Registros2> {
             ),
             DropDownMenu(
               label: 'Orientação',
-              items: const ['--Selecione--','Heterosexual', 'Homosexual', 'Bisexual'], 
+              items: const ['--Selecione--','Heterossexual', 'Homossexual', 'Bissexual'], 
               fontSize: widget.fontSize, 
               selectedItem: orientacaoSelecionada,
               onChanged: (value) {
@@ -199,24 +184,34 @@ class _RegistrosState2 extends State<Registros2> {
                         {
                           "ma_id": 4,
                           "name": widget.nome,
-                          "profile_picture": [
-                            "string"
-                          ],
+                          "profile_picture": [],
                           "age": widget.idade,
                           "course": cursoSelecionado,
                           "bio": bioController.text.isNotEmpty ? bioController.text : '',
-                          "genero": generoSelecionado.toLowerCase(),
-                          "sexual_orientation": orientacaoSelecionada.toLowerCase(),
-                          "tags_preferences": [
-                            "string"
-                          ],
+                          "genero": generoSelecionado,
+                          "sexual_orientation": orientacaoSelecionada,
+                          "tags_preferences": [],
                           "match": [],
                           "likes": [],
                           "login": widget.email,
                           "senha": widget.senha
                         };
+                        widget.user.curso = cursoSelecionado;
+                        widget.user.genero = generoSelecionado;
+                        widget.user.orientacao = orientacaoSelecionada;
+                        widget.user.bio = bioController.text.isNotEmpty ? bioController.text : '';
                       });
-                      submitForm();
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder:(context) => Registros3(
+                            fontSize1: widget.fontSize1,
+                            fontSize2: widget.fontSize2,
+                            user: widget.user,
+                            fontSize: widget.fontSize,
+                            userData: userData,
+                          ),
+                        )
+                      );
                     }
                   },
                   child: Padding(

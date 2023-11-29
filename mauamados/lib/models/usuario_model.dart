@@ -40,6 +40,19 @@ class User extends Equatable {
 
   static List<User> users = [
     User(
+      id: 0, 
+      nome: '', 
+      idade: 0, 
+      urlFotos: [], 
+      bio: '', 
+      curso: '', 
+      interesses: [] ,
+      genero: '', 
+      orientacao: '', 
+      likes: [], 
+      match: []
+    ),
+    User(
       id: 1,
       nome: 'Carlos',
       idade: 18,

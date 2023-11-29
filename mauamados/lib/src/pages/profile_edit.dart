@@ -2,18 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:mauamados/models/models.dart';
 import 'package:mauamados/src/pages/pages.dart';
 import 'package:mauamados/src/widgets/widgets.dart';
+import 'package:http/http.dart' as http;
 
 class ProfileEdit extends StatefulWidget {
   final User user;
   final double fontSize1;
   final double fontSize2;
-  final int idUsuarioAtual;
 
   const ProfileEdit({
     required this.user,
     required this.fontSize1,
     required this.fontSize2,
-    required this.idUsuarioAtual,
     super.key,
   });
 
@@ -34,9 +33,23 @@ class _ProfileEditState extends State<ProfileEdit> {
     super.dispose();
   }
 
+  Future<void> changeData(int id, String value, String dataType, bool idade) async {
+    if (idade) {
+      await http.post(Uri.parse('http://127.0.0.1:8000/user/$dataType/$id/${int.parse(value)}'));
+    }
+    else {
+      await http.post(Uri.parse('http://127.0.0.1:8000/user/$dataType/$id/$value'));
+    }
+  }
+
+  Future<void> addImageRoute(int id, String link) async {
+    await http.post(Uri.parse('http://127.0.0.1:8000/user/add_photo/$id?new_photo=$link'));
+  }
+
   void addImage(String link) {
     final updatedUserPhotos = List<String>.from(widget.user.urlFotos);
     updatedUserPhotos.add(link);
+    addImageRoute(widget.user.id, link);
     setState(() {
       widget.user.urlFotos = updatedUserPhotos;
     });
@@ -86,9 +99,9 @@ class _ProfileEditState extends State<ProfileEdit> {
               Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (context) => ProfilePage(
+                    usuarioAtual: widget.user,
                     fontSize1: widget.fontSize1,
                     fontSize2: widget.fontSize2,
-                    idUsuarioAtual: widget.idUsuarioAtual,
                   ),
                 ),
               );
@@ -138,6 +151,12 @@ class _ProfileEditState extends State<ProfileEdit> {
                       text: widget.user.nome,
                       fontSize: widget.fontSize2,
                       onChanged: (nome) {
+                        changeData(
+                          widget.user.id, 
+                          nome,
+                          'change_name',
+                          false
+                        );
                         setState(() {
                           widget.user.nome = nome;
                         });
@@ -148,19 +167,31 @@ class _ProfileEditState extends State<ProfileEdit> {
                       text: widget.user.idade.toString(),
                       fontSize: widget.fontSize2,
                       onChanged: (idade) {
+                        changeData(
+                          widget.user.id, 
+                          idade,
+                          'change_age',
+                          true
+                        );
                         setState(() {
                           widget.user.idade = int.parse(idade);
                         });
                       },
                     ),
                     DropDownMenu(
-                      items: const ['--Selecione--','Administração', 'Arquitetura e Urbanismo', 'Ciência da Computação', 'Design', 
+                      items: const ['Administração', 'Arquitetura e Urbanismo', 'Ciências da Computação', 'Design', 
               'Engenharia Civil', 'Engenharia de Alimentos', 'Engenharia de Computação', 'Engenharia de Controle e Automoção',
               'Engenharia de Produção', 'Engenharia Elétrica', 'Engenharia Eletrônica', 'Engenharia Mecânica', 'Engenharia Química',
               'Inteligência Artificial e Ciência de Dados', 'Relações Internacionais', 'Sistemas de Informação', 'Professor'], 
                       fontSize: widget.fontSize2, 
                       selectedItem: widget.user.curso, 
                       onChanged: (value) {
+                        changeData(
+                          widget.user.id, 
+                          value,
+                          'change_course', 
+                          false
+                        );
                         setState(() {
                           cursoSelecionado = value;
                           widget.user.curso = cursoSelecionado;
@@ -173,6 +204,12 @@ class _ProfileEditState extends State<ProfileEdit> {
                       text: widget.user.bio,
                       fontSize: widget.fontSize2,
                       onChanged: (bio) {
+                        changeData(
+                          widget.user.id, 
+                          bio, 
+                          'change_bio',
+                          false
+                        );
                         setState(() {
                           widget.user.bio = bio;
                         });
@@ -180,10 +217,16 @@ class _ProfileEditState extends State<ProfileEdit> {
                     ),
                     DropDownMenu(
                       label: 'Genero',
-                      items: const ['Homem', 'Mulher', 'Outro'], 
+                      items: const ['Masculino', 'Feminino', 'Não-Binário'], 
                       fontSize: widget.fontSize2, 
                       selectedItem: generoSelecionado, 
                       onChanged: (value){
+                        changeData(
+                          widget.user.id, 
+                          value, 
+                          'change_genero', 
+                          false
+                        );
                         setState(() {
                           generoSelecionado = value;
                           widget.user.genero = generoSelecionado;
@@ -192,10 +235,16 @@ class _ProfileEditState extends State<ProfileEdit> {
                     ),
                     DropDownMenu(
                       label: 'Orientação',
-                      items: const ['Heterosexual', 'Homosexual', 'Outro'], 
+                      items: const ['Heterossexual', 'Homossexual', 'Bissexual'], 
                       fontSize: widget.fontSize2, 
                       selectedItem: orientacaoSelecionada, 
                       onChanged: (value) {
+                        changeData(
+                          widget.user.id, 
+                          value, 
+                          'change_sexual_orientation', 
+                          false
+                        );
                         setState(() {
                           orientacaoSelecionada = value;
                           widget.user.orientacao = orientacaoSelecionada;
