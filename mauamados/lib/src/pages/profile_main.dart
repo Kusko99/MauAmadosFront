@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:mauamados/models/models.dart';
 import 'package:mauamados/src/app.dart';
 import 'package:mauamados/src/pages/pages.dart';
-import 'package:mauamados/src/widgets/widgets.dart';
 
 class ProfileMainPage extends StatelessWidget {
   final User? user;
@@ -27,9 +26,22 @@ class ProfileMainPage extends StatelessWidget {
         width: deviceWidth/2,
         child: ListView(
           children: [
+            SizedBox(
+              height: deviceHeight*0.01,
+            ),
             ListTile(
               title: const Text('Fale Conosco'),
               onTap: () {},
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(
+                vertical: deviceHeight*0.01,
+                horizontal: deviceWidth * 0.05
+              ),
+              child: Container(
+                height: 1,
+                color: Colors.grey.withAlpha(100),
+              ),
             ),
             ListTile(
               title: const Text('Deslogar'),
