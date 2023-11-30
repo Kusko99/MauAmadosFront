@@ -246,7 +246,7 @@ class ProfileMainPage extends StatelessWidget {
                   Scaffold.of(context).openEndDrawer();
                 },
                 icon: Icon(
-                  Icons.settings,
+                  Icons.menu,
                   color: const Color.fromARGB(255, 0, 71, 133),
                   size: deviceHeight * 0.06,
                 ),

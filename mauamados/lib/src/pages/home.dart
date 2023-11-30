@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mauamados/models/models.dart';
+import 'package:mauamados/src/pages/pages.dart';
 import 'package:mauamados/src/widgets/widgets.dart';
 import 'package:http/http.dart' as http;
 
@@ -65,6 +66,14 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _dislike() {
+    Navigator.push(
+      context, 
+      MaterialPageRoute(
+        builder: (context) => TelaMatch(
+          link: currentUser!.urlFotos.isEmpty ? 'https://i.imgur.com/YTkSwCJ.png' : currentUser!.urlFotos[0],
+        ),
+      )
+    );
     if (currentIndex < users.length - 1) {
       setState(() {
         currentIndex++;
