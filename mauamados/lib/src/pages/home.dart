@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:mauamados/models/models.dart';
 import 'package:mauamados/src/pages/pages.dart';
@@ -43,12 +45,27 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  void executePostRequest(int idUsuarioAtual, int proxUserId) async {
+  Future<void> verificaMatch(int idUsuario, int idMatch, String link) async {
+    final response = await http.get(Uri.parse('http://127.0.0.1:8000/user/likes/$idMatch'));
+    final List liked = json.decode(response.body);
+    if (liked.contains(idUsuario.toString())) {
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (context) => TelaMatch(
+            link: link,
+          ),
+        )
+      );
+    }
+  }
+
+  Future<void> executePostRequest(int idUsuarioAtual, int proxUserId) async {
     await http.post(Uri.parse('http://127.0.0.1:8000/user/post_like/$idUsuarioAtual/$proxUserId'));
   }
 
   void _like() {
     executePostRequest(widget.idUsuarioAtual, users[currentIndex].id);
+    verificaMatch(widget.idUsuarioAtual, users[currentIndex].id, users[currentIndex].urlFotos.isEmpty ? 'https://i.imgur.com/YTkSwCJ.png' : users[currentIndex].urlFotos[0]);
     if (currentIndex < users.length - 1) {
       final int previousIndex = currentIndex;
       setState(() {
@@ -57,7 +74,7 @@ class _HomePageState extends State<HomePage> {
         proxUserId = currentUser!.id;
         users.remove(users[previousIndex]);
       });
-    } else if (currentIndex == users.length - 1) {
+    } else {
       setState(() {
         currentIndex = 0;
         currentUser = users[currentIndex];
@@ -66,21 +83,13 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _dislike() {
-    Navigator.push(
-      context, 
-      MaterialPageRoute(
-        builder: (context) => TelaMatch(
-          link: currentUser!.urlFotos.isEmpty ? 'https://i.imgur.com/YTkSwCJ.png' : currentUser!.urlFotos[0],
-        ),
-      )
-    );
     if (currentIndex < users.length - 1) {
       setState(() {
         currentIndex++;
         currentUser = users[currentIndex];
         proxUserId = currentUser!.id;
       });
-    } else if (currentIndex == users.length - 1) {
+    } else {
       setState(() {
         currentIndex = 0;
         currentUser = users[currentIndex];

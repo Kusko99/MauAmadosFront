@@ -42,16 +42,7 @@ class _LoginCadastroState extends State<LoginCadastro> {
     await getLikes(id);
     setState(() {
       pretendentes = json.decode(response.body);
-      for (Map pretendente in pretendentes) {
-        print(pretendente['ma_id']);
-      }
-
       pretendentes.removeWhere((pretendente) => likes.contains(pretendente['ma_id']));
-      print(likes);
-
-      for (Map pretendente in pretendentes) {
-        print(pretendente['ma_id']);
-      }
       pretendentes.shuffle();
     });
   }
