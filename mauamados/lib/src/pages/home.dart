@@ -91,18 +91,19 @@ class _HomePageState extends State<HomePage> {
     if (currentIndex < users.length - 1) {
       setState(() {
         currentIndex++;
-        currentUser = users[currentIndex];
-        proxUserId = currentUser!.id;
-        users.remove(users[previousIndex]);
       });
     } else {
       setState(() {
         currentIndex = 0;
-        currentUser = users[currentIndex];
-        proxUserId = currentUser!.id;
-        users.remove(users[previousIndex]);
       });
     }
+    setState(() {
+      currentUser = users[currentIndex];
+      proxUserId = currentUser!.id;
+    });
+    Future.delayed(const Duration(seconds: 2), () {
+      users.remove(users[previousIndex]);
+    });
   }
 
   void _dislike() {
