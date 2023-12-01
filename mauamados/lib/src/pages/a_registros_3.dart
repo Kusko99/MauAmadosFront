@@ -52,6 +52,7 @@ class _RegistrosState3 extends State<Registros3> {
     final response = await http.get(Uri.parse('http://127.0.0.1:8000/user/get_possible_matches/$id'));
     setState(() {
       pretendentes = json.decode(response.body);
+      pretendentes.shuffle();
     });
   }
 

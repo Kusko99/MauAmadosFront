@@ -1,17 +1,27 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:mauamados/models/models.dart';
+import 'package:mauamados/src/pages/pages.dart';
 import 'package:mauamados/src/widgets/widgets.dart';
 import 'package:http/http.dart' as http;
 
 class HomePage extends StatefulWidget {
   final int idUsuarioAtual;
   final List pretendentes;
+  final double fontSize1;
+  final double fontSize2;
+  final User user1;
 
   const HomePage({
     required this.idUsuarioAtual,
     required this.pretendentes,
-    super.key
+    required this.fontSize1, 
+    required this.fontSize2, 
+    required this.user1,
+    super.key, 
   });
+
   @override
   State<HomePage> createState() {
     return _HomePageState();
@@ -34,20 +44,76 @@ class _HomePageState extends State<HomePage> {
   double deltaX = 0;
   int proxUserId = -1;
 
-  void executePostRequest(int idUsuarioAtual, int proxUserId) async {
+  @override
+  void initState() {
+    super.initState();
+    for (Map<String, dynamic> usuario in widget.pretendentes) {
+      users.add(User.fromJson(usuario));
+    }
+  }
+
+  Future<void> verificaMatch(int idUsuario, int idMatch, String link) async {
+    final response = await http.get(Uri.parse('http://127.0.0.1:8000/user/likes/$idMatch'));
+    final List liked = json.decode(response.body);
+    if (liked.contains(idUsuario.toString())) {
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (context) => TelaMatch(
+            link: link,
+          ),
+        )
+      );
+    }
+  }
+
+  Future<void> executePostRequest(int idUsuarioAtual, int proxUserId) async {
     await http.post(Uri.parse('http://127.0.0.1:8000/user/post_like/$idUsuarioAtual/$proxUserId'));
   }
 
-
-  void _next() {
+  void _like() {
+    if (users.length == 1) {
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (context) => MainScreen(
+            fontSize1: widget.fontSize1, 
+            fontSize2: widget.fontSize2, 
+            idUsuarioAtual: widget.idUsuarioAtual, 
+            usuarioAtual: widget.user1, 
+            pretendentes: const []
+          )
+        )
+      );
+    }
     executePostRequest(widget.idUsuarioAtual, users[currentIndex].id);
+    verificaMatch(widget.idUsuarioAtual, users[currentIndex].id, users[currentIndex].urlFotos.isEmpty ? 'https://i.imgur.com/YTkSwCJ.png' : users[currentIndex].urlFotos[0]);
+    final int previousIndex = currentIndex;
+
+    if (currentIndex < users.length - 1) {
+      setState(() {
+        currentIndex++;
+      });
+    } else {
+      setState(() {
+        currentIndex = 0;
+      });
+    }
+    setState(() {
+      currentUser = users[currentIndex];
+      proxUserId = currentUser!.id;
+    });
+    Future.delayed(const Duration(seconds: 2), () {
+      users.remove(users[previousIndex]);
+    });
+  }
+
+  void _dislike() {
     if (currentIndex < users.length - 1) {
       setState(() {
         currentIndex++;
         currentUser = users[currentIndex];
         proxUserId = currentUser!.id;
       });
-    } else if (currentIndex == users.length - 1) {
+    } else {
       setState(() {
         currentIndex = 0;
         currentUser = users[currentIndex];
@@ -57,9 +123,6 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    for (Map<String, dynamic> usuario in widget.pretendentes) {
-      users.add(User.fromJson(usuario));
-    }
     double deviceHeight = MediaQuery.of(context).size.height;
     double deviceWidth = MediaQuery.of(context).size.width;
     double size = (deviceHeight* 0.1);
@@ -147,8 +210,10 @@ class _HomePageState extends State<HomePage> {
                     disBack = Colors.white;
                     superBack = Colors.white;
                   });
-                  if ((deltaX > deviceWidth * 0.27) || (deltaX < -(deviceWidth * 0.27)) || (deltaY < -(deviceHeight / 3))) {
-                    _next();
+                  if ((deltaX > deviceWidth * 0.27) || (deltaY < -(deviceHeight / 3))) {
+                    _like();
+                  } else if (deltaX < -(deviceWidth * 0.27)) {
+                    _dislike();
                   }
                 },
                 child: userCard
@@ -161,21 +226,21 @@ class _HomePageState extends State<HomePage> {
                     color: dislike, 
                     icon: Icons.clear_rounded,
                     size: size / 2,
-                    onPressed: _next,
+                    onPressed: _dislike,
                     backgroundColor: disBack,
                   ),
                   ChoiceButton(
                     color: superlike, 
                     icon: Icons.star_rounded,
                     size: size /3,
-                    onPressed: _next,
+                    onPressed: _like,
                     backgroundColor: superBack,
                   ),
                   ChoiceButton(
                     color: like, 
                     icon: Icons.favorite_rounded,
                     size: size /2,
-                    onPressed: _next,
+                    onPressed: _like,
                     backgroundColor: likeBack,
                   ),
                 ],
