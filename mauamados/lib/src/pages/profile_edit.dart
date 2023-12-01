@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:mauamados/models/models.dart';
 import 'package:mauamados/src/pages/pages.dart';
@@ -54,6 +56,22 @@ class _ProfileEditState extends State<ProfileEdit> {
     await http.delete(Uri.parse('http://127.0.0.1:8000/user/remove_tag_preference/$id/$tag'));
   }
 
+  Future<void> deleteImageRoute(int id, String link) async {
+    final String corpo = link;
+    print(corpo);
+    final response = await http.delete(
+      Uri.parse('http://127.0.0.1:8000/user/delete_photo/$id'),
+      headers: {
+        'accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Accept-Charset': 'utf-8'
+      },
+      body: jsonEncode({"photo_to_delete": corpo}),
+    );
+    print(response.body);
+    print(response.statusCode);
+  }
+
   void addImage(String link) {
     final updatedUserPhotos = List<String>.from(widget.user.urlFotos);
     updatedUserPhotos.add(link);
@@ -66,6 +84,7 @@ class _ProfileEditState extends State<ProfileEdit> {
   void removeImage(String link) {
     final updatedUserPhotos = List<String>.from(widget.user.urlFotos);
     updatedUserPhotos.remove(link);
+    deleteImageRoute(widget.user.id, link);
     setState(() {
       widget.user.urlFotos = updatedUserPhotos;
     });
