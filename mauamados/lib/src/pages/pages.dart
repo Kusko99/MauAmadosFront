@@ -13,3 +13,4 @@ export 'a_registros_3.dart';
 export 'profile_match.dart';
 export 'tela_match.dart';
 export 'home_alter.dart';
+export 'tela_deletar.dart';
