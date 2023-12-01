@@ -26,22 +26,59 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   int currentIndex = 0;
+  List<Widget> screens = [];
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.pretendentes.isEmpty) {
+      setState(() {
+        screens = [
+          const HomeAlter(),
+          ProfilePage(
+            fontSize1: widget.fontSize1, 
+            fontSize2: widget.fontSize2, 
+            usuarioAtual: widget.usuarioAtual
+          ),
+          ChatPage(
+            conversas: conversas,
+            fontSize: widget.fontSize2 * 0.75 < 12 ? 12 : widget.fontSize2 * 0.75, 
+            idUsuarioAtual: 1,
+          )
+        ];
+      });
+    } else {
+      setState(() {
+        screens = [
+          HomePage(
+            idUsuarioAtual: widget.idUsuarioAtual, 
+            pretendentes: widget.pretendentes,
+            fontSize1: widget.fontSize1, 
+            fontSize2: widget.fontSize2,
+            user1: widget.usuarioAtual,
+          ),
+          ProfilePage(
+            fontSize1: widget.fontSize1, 
+            fontSize2: widget.fontSize2, 
+            usuarioAtual: widget.usuarioAtual
+          ),
+          ChatPage(
+            conversas: conversas,
+            fontSize: widget.fontSize2 * 0.75 < 12 ? 12 : widget.fontSize2 * 0.75, 
+            idUsuarioAtual: 1,
+          )
+        ];
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    late double fontSize1 = widget.fontSize1;
-    late double fontSize2 = widget.fontSize2;
     
     double bottomNavBarSize = MediaQuery.of(context).size.height *  0.09;
     if (bottomNavBarSize < 40) {
       bottomNavBarSize = 40;
     }
-
-    final screens = [
-      HomePage(idUsuarioAtual: widget.idUsuarioAtual, pretendentes: widget.pretendentes,),
-      ProfilePage(fontSize1: fontSize1, fontSize2: fontSize2, usuarioAtual: widget.usuarioAtual),
-      ChatPage(conversas: conversas,fontSize: fontSize2 * 0.75 < 12 ? 12 : fontSize2 * 0.75, idUsuarioAtual: 1,)
-    ];
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,

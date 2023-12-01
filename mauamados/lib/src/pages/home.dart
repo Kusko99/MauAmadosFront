@@ -9,12 +9,19 @@ import 'package:http/http.dart' as http;
 class HomePage extends StatefulWidget {
   final int idUsuarioAtual;
   final List pretendentes;
+  final double fontSize1;
+  final double fontSize2;
+  final User user1;
 
   const HomePage({
     required this.idUsuarioAtual,
     required this.pretendentes,
-    super.key
+    required this.fontSize1, 
+    required this.fontSize2, 
+    required this.user1,
+    super.key, 
   });
+
   @override
   State<HomePage> createState() {
     return _HomePageState();
@@ -64,10 +71,24 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _like() {
+    if (users.length == 1) {
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (context) => MainScreen(
+            fontSize1: widget.fontSize1, 
+            fontSize2: widget.fontSize2, 
+            idUsuarioAtual: widget.idUsuarioAtual, 
+            usuarioAtual: widget.user1, 
+            pretendentes: const []
+          )
+        )
+      );
+    }
     executePostRequest(widget.idUsuarioAtual, users[currentIndex].id);
     verificaMatch(widget.idUsuarioAtual, users[currentIndex].id, users[currentIndex].urlFotos.isEmpty ? 'https://i.imgur.com/YTkSwCJ.png' : users[currentIndex].urlFotos[0]);
+    final int previousIndex = currentIndex;
+
     if (currentIndex < users.length - 1) {
-      final int previousIndex = currentIndex;
       setState(() {
         currentIndex++;
         currentUser = users[currentIndex];
@@ -78,6 +99,8 @@ class _HomePageState extends State<HomePage> {
       setState(() {
         currentIndex = 0;
         currentUser = users[currentIndex];
+        proxUserId = currentUser!.id;
+        users.remove(users[previousIndex]);
       });
     }
   }
