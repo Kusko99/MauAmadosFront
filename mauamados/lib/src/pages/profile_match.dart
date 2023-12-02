@@ -76,11 +76,17 @@ class _ProfileMatchState extends State<ProfileMatch> {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       BotaoDoMau(
+                        onPressed: () {
+                          setState(() {
+                            conversas.removeWhere((conversa) => conversa['ids'].contains(widget.user.id));
+                          });
+                        },
                         fontSize: widget.fontSize, 
                         color: Colors.grey, 
                         texto: 'Desfazer Match'
                       ),
                       BotaoDoMau(
+                        onPressed: () {},
                         fontSize: widget.fontSize, 
                         color: const Color.fromARGB(255, 162, 38, 29), 
                         texto: 'Denunciar'

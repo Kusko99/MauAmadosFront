@@ -4,8 +4,10 @@ class BotaoDoMau extends StatelessWidget {
   final double fontSize;
   final Color color;
   final String texto;
+  final VoidCallback onPressed;
   const BotaoDoMau({
     super.key, 
+    required this.onPressed,
     required this.fontSize, 
     required this.color,
     required this.texto
@@ -24,7 +26,7 @@ class BotaoDoMau extends StatelessWidget {
             elevation: 0,
             padding: const EdgeInsets.all(0)
           ),
-          onPressed: () {},
+          onPressed: onPressed,
           child: Container(
             padding: EdgeInsets.all(fontSize * 0.4),
             decoration: BoxDecoration(
