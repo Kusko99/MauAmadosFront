@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:mauamados/models/models.dart';
 import 'package:mauamados/src/widgets/widgets.dart';
@@ -32,9 +30,13 @@ class _ProfileMatchState extends State<ProfileMatch> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 1,
-        toolbarHeight: max(deviceHeight * 0.07, 36.0),
-        leadingWidth: max(deviceHeight * 0.07, 36.0),
+        toolbarHeight: deviceHeight * 0.08,
+        leadingWidth: deviceHeight * 0.08,
         foregroundColor: const Color.fromARGB(255, 0, 71, 133),
+        iconTheme: IconThemeData(
+          color: const Color.fromARGB(255, 0, 71, 133),
+          size: deviceHeight * 0.06,
+        ),
       ),
       body: SingleChildScrollView(
         child: Center(
