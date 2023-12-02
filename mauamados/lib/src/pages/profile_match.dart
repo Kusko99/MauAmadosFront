@@ -54,7 +54,7 @@ class _ProfileMatchState extends State<ProfileMatch> {
                 ),
                 Padding(
                   padding: EdgeInsets.only(
-                    bottom: deviceHeight * 0.05,
+                    bottom: deviceHeight * 0.02,
                     left: deviceWidth * 0.05,
                     right: deviceWidth * 0.05
                   ),
@@ -64,6 +64,26 @@ class _ProfileMatchState extends State<ProfileMatch> {
                       fontSize: widget.fontSize,
                       color: Colors.black
                     )
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(
+                    bottom: deviceHeight * 0.05
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      BotaoDoMau(
+                        fontSize: widget.fontSize, 
+                        color: Colors.grey, 
+                        texto: 'Desfazer Match'
+                      ),
+                      BotaoDoMau(
+                        fontSize: widget.fontSize, 
+                        color: const Color.fromARGB(255, 162, 38, 29), 
+                        texto: 'Denunciar'
+                      )
+                    ],
                   ),
                 )
               ],
