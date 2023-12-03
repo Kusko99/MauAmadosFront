@@ -70,7 +70,6 @@ class _ChatConversaState extends State<ChatConversa> {
             Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (context) => ChatPage(
-                  conversasAPI: widget.conversasAPI,
                   fontSize: widget.fontSize,
                   idUsuarioAtual: widget.idUsuarioAtual,
                 ),

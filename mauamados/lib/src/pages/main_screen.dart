@@ -8,7 +8,6 @@ class MainScreen extends StatefulWidget {
   final int idUsuarioAtual;
   final User usuarioAtual;
   final List pretendentes;
-  final List<dynamic> conversasAPI;
 
   const MainScreen({
     required this.fontSize1,
@@ -16,7 +15,6 @@ class MainScreen extends StatefulWidget {
     required this.idUsuarioAtual,
     required this.usuarioAtual,
     required this.pretendentes,
-    required this.conversasAPI,
     super.key
     });
 
@@ -43,7 +41,6 @@ class _MainScreenState extends State<MainScreen> {
             usuarioAtual: widget.usuarioAtual
           ),
           ChatPage(
-            conversasAPI: widget.conversasAPI,
             fontSize: widget.fontSize2 * 0.75 < 12 ? 12 : widget.fontSize2 * 0.75, 
             idUsuarioAtual: 1,
           )
@@ -53,7 +50,6 @@ class _MainScreenState extends State<MainScreen> {
       setState(() {
         screens = [
           HomePage(
-            conversasAPI: widget.conversasAPI,
             idUsuarioAtual: widget.idUsuarioAtual, 
             pretendentes: widget.pretendentes,
             fontSize1: widget.fontSize1, 
@@ -66,7 +62,6 @@ class _MainScreenState extends State<MainScreen> {
             usuarioAtual: widget.usuarioAtual
           ),
           ChatPage(
-            conversasAPI: widget.conversasAPI,
             fontSize: widget.fontSize2 * 0.75 < 12 ? 12 : widget.fontSize2 * 0.75, 
             idUsuarioAtual: 1,
           )

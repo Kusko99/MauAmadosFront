@@ -192,7 +192,6 @@ class _LoginCadastroState extends State<LoginCadastro> {
                                       Navigator.of(context).push(
                                         MaterialPageRoute(
                                           builder: (context) => MainScreen(
-                                            conversasAPI: conversasAPI['todas_as_conversas'],
                                             pretendentes: pretendentes,
                                             usuarioAtual: user,
                                             fontSize1: widget.fontSize1,

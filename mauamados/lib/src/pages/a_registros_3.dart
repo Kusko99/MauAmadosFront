@@ -94,7 +94,6 @@ class _RegistrosState3 extends State<Registros3> {
       Navigator.of(context).push(
         MaterialPageRoute(
           builder: (context) => MainScreen(
-            conversasAPI: const [],
             pretendentes: pretendentes,
             idUsuarioAtual: maId,
             usuarioAtual: User.fromJson(userData),
