@@ -56,9 +56,22 @@ class _ProfileEditState extends State<ProfileEdit> {
   }
 
   Future<void> deleteImageRoute(int id, String link) async {
-    final String corpo = '"$link"';
+    final String corpo = link;
     await http.delete(
       Uri.parse('http://127.0.0.1:8000/user/delete_photo/$id'),
+      headers: {
+        'accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Accept-Charset': 'utf-8'
+      },
+      body: jsonEncode(corpo),
+    );
+  }
+
+  Future<void> updateIndex(int id, int index,String link) async {
+    final String corpo = link;
+    await http.put(
+      Uri.parse('http://127.0.0.1:8000/user/photo_new_index/$id/$index'),
       headers: {
         'accept': 'application/json',
         'Content-Type': 'application/json',
@@ -161,6 +174,8 @@ class _ProfileEditState extends State<ProfileEdit> {
                                   widget.user.urlFotos[indice1] = urlAlvo;
                                   widget.user.urlFotos[indice2] = url;
                                 });
+                                updateIndex(widget.user.id, indice2, url);
+                                updateIndex(widget.user.id, indice1, urlAlvo);
                               },
                             ))
                         .toList(),
