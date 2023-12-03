@@ -63,13 +63,33 @@ class ChatContatos extends StatelessWidget {
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              'Matches',
-              style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-                fontSize: fontSize * 1.5
-              ),
+            Row(
+              children: [
+                Text(
+                  'Matches',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: fontSize * 1.5
+                  ),
+                ),
+                IconButton(
+                  onPressed:() { 
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => ChatPage(
+                          fontSize: fontSize, 
+                          idUsuarioAtual: idUsuarioAtual
+                        )
+                      )
+                    ); 
+                  },
+                  icon: Icon(
+                    Icons.refresh,
+                    size: fontSize * 1.5,
+                  )
+                )
+              ],
             ),
             const SizedBox(
               height: 5,

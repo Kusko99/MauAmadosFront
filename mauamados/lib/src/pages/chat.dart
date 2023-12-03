@@ -26,8 +26,9 @@ class _ChatPageState extends State<ChatPage> {
 
   Future<void> getConversas(int id) async {
     final response = await http.get(Uri.parse('http://127.0.0.1:8000/get_todas_conversas/$id'));
+    final utf8Body = utf8.decode(response.bodyBytes);
     setState(() {
-      conversasAPI = json.decode(response.body);
+      conversasAPI = json.decode(utf8Body);
     });
   }
   dynamic conversasAPI;
