@@ -5,10 +5,12 @@ import 'package:mauamados/src/widgets/widgets.dart';
 class ProfileMatch extends StatefulWidget {
   final User user;
   final double fontSize;
+  final List<dynamic> conversas;
 
   const ProfileMatch ({
     required this.user,
     required this.fontSize,
+    required this.conversas,
     super.key
   });
 
@@ -78,7 +80,9 @@ class _ProfileMatchState extends State<ProfileMatch> {
                       BotaoDoMau(
                         onPressed: () {
                           setState(() {
-                            conversas.removeWhere((conversa) => conversa['ids'].contains(widget.user.id));
+                            widget.conversas.removeWhere((conversa) =>
+                              conversa['ma_id_user1'] == widget.user.id || conversa['ma_id_user2'] == widget.user.id
+                            );
                           });
                         },
                         fontSize: widget.fontSize, 
