@@ -56,19 +56,16 @@ class _ProfileEditState extends State<ProfileEdit> {
   }
 
   Future<void> deleteImageRoute(int id, String link) async {
-    final String corpo = link;
-    print(corpo);
-    final response = await http.delete(
+    final String corpo = '"$link"';
+    await http.delete(
       Uri.parse('http://127.0.0.1:8000/user/delete_photo/$id'),
       headers: {
         'accept': 'application/json',
         'Content-Type': 'application/json',
         'Accept-Charset': 'utf-8'
       },
-      body: jsonEncode({"photo_to_delete": corpo}),
+      body: jsonEncode(corpo),
     );
-    print(response.body);
-    print(response.statusCode);
   }
 
   void addImage(String link) {

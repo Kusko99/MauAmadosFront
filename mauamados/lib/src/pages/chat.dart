@@ -21,6 +21,7 @@ class _ChatPageState extends State<ChatPage> {
   @override
   void initState() {
     super.initState();
+    getConversas(widget.idUsuarioAtual);
   }
 
   Future<void> getConversas(int id) async {
@@ -33,7 +34,6 @@ class _ChatPageState extends State<ChatPage> {
 
   @override
   Widget build(BuildContext context) {
-    getConversas(widget.idUsuarioAtual);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
