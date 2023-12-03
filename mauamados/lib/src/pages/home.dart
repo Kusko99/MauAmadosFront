@@ -12,8 +12,10 @@ class HomePage extends StatefulWidget {
   final double fontSize1;
   final double fontSize2;
   final User user1;
+  final List<dynamic> conversasAPI;
 
   const HomePage({
+    required this.conversasAPI,
     required this.idUsuarioAtual,
     required this.pretendentes,
     required this.fontSize1, 
@@ -75,6 +77,7 @@ class _HomePageState extends State<HomePage> {
       Navigator.of(context).push(
         MaterialPageRoute(
           builder: (context) => MainScreen(
+            conversasAPI: widget.conversasAPI,
             fontSize1: widget.fontSize1, 
             fontSize2: widget.fontSize2, 
             idUsuarioAtual: widget.idUsuarioAtual, 

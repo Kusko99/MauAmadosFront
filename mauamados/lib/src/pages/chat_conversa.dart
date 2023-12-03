@@ -8,8 +8,10 @@ class ChatConversa extends StatefulWidget{
   final int idUsuarioAtual;
   final double fontSize;
   final List<Map<String, dynamic>> conversas;
+  final List<dynamic> conversasAPI;
 
   const ChatConversa({
+    required this.conversasAPI,
     required this.conversa, 
     required this.fontSize, 
     required this.idUsuarioAtual,
@@ -49,6 +51,7 @@ class _ChatConversaState extends State<ChatConversa> {
             Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (context) => ChatPage(
+                  conversasAPI: widget.conversasAPI,
                   fontSize: widget.fontSize,
                   idUsuarioAtual: widget.idUsuarioAtual,
                   conversas: widget.conversas,
