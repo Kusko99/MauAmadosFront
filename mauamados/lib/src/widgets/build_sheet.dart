@@ -61,6 +61,12 @@ class BuildSheet extends StatelessWidget {
                     ),
                   ),
                 ),
+              ),
+              BotaoDoMau(
+                onPressed: () {},
+                fontSize: fontSize, 
+                color: const Color.fromARGB(255, 162, 38, 29), 
+                texto: 'Denunciar'
               )
             ],
           ),

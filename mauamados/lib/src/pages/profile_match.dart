@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:mauamados/models/models.dart';
 import 'package:mauamados/src/widgets/widgets.dart';
@@ -32,9 +30,13 @@ class _ProfileMatchState extends State<ProfileMatch> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 1,
-        toolbarHeight: max(deviceHeight * 0.07, 36.0),
-        leadingWidth: max(deviceHeight * 0.07, 36.0),
+        toolbarHeight: deviceHeight * 0.08,
+        leadingWidth: deviceHeight * 0.08,
         foregroundColor: const Color.fromARGB(255, 0, 71, 133),
+        iconTheme: IconThemeData(
+          color: const Color.fromARGB(255, 0, 71, 133),
+          size: deviceHeight * 0.06,
+        ),
       ),
       body: SingleChildScrollView(
         child: Center(
@@ -54,7 +56,7 @@ class _ProfileMatchState extends State<ProfileMatch> {
                 ),
                 Padding(
                   padding: EdgeInsets.only(
-                    bottom: deviceHeight * 0.05,
+                    bottom: deviceHeight * 0.02,
                     left: deviceWidth * 0.05,
                     right: deviceWidth * 0.05
                   ),
@@ -64,6 +66,32 @@ class _ProfileMatchState extends State<ProfileMatch> {
                       fontSize: widget.fontSize,
                       color: Colors.black
                     )
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(
+                    bottom: deviceHeight * 0.05
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      BotaoDoMau(
+                        onPressed: () {
+                          setState(() {
+                            conversas.removeWhere((conversa) => conversa['ids'].contains(widget.user.id));
+                          });
+                        },
+                        fontSize: widget.fontSize, 
+                        color: Colors.grey, 
+                        texto: 'Desfazer Match'
+                      ),
+                      BotaoDoMau(
+                        onPressed: () {},
+                        fontSize: widget.fontSize, 
+                        color: const Color.fromARGB(255, 162, 38, 29), 
+                        texto: 'Denunciar'
+                      )
+                    ],
                   ),
                 )
               ],

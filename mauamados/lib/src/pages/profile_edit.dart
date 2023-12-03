@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:mauamados/models/models.dart';
 import 'package:mauamados/src/pages/pages.dart';
@@ -152,10 +151,19 @@ class _ProfileEditState extends State<ProfileEdit> {
                   runSpacing: 5,
                   children: [
                     ...widget.user.urlFotos
-                        .map((url) => ProfileImage(
+                        .map((url) => ProfileDraggable(
                               imageUrl: url,
                               onRemove: () {
                                 removeImage(url);
+                              },
+                              urlFotos: widget.user.urlFotos,
+                              onAccept: (urlAlvo) {
+                                int indice1 = widget.user.urlFotos.indexOf(url);
+                                int indice2 = widget.user.urlFotos.indexOf(urlAlvo);
+                                setState(() {
+                                  widget.user.urlFotos[indice1] = urlAlvo;
+                                  widget.user.urlFotos[indice2] = url;
+                                });
                               },
                             ))
                         .toList(),

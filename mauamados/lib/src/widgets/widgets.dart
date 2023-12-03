@@ -18,3 +18,5 @@ export 'chat_messages.dart';
 export 'login_button.dart';
 export 'custom_text_field.dart';
 export 'no_users_text.dart';
+export 'profile_images_draggable.dart';
+export 'botao_do_mau.dart';
