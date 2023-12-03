@@ -31,15 +31,19 @@ class ChatContatos extends StatelessWidget {
 
     final conversasDoUsuario = List<dynamic>.from(conversasAPI)
       .where((conversa) =>
-        (conversa['ma_id_user1'] == idUsuarioAtual) &&
+        ((conversa['ma_id_user1'] == idUsuarioAtual) &&
+        conversa['conversa'].isNotEmpty)  || 
+        ((conversa['ma_id_user2'] == idUsuarioAtual) &&
         conversa['conversa'].isNotEmpty)
-      .toList();
+      ).toList();
 
       final matchesDoUsuario = List<dynamic>.from(conversasAPI)
       .where((conversa) =>
-        (conversa['ma_id_user1'] == idUsuarioAtual) &&
+        ((conversa['ma_id_user1'] == idUsuarioAtual) &&
+        conversa['conversa'].isEmpty) || 
+        ((conversa['ma_id_user2'] == idUsuarioAtual) &&
         conversa['conversa'].isEmpty)
-      .toList();
+      ).toList();
 
     double deviceHeight = MediaQuery.of(context).size.height;
     double deviceWidth = MediaQuery.of(context).size.width;

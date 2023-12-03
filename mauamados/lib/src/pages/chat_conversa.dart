@@ -88,6 +88,7 @@ class _ChatConversaState extends State<ChatConversa> {
             Navigator.of(context).push(
               MaterialPageRoute(
                 builder:(context) => ProfileMatch(
+                  idUsuarioAtual: widget.idUsuarioAtual,
                   conversas: widget.conversasAPI,
                   user: widget.outroUsuario,
                   fontSize: widget.fontSize,
