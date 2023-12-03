@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:mauamados/models/models.dart';
 import 'package:mauamados/src/pages/pages.dart';
 import 'package:mauamados/src/widgets/widgets.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 class ChatConversa extends StatefulWidget{
   final List<dynamic> conversa;
@@ -28,6 +30,26 @@ class ChatConversa extends StatefulWidget{
 }
 
 class _ChatConversaState extends State<ChatConversa> {
+
+  Future<void> enviarMensagem(String messageText) async {
+    final jsonData = jsonEncode(
+      {
+        'remetente': widget.idUsuarioAtual, 
+        'receptor': widget.idOutroUsuario,
+        'corpo': messageText
+      }
+    );
+
+    await http.post(
+      Uri.parse('http://127.0.0.1:8000/enviar_mensagem/'),
+      headers: {
+        'accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: jsonData,
+    );
+  }
+  
   ScrollController controller = ScrollController();
   TextEditingController textController = TextEditingController();
 
@@ -150,6 +172,7 @@ class _ChatConversaState extends State<ChatConversa> {
                       WidgetsBinding.instance.addPostFrameCallback((_) {
                         controller.jumpTo(controller.position.maxScrollExtent);
                       });
+                      enviarMensagem(messageText);
                     }
                   },
                   icon: Icon(
