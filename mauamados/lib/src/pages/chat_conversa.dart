@@ -4,18 +4,20 @@ import 'package:mauamados/src/pages/pages.dart';
 import 'package:mauamados/src/widgets/widgets.dart';
 
 class ChatConversa extends StatefulWidget{
-  final Map<String, dynamic> conversa;
+  final List<dynamic> conversa;
   final int idUsuarioAtual;
   final double fontSize;
-  final List<Map<String, dynamic>> conversas;
   final List<dynamic> conversasAPI;
+  final int idOutroUsuario;
+  final User outroUsuario;
 
   const ChatConversa({
     required this.conversasAPI,
     required this.conversa, 
     required this.fontSize, 
     required this.idUsuarioAtual,
-    required this.conversas, 
+    required this.idOutroUsuario,
+    required this.outroUsuario,
     super.key
   });
 
@@ -34,11 +36,6 @@ class _ChatConversaState extends State<ChatConversa> {
     double deviceHeight = MediaQuery.of(context).size.height;
     double deviceWidth = MediaQuery.of(context).size.width;
 
-    List<int> idsConversa = widget.conversa['ids'];
-    int idOutroUsuario = idsConversa.firstWhere((id) => id != widget.idUsuarioAtual);
-
-    User? outroUsuario = User.users.firstWhere((user) => user.id == idOutroUsuario);
-
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -54,7 +51,6 @@ class _ChatConversaState extends State<ChatConversa> {
                   conversasAPI: widget.conversasAPI,
                   fontSize: widget.fontSize,
                   idUsuarioAtual: widget.idUsuarioAtual,
-                  conversas: widget.conversas,
                 ),
               ),
             );
@@ -70,7 +66,7 @@ class _ChatConversaState extends State<ChatConversa> {
             Navigator.of(context).push(
               MaterialPageRoute(
                 builder:(context) => ProfileMatch(
-                  user: outroUsuario,
+                  user: widget.outroUsuario,
                   fontSize: widget.fontSize,
                 )
               )
@@ -80,8 +76,8 @@ class _ChatConversaState extends State<ChatConversa> {
             children: [
               ClipOval(
                 child: Image.network(
-                  outroUsuario.urlFotos.isNotEmpty
-                      ? outroUsuario.urlFotos.first
+                  widget.outroUsuario.urlFotos.isNotEmpty
+                      ? widget.outroUsuario.urlFotos.first
                       : 'https://i.imgur.com/YTkSwCJ.png',
                   width: deviceHeight * 0.06,
                   height: deviceHeight * 0.06,
@@ -91,7 +87,7 @@ class _ChatConversaState extends State<ChatConversa> {
               const SizedBox(width: 10),
               Flexible(
                 child: Text(
-                  outroUsuario.nome,
+                  widget.outroUsuario.nome,
                   style: TextStyle(
                     fontSize: widget.fontSize * 4 / 3,
                     color: Colors.black,
@@ -147,8 +143,7 @@ class _ChatConversaState extends State<ChatConversa> {
                     final messageText = textController.text;
                     if (messageText.isNotEmpty) {
                       setState(() {
-                        widget.conversa['mensagens']
-                            .add({'id': widget.idUsuarioAtual, 'texto': messageText});
+                        widget.conversa.add({'remetente': widget.idUsuarioAtual, 'receptor': widget.idOutroUsuario,'corpo': messageText});
                         textController.clear();
                       });
                       WidgetsBinding.instance.addPostFrameCallback((_) {

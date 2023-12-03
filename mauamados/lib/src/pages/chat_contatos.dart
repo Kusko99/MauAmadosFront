@@ -8,14 +8,12 @@ import 'dart:math';
 class ChatContatos extends StatelessWidget {
   final int idUsuarioAtual;
   final double fontSize;
-  final List<Map<String, dynamic>> conversas;
   final List<dynamic> conversasAPI;
 
   const ChatContatos({
     required this.conversasAPI,
     required this.idUsuarioAtual,
     required this.fontSize,
-    required this.conversas,
     super.key,
   });
 
@@ -79,17 +77,17 @@ class ChatContatos extends StatelessWidget {
                 itemCount: matchesDoUsuario.length,
                 itemBuilder: (context, index) {
                   final match = matchesDoUsuario[index];
-                  final idOutroUsuario = match['ma_id_user2'];
+                  final idOutroUsuario = match['ma_id_user2'] != idUsuarioAtual ? match['ma_id_user2'] : match['ma_id_user1'];
 
                   return FutureBuilder<User>(
                     future: getUser(idOutroUsuario), 
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
-                        return CircularProgressIndicator();
+                        return const CircularProgressIndicator();
                       } else if (snapshot.hasError) {
-                        return Text('Erro ao carregar usuário');
+                        return const Text('Erro ao carregar usuário');
                       } else if (!snapshot.hasData) {
-                        return Text('Dados do usuário não encontrados');
+                        return const Text('Dados do usuário não encontrados');
                       } else {
                         final outroUsuario = snapshot.data!;
                         return Container(
@@ -101,11 +99,12 @@ class ChatContatos extends StatelessWidget {
                               Navigator.of(context).push(
                                 MaterialPageRoute(
                                   builder: (context) => ChatConversa(
+                                    outroUsuario: outroUsuario,
+                                    idOutroUsuario: idOutroUsuario,
                                     conversasAPI: conversasAPI,
-                                    conversa: match,
+                                    conversa: match['conversa'],
                                     fontSize: fontSize,
                                     idUsuarioAtual: idUsuarioAtual,
-                                    conversas: conversas,
                                   ),
                                 ),
                               );
@@ -171,17 +170,17 @@ class ChatContatos extends StatelessWidget {
               itemCount: conversasDoUsuario.length,
               itemBuilder: (context, index) {
                 final conversa = conversasDoUsuario[index];
-                final idOutroUsuario = conversa['ma_id_user2'];
+                final idOutroUsuario = conversa['ma_id_user2'] != idUsuarioAtual ? conversa['ma_id_user2'] : conversa['ma_id_user1'];
 
                 return FutureBuilder<User>(
                   future: getUser(idOutroUsuario), 
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
-                      return CircularProgressIndicator();
+                      return const CircularProgressIndicator();
                     } else if (snapshot.hasError) {
-                      return Text('Erro ao carregar usuário');
+                      return const Text('Erro ao carregar usuário');
                     } else if (!snapshot.hasData) {
-                      return Text('Dados do usuário não encontrados');
+                      return const Text('Dados do usuário não encontrados');
                     } else {
                       final outroUsuario = snapshot.data!;
                       return InkWell(
@@ -189,11 +188,12 @@ class ChatContatos extends StatelessWidget {
                           Navigator.of(context).push(
                             MaterialPageRoute(
                               builder: (context) => ChatConversa(
+                                outroUsuario: outroUsuario,
+                                idOutroUsuario: idOutroUsuario,
                                 conversasAPI: conversasAPI,
-                                conversa: conversa,
+                                conversa: conversa['conversa'],
                                 fontSize: fontSize,
                                 idUsuarioAtual: idUsuarioAtual,
-                                conversas: conversas,
                               ),
                             ),
                           );
@@ -231,9 +231,9 @@ class ChatContatos extends StatelessWidget {
                                   overflow: TextOverflow.ellipsis
                                 ),
                                 Text(
-                                  conversa['mensagens'].last['id'] == idUsuarioAtual ? 
-                                    'Você: ${conversa['mensagens'].last['texto']}' : 
-                                    '${outroUsuario.nome}: ${conversa['mensagens'].last['texto']}',
+                                  conversa['conversa'].last['remetente'] == idUsuarioAtual ? 
+                                    'Você: ${conversa['conversa'].last['corpo']}' : 
+                                    '${outroUsuario.nome}: ${conversa['conversa'].last['corpo']}',
                                   style: TextStyle(
                                     fontSize: fontSize
                                   ),
