@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:mauamados/models/models.dart';
 import 'package:mauamados/src/pages/pages.dart';
@@ -51,11 +50,31 @@ class _HomePageState extends State<HomePage> {
       users.add(User.fromJson(usuario));
     }
   }
+  
+  Future<void> criarConversa(int id) async {
+    final jsonData = jsonEncode(
+      {
+        "ma_id_user1": id,
+        "ma_id_user2": widget.idUsuarioAtual,
+        "conversa": []
+      }
+    );
+
+    await http.post(
+      Uri.parse('http://127.0.0.1:8000/create_chat/?ma_id_1=${widget.idUsuarioAtual}&ma_id_2=$id'),
+      headers: {
+        'accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: jsonData,
+    );
+  }
 
   Future<void> verificaMatch(int idUsuario, int idMatch, String link) async {
     final response = await http.get(Uri.parse('http://127.0.0.1:8000/user/likes/$idMatch'));
     final List liked = json.decode(response.body);
     if (liked.contains(idUsuario.toString())) {
+      criarConversa(idMatch);
       Navigator.of(context).push(
         MaterialPageRoute(
           builder: (context) => TelaMatch(

@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:mauamados/models/models.dart';
 import 'package:mauamados/src/widgets/widgets.dart';
+import 'package:http/http.dart' as http;
 
 class ProfileMatch extends StatefulWidget {
   final User user;
   final double fontSize;
+  final List<dynamic> conversas;
+  final int idUsuarioAtual;
 
   const ProfileMatch ({
+    required this.idUsuarioAtual,
     required this.user,
     required this.fontSize,
+    required this.conversas,
     super.key
   });
 
@@ -17,6 +22,12 @@ class ProfileMatch extends StatefulWidget {
 }
 
 class _ProfileMatchState extends State<ProfileMatch> {
+  
+  Future<void> deletarConversa(int idUsuarioAtual, int idOutro) async {
+    await http.delete(Uri.parse('http://127.0.0.1:8000/delete_chat/$idUsuarioAtual/$idOutro'));
+    await http.delete(Uri.parse('http://127.0.0.1:8000/user/remove_like/$idUsuarioAtual/$idOutro'));
+    await http.delete(Uri.parse('http://127.0.0.1:8000/user/remove_like/$idOutro/$idUsuarioAtual'));
+  }
 
   @override
   Widget build (BuildContext context) {
@@ -78,8 +89,11 @@ class _ProfileMatchState extends State<ProfileMatch> {
                       BotaoDoMau(
                         onPressed: () {
                           setState(() {
-                            conversas.removeWhere((conversa) => conversa['ids'].contains(widget.user.id));
+                            widget.conversas.removeWhere((conversa) =>
+                              conversa['ma_id_user1'] == widget.user.id || conversa['ma_id_user2'] == widget.user.id
+                            );
                           });
+                          deletarConversa(widget.idUsuarioAtual, widget.user.id);
                         },
                         fontSize: widget.fontSize, 
                         color: Colors.grey, 

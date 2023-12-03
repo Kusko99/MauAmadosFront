@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class ChatMessages extends StatelessWidget {
-  final Map<String, dynamic> conversa;
+  final List<dynamic> conversa;
   final double fontSize;
   final int idUsuarioAtual;
   final ScrollController controller;
@@ -24,12 +24,11 @@ class ChatMessages extends StatelessWidget {
 
     return ListView.builder(
       controller: controller,
-      itemCount: conversa['mensagens'].length,
+      itemCount: conversa.length,
       itemBuilder: (context, index) {
-        final mensagens = conversa['mensagens'];
-        final mensagem = mensagens[index];
-        final id = mensagem['id'];
-        final texto = mensagem['texto'];
+        final mensagem = conversa[index];
+        final id = mensagem['remetente'];
+        final texto = mensagem['corpo'];
         final isMinhaMensagem = id == idUsuarioAtual;
         return Container(
           margin: EdgeInsets.only(

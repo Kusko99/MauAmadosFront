@@ -2,18 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:mauamados/models/models.dart';
 import 'package:mauamados/src/pages/pages.dart';
 import 'package:mauamados/src/widgets/widgets.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 class ChatConversa extends StatefulWidget{
-  final Map<String, dynamic> conversa;
+  final List<dynamic> conversa;
   final int idUsuarioAtual;
   final double fontSize;
-  final List<Map<String, dynamic>> conversas;
+  final List<dynamic> conversasAPI;
+  final int idOutroUsuario;
+  final User outroUsuario;
 
   const ChatConversa({
+    required this.conversasAPI,
     required this.conversa, 
     required this.fontSize, 
     required this.idUsuarioAtual,
-    required this.conversas, 
+    required this.idOutroUsuario,
+    required this.outroUsuario,
     super.key
   });
 
@@ -24,6 +30,26 @@ class ChatConversa extends StatefulWidget{
 }
 
 class _ChatConversaState extends State<ChatConversa> {
+
+  Future<void> enviarMensagem(String messageText) async {
+    final jsonData = jsonEncode(
+      {
+        'remetente': widget.idUsuarioAtual, 
+        'receptor': widget.idOutroUsuario,
+        'corpo': messageText
+      }
+    );
+
+    await http.post(
+      Uri.parse('http://127.0.0.1:8000/enviar_mensagem/'),
+      headers: {
+        'accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: jsonData,
+    );
+  }
+  
   ScrollController controller = ScrollController();
   TextEditingController textController = TextEditingController();
 
@@ -31,11 +57,6 @@ class _ChatConversaState extends State<ChatConversa> {
   Widget build(BuildContext context) {
     double deviceHeight = MediaQuery.of(context).size.height;
     double deviceWidth = MediaQuery.of(context).size.width;
-
-    List<int> idsConversa = widget.conversa['ids'];
-    int idOutroUsuario = idsConversa.firstWhere((id) => id != widget.idUsuarioAtual);
-
-    User? outroUsuario = User.users.firstWhere((user) => user.id == idOutroUsuario);
 
     return Scaffold(
       appBar: AppBar(
@@ -51,7 +72,6 @@ class _ChatConversaState extends State<ChatConversa> {
                 builder: (context) => ChatPage(
                   fontSize: widget.fontSize,
                   idUsuarioAtual: widget.idUsuarioAtual,
-                  conversas: widget.conversas,
                 ),
               ),
             );
@@ -67,7 +87,9 @@ class _ChatConversaState extends State<ChatConversa> {
             Navigator.of(context).push(
               MaterialPageRoute(
                 builder:(context) => ProfileMatch(
-                  user: outroUsuario,
+                  idUsuarioAtual: widget.idUsuarioAtual,
+                  conversas: widget.conversasAPI,
+                  user: widget.outroUsuario,
                   fontSize: widget.fontSize,
                 )
               )
@@ -77,8 +99,8 @@ class _ChatConversaState extends State<ChatConversa> {
             children: [
               ClipOval(
                 child: Image.network(
-                  outroUsuario.urlFotos.isNotEmpty
-                      ? outroUsuario.urlFotos.first
+                  widget.outroUsuario.urlFotos.isNotEmpty
+                      ? widget.outroUsuario.urlFotos.first
                       : 'https://i.imgur.com/YTkSwCJ.png',
                   width: deviceHeight * 0.06,
                   height: deviceHeight * 0.06,
@@ -88,7 +110,7 @@ class _ChatConversaState extends State<ChatConversa> {
               const SizedBox(width: 10),
               Flexible(
                 child: Text(
-                  outroUsuario.nome,
+                  widget.outroUsuario.nome,
                   style: TextStyle(
                     fontSize: widget.fontSize * 4 / 3,
                     color: Colors.black,
@@ -144,13 +166,13 @@ class _ChatConversaState extends State<ChatConversa> {
                     final messageText = textController.text;
                     if (messageText.isNotEmpty) {
                       setState(() {
-                        widget.conversa['mensagens']
-                            .add({'id': widget.idUsuarioAtual, 'texto': messageText});
+                        widget.conversa.add({'remetente': widget.idUsuarioAtual, 'receptor': widget.idOutroUsuario,'corpo': messageText});
                         textController.clear();
                       });
                       WidgetsBinding.instance.addPostFrameCallback((_) {
                         controller.jumpTo(controller.position.maxScrollExtent);
                       });
+                      enviarMensagem(messageText);
                     }
                   },
                   icon: Icon(

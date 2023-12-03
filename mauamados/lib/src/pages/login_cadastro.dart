@@ -26,6 +26,7 @@ class _LoginCadastroState extends State<LoginCadastro> {
 
   List pretendentes = [];
   List likes = [];
+  dynamic conversasAPI;
 
   Future<void> getLikes(int id) async {
     final response = await http.get(Uri.parse('http://127.0.0.1:8000/user/likes/$id'));
@@ -44,6 +45,13 @@ class _LoginCadastroState extends State<LoginCadastro> {
       pretendentes = json.decode(response.body);
       pretendentes.removeWhere((pretendente) => likes.contains(pretendente['ma_id']));
       pretendentes.shuffle();
+    });
+  }
+
+  Future<void> getConversas(int id) async {
+    final response = await http.get(Uri.parse('http://127.0.0.1:8000/get_todas_conversas/$id'));
+    setState(() {
+      conversasAPI = json.decode(response.body);
     });
   }
 
@@ -179,6 +187,7 @@ class _LoginCadastroState extends State<LoginCadastro> {
                                       final userData = json.decode(utf8.decode(userResponse.bodyBytes));
                                       final user = User.fromJson(userData[0]);
                                       await getPretendentes(userId);
+                                      await getConversas(userId);
 
                                       Navigator.of(context).push(
                                         MaterialPageRoute(

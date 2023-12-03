@@ -41,7 +41,6 @@ class _MainScreenState extends State<MainScreen> {
             usuarioAtual: widget.usuarioAtual
           ),
           ChatPage(
-            conversas: conversas,
             fontSize: widget.fontSize2 * 0.75 < 12 ? 12 : widget.fontSize2 * 0.75, 
             idUsuarioAtual: 1,
           )
@@ -63,7 +62,6 @@ class _MainScreenState extends State<MainScreen> {
             usuarioAtual: widget.usuarioAtual
           ),
           ChatPage(
-            conversas: conversas,
             fontSize: widget.fontSize2 * 0.75 < 12 ? 12 : widget.fontSize2 * 0.75, 
             idUsuarioAtual: 1,
           )

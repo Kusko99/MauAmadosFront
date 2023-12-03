@@ -17,7 +17,9 @@ class ChoiceButton extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _ChoiceButtonState createState() => _ChoiceButtonState();
+  State<ChoiceButton> createState() {
+    return _ChoiceButtonState();
+  }
 }
 
 class _ChoiceButtonState extends State<ChoiceButton> {
