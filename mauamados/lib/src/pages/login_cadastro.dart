@@ -67,6 +67,7 @@ class _LoginCadastroState extends State<LoginCadastro> {
 
     double fontSize = MediaQuery.of(context).size.shortestSide * 0.04;
     double imageSize = (fontSize * 12);
+    final ScrollController _scrollController = ScrollController();
 
     return Scaffold(
       body: Stack(
@@ -326,15 +327,104 @@ class _LoginCadastroState extends State<LoginCadastro> {
                           fontSize: fontSize,
                           texto: 'Novo Usuário',
                           onTap: () {
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (context) => 
-                                Registros(
-                                  fontSize1: widget.fontSize1,
-                                  fontSize2: widget.fontSize2,
-                                  fontSize: fontSize,
-                                )
-                              )
+                            showDialog(
+                              context: context,
+                              builder: (context) {
+                                return Center(
+                                  child: SingleChildScrollView(
+                                    child: AlertDialog(
+                                      contentPadding: const EdgeInsets.only(
+                                        left: 16,
+                                        right: 16,
+                                        bottom: 16
+                                      ),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(30),
+                                      ),
+                                      content: Container(
+                                        height: widget.deviceHeight * 0.65,
+                                        width: deviceWidth * 0.75,
+                                        constraints: const BoxConstraints(
+                                          minHeight: 206,
+                                          minWidth: 300
+                                        ),
+                                        child: Column(
+                                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                          crossAxisAlignment: CrossAxisAlignment.end,
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            IconButton(
+                                              iconSize: widget.fontSize2,
+                                              icon: const Icon(Icons.close_rounded),
+                                              onPressed: Navigator.of(context).pop,
+                                              splashColor: Colors.transparent,
+                                              highlightColor: Colors.transparent,
+                                            ),
+                                            Container(
+                                              decoration: BoxDecoration(
+                                                border: Border.all(
+                                                  width: 1,
+                                                  color: Colors.grey
+                                                ),
+                                                borderRadius: BorderRadius.circular(5)
+                                              ),
+                                              height: widget.deviceHeight*0.4,
+                                              child: Scrollbar(
+                                                controller: _scrollController,
+                                                thumbVisibility: true,
+                                                child: SingleChildScrollView(
+                                                  controller: _scrollController,
+                                                  child: Wrap(
+                                                    children: [
+                                                      Text(
+                                                        termosDeUso
+                                                      ),
+                                                    ],
+                                                  ),
+                                                )
+                                              ),
+                                            ),
+                                            Center(
+                                              child: ElevatedButton(
+                                                style: ElevatedButton.styleFrom(
+                                                  backgroundColor: const Color.fromARGB(255, 0, 71, 133),
+                                                  shape: RoundedRectangleBorder(
+                                                    borderRadius: BorderRadius.circular(20)
+                                                  )
+                                                ),
+                                                onPressed:() { 
+                                                  Navigator.of(context).push(
+                                                    MaterialPageRoute(
+                                                      builder: (context) => 
+                                                      Registros(
+                                                        fontSize1: widget.fontSize1,
+                                                        fontSize2: widget.fontSize2,
+                                                        fontSize: fontSize,
+                                                      )
+                                                    )
+                                                  );
+                                                },
+                                                child: Padding(
+                                                  padding: EdgeInsets.symmetric(
+                                                    vertical: widget.deviceHeight * 0.01
+                                                  ),
+                                                  child: Text(
+                                                    "Aceito os termos de uso e política de privacidade",
+                                                    style: TextStyle(
+                                                      fontSize: fontSize
+                                                    ),
+                                                    textAlign: TextAlign.center,
+                                                  ),
+                                                )
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      )
+                                    ),
+                                  )
+                                );
+                              }
                             );
                           },
                         ),
