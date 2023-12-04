@@ -24,9 +24,9 @@ class ProfileMatch extends StatefulWidget {
 class _ProfileMatchState extends State<ProfileMatch> {
   
   Future<void> deletarConversa(int idUsuarioAtual, int idOutro) async {
-    await http.delete(Uri.parse('http://127.0.0.1:8000/delete_chat/$idUsuarioAtual/$idOutro'));
-    await http.delete(Uri.parse('http://127.0.0.1:8000/user/remove_like/$idUsuarioAtual/$idOutro'));
-    await http.delete(Uri.parse('http://127.0.0.1:8000/user/remove_like/$idOutro/$idUsuarioAtual'));
+    await http.delete(Uri.parse('http://10.0.2.2:8000/delete_chat/$idUsuarioAtual/$idOutro'));
+    await http.delete(Uri.parse('http://10.0.2.2:8000/user/remove_like/$idUsuarioAtual/$idOutro'));
+    await http.delete(Uri.parse('http://10.0.2.2:8000/user/remove_like/$idOutro/$idUsuarioAtual'));
   }
 
   @override

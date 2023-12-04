@@ -18,7 +18,7 @@ class ProfileMainPage extends StatelessWidget {
   Widget build(BuildContext context) {
 
   Future<void> deleteUser(int id) async {
-    await http.delete(Uri.parse('http://127.0.0.1:8000/user/$id'));
+    await http.delete(Uri.parse('http://10.0.2.2:8000/user/$id'));
   }
     double deviceHeight = MediaQuery.of(context).size.height;
     double deviceWidth = MediaQuery.of(context).size.width;
