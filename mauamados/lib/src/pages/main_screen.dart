@@ -63,7 +63,7 @@ class _MainScreenState extends State<MainScreen> {
           ),
           ChatPage(
             fontSize: widget.fontSize2 * 0.75 < 12 ? 12 : widget.fontSize2 * 0.75, 
-            idUsuarioAtual: 1,
+            idUsuarioAtual: widget.idUsuarioAtual,
           )
         ];
       });
