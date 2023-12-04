@@ -24,25 +24,37 @@ class _ChatPageState extends State<ChatPage> {
     getConversas(widget.idUsuarioAtual);
   }
 
-  Future<void> getConversas(int id) async {
-    final response = await http.get(Uri.parse('http://127.0.0.1:8000/get_todas_conversas/$id'));
+  Future<dynamic> getConversas(int id) async {
+    final response = await http.get(Uri.parse('http://10.0.2.2:8000/get_todas_conversas/$id'));
     final utf8Body = utf8.decode(response.bodyBytes);
-    setState(() {
-      conversasAPI = json.decode(utf8Body);
-    });
+    dynamic conversasAPI = json.decode(utf8Body);
+    return conversasAPI;
   }
-  dynamic conversasAPI;
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        body: ChatContatos(
-          conversasAPI: conversasAPI['todas_as_conversas'],
-          idUsuarioAtual: widget.idUsuarioAtual, 
-          fontSize: widget.fontSize,
-        ),
+        body: FutureBuilder(
+          future: getConversas(widget.idUsuarioAtual), 
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const CircularProgressIndicator();
+            } else if (snapshot.hasError) {
+              return const Text('Erro ao carregar usuário');
+            } else if (!snapshot.hasData) {
+              return const Text('Dados do usuário não encontrados');
+            } else {
+              final conversasAPI = snapshot.data!;
+              return ChatContatos(
+                conversasAPI: conversasAPI['todas_as_conversas'],
+                idUsuarioAtual: widget.idUsuarioAtual, 
+                fontSize: widget.fontSize,
+              );
+            }
+          }
+        )
       ),
     );
   }

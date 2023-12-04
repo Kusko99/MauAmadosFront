@@ -36,29 +36,29 @@ class _ProfileEditState extends State<ProfileEdit> {
 
   Future<void> changeData(int id, String value, String dataType, bool idade) async {
     if (idade) {
-      await http.put(Uri.parse('http://127.0.0.1:8000/user/$dataType/$id/${int.parse(value)}'));
+      await http.put(Uri.parse('http://10.0.2.2:8000/user/$dataType/$id/${int.parse(value)}'));
     }
     else {
-      await http.put(Uri.parse('http://127.0.0.1:8000/user/$dataType/$id/$value'));
+      await http.put(Uri.parse('http://10.0.2.2:8000/user/$dataType/$id/$value'));
     }
   }
 
   Future<void> addImageRoute(int id, String link) async {
-    await http.post(Uri.parse('http://127.0.0.1:8000/user/add_photo/$id?new_photo=$link'));
+    await http.post(Uri.parse('http://10.0.2.2:8000/user/add_photo/$id?new_photo=$link'));
   }
 
   Future<void> addInterestRoute(int id, String tag) async {
-    await http.post(Uri.parse('http://127.0.0.1:8000/user/add_tag_preferences/$id/$tag'));
+    await http.post(Uri.parse('http://10.0.2.2:8000/user/add_tag_preferences/$id/$tag'));
   }
 
   Future<void> removeInterestRoute(int id, String tag) async {
-    await http.delete(Uri.parse('http://127.0.0.1:8000/user/remove_tag_preference/$id/$tag'));
+    await http.delete(Uri.parse('http://10.0.2.2:8000/user/remove_tag_preference/$id/$tag'));
   }
 
   Future<void> deleteImageRoute(int id, String link) async {
     final String corpo = link;
     await http.delete(
-      Uri.parse('http://127.0.0.1:8000/user/delete_photo/$id'),
+      Uri.parse('http://10.0.2.2:8000/user/delete_photo/$id'),
       headers: {
         'accept': 'application/json',
         'Content-Type': 'application/json',
@@ -71,7 +71,7 @@ class _ProfileEditState extends State<ProfileEdit> {
   Future<void> updateIndex(int id, int index,String link) async {
     final String corpo = link;
     await http.put(
-      Uri.parse('http://127.0.0.1:8000/user/photo_new_index/$id/$index'),
+      Uri.parse('http://10.0.2.2:8000/user/photo_new_index/$id/$index'),
       headers: {
         'accept': 'application/json',
         'Content-Type': 'application/json',

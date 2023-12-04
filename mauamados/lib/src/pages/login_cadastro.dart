@@ -29,7 +29,7 @@ class _LoginCadastroState extends State<LoginCadastro> {
   dynamic conversasAPI;
 
   Future<void> getLikes(int id) async {
-    final response = await http.get(Uri.parse('http://127.0.0.1:8000/user/likes/$id'));
+    final response = await http.get(Uri.parse('http://10.0.2.2:8000/user/likes/$id'));
     final likeds = json.decode(response.body);
     for (String liker in likeds) {
       setState(() {
@@ -39,7 +39,7 @@ class _LoginCadastroState extends State<LoginCadastro> {
   }
 
   Future<void> getPretendentes(int id) async {
-    final response = await http.get(Uri.parse('http://127.0.0.1:8000/user/get_possible_matches/$id'));
+    final response = await http.get(Uri.parse('http://10.0.2.2:8000/user/get_possible_matches/$id'));
     await getLikes(id);
     setState(() {
       pretendentes = json.decode(response.body);
@@ -49,7 +49,7 @@ class _LoginCadastroState extends State<LoginCadastro> {
   }
 
   Future<void> getConversas(int id) async {
-    final response = await http.get(Uri.parse('http://127.0.0.1:8000/get_todas_conversas/$id'));
+    final response = await http.get(Uri.parse('http://10.0.2.2:8000/get_todas_conversas/$id'));
     setState(() {
       conversasAPI = json.decode(response.body);
     });
@@ -169,7 +169,7 @@ class _LoginCadastroState extends State<LoginCadastro> {
                                   final password = passwordController.text;
 
                                   final response = await http.get(
-                                    Uri.parse('http://127.0.0.1:8000/login/?username=$username&password=$password'),
+                                    Uri.parse('http://10.0.2.2:8000/login/?username=$username&password=$password'),
                                   );
                                   
                                   if (response.statusCode == 200) {
@@ -178,7 +178,7 @@ class _LoginCadastroState extends State<LoginCadastro> {
                                     final userId = int.parse(data['ID']);
 
                                     final userResponse = await http.get(
-                                      Uri.parse('http://127.0.0.1:8000/user/$userId'),
+                                      Uri.parse('http://10.0.2.2:8000/user/$userId'),
                                       headers: {
                                         'Accept-Charset': 'utf-8',
                                       },

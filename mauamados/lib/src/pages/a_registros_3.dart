@@ -49,7 +49,7 @@ class _RegistrosState3 extends State<Registros3> {
   int maId = -1;
 
   Future<void> getPretendentes(int id) async {
-    final response = await http.get(Uri.parse('http://127.0.0.1:8000/user/get_possible_matches/$id'));
+    final response = await http.get(Uri.parse('http://10.0.2.2:8000/user/get_possible_matches/$id'));
     setState(() {
       pretendentes = json.decode(response.body);
       pretendentes.shuffle();
@@ -61,7 +61,7 @@ class _RegistrosState3 extends State<Registros3> {
     bool userFound = true;
 
     do {
-      http.Response response = await http.get(Uri.parse('http://127.0.0.1:8000/user/$id'));
+      http.Response response = await http.get(Uri.parse('http://10.0.2.2:8000/user/$id'));
       dynamic responseData = json.decode(response.body);
 
       if (responseData.isEmpty) {
@@ -80,7 +80,7 @@ class _RegistrosState3 extends State<Registros3> {
     final jsonData = jsonEncode(userData);
 
     final response = await http.post(
-      Uri.parse('http://127.0.0.1:8000/user'),
+      Uri.parse('http://10.0.2.2:8000/user'),
       headers: {
         'accept': 'application/json',
         'Content-Type': 'application/json',

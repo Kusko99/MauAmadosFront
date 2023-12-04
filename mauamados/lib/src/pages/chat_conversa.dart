@@ -41,7 +41,7 @@ class _ChatConversaState extends State<ChatConversa> {
     );
 
     await http.post(
-      Uri.parse('http://127.0.0.1:8000/enviar_mensagem/'),
+      Uri.parse('http://10.0.2.2:8000/enviar_mensagem/'),
       headers: {
         'accept': 'application/json',
         'Content-Type': 'application/json',
